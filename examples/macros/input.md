@@ -1,8 +1,5 @@
-Rust provides a powerful macro system that allows metaprogramming. As you've
-seen in previous chapters, macros look like functions, except that their name
-ends with a bang `!`, but instead of generating a function call, macros are
-expanded into source code that gets compiled with the rest of the program.
+Rust предоставляет мощную систему макросов, которая позволяет использовать метапрограммирование. Как вы могли видеть в предыдущих главах, макросы выглядят как функции, за исключением того, что их имя заканчивается восклицательным знаком - '!'. И вместо вызова функции, макросы раскрывают свой функционал в исходный код, который потом компилируется с остальной частью программы.
 
-Macros are created using the `macro_rules!` macro.
+Макросы создаются с помощью макроса 'macro_rules!'
 
 {simple.play}
