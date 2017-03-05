@@ -48,7 +48,7 @@ test: node_modules/yaspeller
 	./check-line-length.sh
 	./check-line-length-md.sh
 	./check-links.sh
-	$(YASPELLER) --lang ru --dictionary ru_dict.json --check-yo --ignore-uppercase --only-errors README.md CONTRIBUTING.md examples
+	$(YASPELLER) --only-errors README.md CONTRIBUTING.md examples
 
 serve: node_modules/gitbook
 	$(GITBOOK) serve stage
