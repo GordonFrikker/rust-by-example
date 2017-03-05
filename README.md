@@ -2,6 +2,8 @@
 
 [![Build Status][travis-image]][travis-link]
 
+Проверка правописания: [Яндекс.Спеллер][yaspeller]
+
 ## Что это за проект?
 
 Это исходный код сайта [Rust by Example][website], переведенный на русский язык! Перевод можно найти по адресу https://rurust.github.io/rust-by-example-ru
@@ -105,12 +107,13 @@ make test
 
 ## От переводчика
 
-Перевод `Rust by examples` находится в процессе выполнения. За ходом перевода можно наблюдать [тут](https://github.com/GordonFrikker/rust-by-example-ru/issues/1). 
+Перевод `Rust by examples` находится в процессе выполнения. За ходом перевода можно наблюдать [тут](https://github.com/GordonFrikker/rust-by-example-ru/issues/1).
 
 Буду рад помощи.
 
 [travis-image]: https://travis-ci.org/ruRust/rust-by-example-ru.svg?branch=master
 [travis-link]: https://travis-ci.org/ruRust/rust-by-example-ru
+[yaspeller]: https://tech.yandex.ru/speller/
 [website]: http://rustbyexample.com
 [how-to-contribute]: CONTRIBUTING.md
 [rust-lang]: http://www.rust-lang.org/
