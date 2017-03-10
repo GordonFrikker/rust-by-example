@@ -4,7 +4,7 @@
 
 ### Смотрите также:
 
-[`Box`][box] и [methods][методы]
+[`Box`][box] и [`methods`][methods]
 
 [box]: ../../std/box.html
 [methods]: ../../fn/methods.html
