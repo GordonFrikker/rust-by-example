@@ -1,16 +1,16 @@
-// Define a function which takes a generic `F` argument
-// bounded by `Fn`, and calls it
+// Объявляем функцию, которая принимает обобщенный тип `F`,
+// ограниченный типажом `Fn`, и вызывает его.
 fn call_me<F: Fn()>(f: F) {
     f();
 }
 
-// Define a wrapper function satisfying the `Fn` bound
+// Объявляем функцию-обертку, удовлетворяющую ограничению `Fn`
 fn function() {
     println!("I'm a function!");
 }
 
 fn main() {
-    // Define a closure satisfying the `Fn` bound
+    // Определяем замыкание, удовлетворяющее ограничению `Fn`
     let closure = || println!("I'm a closure!");
 
     call_me(closure);
