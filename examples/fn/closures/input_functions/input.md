@@ -11,7 +11,7 @@
 
 ### Смотрите также:
 
-[`Fn`][fn], [`FnMut`][fn_mut], and [`FnOnce`][fn_once]
+[`Fn`][fn], [`FnMut`][fn_mut], и [`FnOnce`][fn_once]
 
 [fn]: http://doc.rust-lang.org/std/ops/trait.Fn.html
 [fn_mut]: http://doc.rust-lang.org/std/ops/trait.FnMut.html
