@@ -19,7 +19,7 @@ fn main() {
     use std::mem;
 
     let greeting = "hello";
-    // Не копируемый тип.
+    // Некопируемый тип.
     // `to_owned` преобразует заимствованные данные в собственные.
     let mut farewell = "goodbye".to_owned();
 
