@@ -18,22 +18,22 @@ fn apply_to_3<F>(f: F) -> i32 where
 fn main() {
     use std::mem;
 
-    let greeting = "hello";
+    let greeting = "привет";
     // Некопируемый тип.
     // `to_owned` преобразует заимствованные данные в собственные.
-    let mut farewell = "goodbye".to_owned();
+    let mut farewell = "пока".to_owned();
 
     // Захват двух переменных: `greeting` по ссылке и
     // `farewell` по значению.
     let diary = || {
         // `greeting` захватывается по ссылке: требует `Fn`.
-        println!("I said {}.", greeting);
+        println!("Я сказал {}.", greeting);
 
         // Изменяемость требует от `farewell` быть захваченным
         // по изменяемой ссылке. Сейчас требуется `FnMut`.
         farewell.push_str("!!!");
-        println!("Then I screamed {}.", farewell);
-        println!("Now I can sleep. zzzzz");
+        println!("Потом я закричал {}.", farewell);
+        println!("Теперь я могу поспать. zzzzz");
 
         // Ручной вызов удаления требуется от `farewell`
         // быть захваченным по значению. Теперь требуется `FnOnce`.
@@ -46,5 +46,5 @@ fn main() {
     // `double` удовлетворяет ограничениям типажа `apply_to_3`
     let double = |x| 2 * x;
 
-    println!("3 doubled: {}", apply_to_3(double));
+    println!("3 удвоенное: {}", apply_to_3(double));
 }

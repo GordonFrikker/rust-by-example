@@ -6,12 +6,12 @@ fn call_me<F: Fn()>(f: F) {
 
 // Объявляем функцию-обёртку, удовлетворяющую ограничению `Fn`
 fn function() {
-    println!("I'm a function!");
+    println!("Я функция!");
 }
 
 fn main() {
     // Определяем замыкание, удовлетворяющее ограничению `Fn`
-    let closure = || println!("I'm a closure!");
+    let closure = || println!("Я замыкание!");
 
     call_me(closure);
     call_me(function);
