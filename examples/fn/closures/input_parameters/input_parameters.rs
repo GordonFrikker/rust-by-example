@@ -46,5 +46,5 @@ fn main() {
     // `double` удовлетворяет ограничениям типажа `apply_to_3`
     let double = |x| 2 * x;
 
-    println!("3 удвоенное: {}", apply_to_3(double));
+    println!("Удвоенное 3: {}", apply_to_3(double));
 }
