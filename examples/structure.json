@@ -119,8 +119,8 @@
         { "id": "lifetime", "title": "Lifetimes", "children": [
             { "id": "explicit", "title": "Explicit annotation", "children": null },
             { "id": "fn", "title": "Functions", "children": null },
-            { "id": "methods", "title": "Methods", "children": null },
-            { "id": "struct", "title": "Structs", "children": null },
+            { "id": "methods", "title": "Методы", "children": null },
+            { "id": "struct", "title": "Структуры", "children": null },
             { "id": "lifetime_bounds", "title": "Bounds", "children": null },
             { "id": "lifetime_coercion", "title": "Coercion", "children": null },
             { "id": "static_lifetime", "title": "static", "children": null },
