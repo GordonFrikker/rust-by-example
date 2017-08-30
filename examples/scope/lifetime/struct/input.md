@@ -1,10 +1,10 @@
-Annotation of lifetimes in structures are also similar to functions:
+Аннотирование времени жизни в структурах аналогично функциям:
 
 {struct.play}
 
 ### Смотрите также:
 
-[`structs`][structs]
+[`Структуры`][structs]
 
 
 [structs]: ../../custom_types/structs.html
