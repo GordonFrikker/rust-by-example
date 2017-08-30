@@ -1,10 +1,10 @@
-Methods are annotated similarly to functions:
+Методы аннотируются аналогично функциям:
 
 {methods.play}
 
 ### Смотрите также:
 
-[methods][methods]
+[`Методы`][methods]
 
 
 [methods]: ../../fn/methods.html
