@@ -1,19 +1,19 @@
-The same set of rules can be applied to functions: a type `T` becomes
-generic when preceded by `<T>`.
+Тот же набор правил применяется и к функциям: тип `T` становится
+обобщённым, когда предшествует `<T>`.
 
-Using generic functions sometimes requires explicitly specifying type
-parameters. This may be the case if the function is called where the return type
-is generic, or if the compiler doesn't have enough information to infer
-the necessary type parameters.
+При использовании обобщённых функций, иногда требуется явно указывать тип
+данных параметров. Это может быть необходимо в случае, если вызываемая функция возвращает
+обобщённый тип или у компилятора недостаточно информации для вывода необходимого
+типа данных.
 
-A function call with explicitly specified type parameters looks like:
+Вызов функции с явно указанными типами данных параметров выглядит так:
 `fun::<A, B, ...>()`.
 
 {fn.play}
 
 ### Смотрите также:
 
-[functions][fn] and [`struct`s][structs]
+[Функции][fn] и [структуры][structs]
 
 [fn]: ../fn.html
 [structs]: ../custom_types/structs.html
