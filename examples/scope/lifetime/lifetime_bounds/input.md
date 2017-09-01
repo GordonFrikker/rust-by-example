@@ -1,18 +1,18 @@
-Just like generic types can be bounded, lifetimes (themselves generic)
-use bounds as well. The `:` character has a slightly different meaning here,
-but `+` is the same. Note how the following read:
+Как обобщения, типы могут быть ограничены и время жизни (обобщённое само по себе)
+тоже использует ограничения. Знак `:` имеет немного другое значение,
+но  знак `+` такое же. Прочитайте следующую заметку:
 
-1. `T: 'a`: *All* references in `T` must outlive lifetime `'a`.
-2. `T: Trait + 'a`: Type `T` must implement trait `Trait` and *all* references
-in `T` must outlive `'a`.
+1. `T: 'a`: *Все* ссылки в `T` должны пережить время жизни `'a`.
+2. `T: Trait + 'a`: Тип `T` должен реализовать типаж `Trait` и *все* ссылки
+в `T` должны пережить `'a`.
 
-The example below shows the above syntax in action:
+Пример ниже демонстрирует синтаксис в действии:
 
 {bounds.play}
 
 ### Смотрите также:
 
-[generics][generics], [bounds in generics][bounds], and
+[`Обобщения`][generics], [bounds in generics][bounds], and
 [multiple bounds in generics][multibounds]
 
 [generics]: ../../generics.html

@@ -1,21 +1,21 @@
-use std::fmt::Debug; // Trait to bound with.
+use std::fmt::Debug; // Типаж с ограничениями.
 
 #[derive(Debug)]
 struct Ref<'a, T: 'a>(&'a T);
-// `Ref` contains a reference to a generic type `T` that has
-// an unknown lifetime `'a`. `T` is bounded such that any
-// *references* in `T` must outlive `'a`. Additionally, the lifetime
-// of `Ref` may not exceed `'a`.
+// `Ref` содержит ссылки на обобщённый тип `T` который имеет
+// неизвестное время жизни `'a`. `T` ограничен так, что любые
+// *ссылки* в `T` должны пережить `'a`.
+// Кроме того, время жизни `Ref` не может превышать `'a`.
 
-// A generic function which prints using the `Debug` trait.
+// Обобщённая функция, которая показывает использование типажа `Debug`.
 fn print<T>(t: T) where
     T: Debug {
     println!("`print`: t is {:?}", t);
 }
 
-// Here a reference to `T` is taken where `T` implements
-// `Debug` and all *references* in `T` outlive `'a`. In
-// addition, `'a` must outlive the function.
+// Здесь приводится ссылка на `T`, где `T` реализует
+// `Debug` и все *ссылки* в `T` переживут `'a`.
+// К тому же, `'a` должен пережить функцию.
 fn print_ref<'a, T>(t: &'a T) where
     T: Debug + 'a {
     println!("`print_ref`: t is {:?}", t);

@@ -92,7 +92,7 @@
         { "id": "gen_fn", "title": "Функции", "children": null },
         { "id": "impl", "title": "Реализация", "children": null },
         { "id": "gen_trait", "title": "Traits", "children": null },
-        { "id": "bounds", "title": "Bounds", "children": [
+        { "id": "bounds", "title": "Ограничения", "children": [
             { "id": "testcase_empty", "title": "Testcase: empty bounds", "children": null }
         ] },
         { "id": "multi_bounds", "title": "Multiple bounds", "children": null },
