@@ -1,8 +1,8 @@
-// `Centimeters`, a tuple struct that can be compared
+// `Centimeters`, кортёжная структура, которую можно сравнить
 #[derive(PartialEq, PartialOrd)]
 struct Centimeters(f64);
 
-// `Inches`, a tuple struct that can be printed
+// `Inches`, кортёжная структура, которую можно напечатать
 #[derive(Debug)]
 struct Inches(i32);
 
@@ -14,19 +14,19 @@ impl Inches {
     }
 }
 
-// `Seconds`, a tuple struct no additional attributes
+// `Seconds`, кортёжная структура без дополнительных аргументов
 struct Seconds(i32);
 
 fn main() {
     let _one_second = Seconds(1);
 
-    // Error: `Seconds` can't be printed; it doesn't implement the `Debug` trait
+    // Ошибка: `Seconds` невозможно напечатать; не реализован типаж `Debug`
     //println!("One second looks like: {:?}", _one_second);
-    // ЗАДАНИЕ ^ Try uncommenting this line
+    // ЗАДАНИЕ ^ Попробуйте раскомментировать эту строку
 
-    // Error: `Seconds` can't be compared; it doesn't implement the `PartialEq` trait
+    // Ошибка: `Seconds` нельзя сравнить; не реализован типаж `PartialEq`
     //let _this_is_true = (_one_second == _one_second);
-    // ЗАДАНИЕ ^ Try uncommenting this line
+    // ЗАДАНИЕ ^ Попробуйте раскомментировать эту строку
 
     let foot = Inches(12);
 

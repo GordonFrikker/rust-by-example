@@ -1,16 +1,16 @@
-The compiler is capable of providing basic implementations for some traits via
-the `#[derive]` [attribute][attribute]. These traits can still be
-manually implemented if a more complex behavior is required.
+Компилятор способен предоставить основные реализации для некоторых типажей
+с помощью [атрибута][attribute] `#[derive]`. Эти типажи могут быть
+реализованы вручную, если необходимо более сложное поведение.
 
-The following is a list of derivable traits:
-* Comparison traits:
+Ниже приводится список наследуемых типажей:
+* Типажи сравнения:
   [`Eq`][eq], [`PartialEq`][partial-eq], [`Ord`][ord], [`PartialOrd`][partial-ord]
-* [`Clone`][clone], to create `T` from `&T` via a copy.
-* [`Copy`][copy], to give a type 'copy semantics' instead of 'move semantics'
-* [`Hash`][hash], to compute a hash from `&T`.
-* [`Default`][default], to create an empty instance of a data type.
-* `Zero`, to create a zero instance of a numeric data type.
-* [`Debug`][debug], to format a value using the `{:?}` formatter.
+* [`Clone`][clone], для создания `T` из `&T` с помощью копии.
+* [`Copy`][copy], чтобы дать тип 'copy semantics' вместо 'move semantics'
+* [`Hash`][hash], чтобы вычислить хэш из `&T`.
+* [`Default`][default], чтобы создать пустой экземпляр типа данных.
+* `Zero`, для создания нулевого экземпляра числового типа данных.
+* [`Debug`][debug], чтобы отформатировать значение с помощью `{:?}`.
 
 {derive.play}
 
