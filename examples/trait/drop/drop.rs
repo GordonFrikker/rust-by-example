@@ -2,7 +2,7 @@ struct Droppable {
     name: &'static str,
 }
 
-// This trivial implementation of `drop` adds a print to console.
+// Это простая реализация `, которая добавляет вывод в консоль.
 impl Drop for Droppable {
     fn drop(&mut self) {
         println!("> Dropping {}", self.name);
@@ -12,11 +12,11 @@ impl Drop for Droppable {
 fn main() {
     let _a = Droppable { name: "a" };
 
-    // block A
+    // блок A
     {
         let _b = Droppable { name: "b" };
 
-        // block B
+        // блок B
         {
             let _c = Droppable { name: "c" };
             let _d = Droppable { name: "d" };
@@ -29,12 +29,12 @@ fn main() {
     }
     println!("Just exited block A");
 
-    // Variable can be manually dropped using the `drop` function
+    // Переменная может упасть вручную с помощью функции `drop`.
     drop(_a);
-    // ЗАДАНИЕ ^ Try commenting this line
+    // ЗАДАНИЕ ^ Попробуйте закомментировать эту строку
 
     println!("end of the main function");
 
-    // `_a` *won't* be `drop`ed again here, because it already has been
-    // (manually) `drop`ed
+    // `_a`  *не может* упасть здесь снова, потому что онa уже
+    // (вручную) упала.
 }
