@@ -2,7 +2,7 @@ struct Droppable {
     name: &'static str,
 }
 
-// Это простая реализация `, которая добавляет вывод в консоль.
+// Это простая реализация `drop`, которая добавляет вывод в консоль.
 impl Drop for Droppable {
     fn drop(&mut self) {
         println!("> Dropping {}", self.name);
@@ -35,6 +35,6 @@ fn main() {
 
     println!("end of the main function");
 
-    // `_a`  *не может* упасть здесь снова, потому что онa уже
+    // `_a` *не может* упасть здесь снова, потому что онa уже
     // (вручную) упала.
 }
