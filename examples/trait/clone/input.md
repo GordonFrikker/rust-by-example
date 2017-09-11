@@ -1,9 +1,9 @@
-When dealing with resources, the default behavior is to transfer them during
-assignments or function calls. However, sometimes we need to make a
-copy of the resource as well.
+При работе с ресурсами, стандартным поведением является передача их (ресурсов)
+в ходе выполнения или вызов функции. Однако, иногда нам нужно
+также объявить копию ресурса.
 
-The [`Clone`][clone] trait helps us do exactly this. Most commonly, we can
-use the `.clone()` method defined by the `Clone` trait.
+Типаж [`Clone`][clone] помогает нам сделать именно это. Чаще всего, мы можем
+использовать метод `.clone()` объявленный типажем `Clone`.
 
 {clone.play}
 
