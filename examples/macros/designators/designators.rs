@@ -20,7 +20,7 @@ macro_rules! print_result {
     // его как строку вместе с результатом.
     // Указатель `expr` используют для обозначения выражений.
     ($expression:expr) => (
-        // `stringify!` преобразует выражение *as it is* в строку.
+        // `stringify!` преобразует выражение *как это* в строку.
         println!("{:?} = {:?}",
                  stringify!($expression),
                  $expression)
