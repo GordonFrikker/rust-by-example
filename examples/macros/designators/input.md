@@ -1,13 +1,13 @@
-The arguments of a macro are prefixed by a dollar sign `$` and type annotated
-with a *designator*:
+Аргументы макроса имеют префикс знака доллара `$` и тип аннотируется
+с помощью *указателя*:
 
 {designators.play}
 
-This is a list of all the designators:
+Это список всех указателей:
 
 * `block`
-* `expr` is used for expressions
-* `ident` is used for variable/function names
+* `expr` используют для обозначения выражений
+* `ident` используют для обозначения переменной/имени функции
 * `item`
 * `pat` (*pattern*)
 * `path`
