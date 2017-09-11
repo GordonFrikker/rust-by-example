@@ -135,7 +135,7 @@
         { "id": "clone", "title": "Clone", "children": null }
     ] },
     { "id": "macros", "title": "macro_rules!", "children": [
-        { "id": "designators", "title": "Идентификатор", "children": null },
+        { "id": "designators", "title": "Указатели", "children": null },
         { "id": "overload", "title": "Overload", "children": null },
         { "id": "repeat", "title": "Repeat", "children": null },
         { "id": "dry", "title": "DRY (Don't Repeat Yourself)", "children": null }
