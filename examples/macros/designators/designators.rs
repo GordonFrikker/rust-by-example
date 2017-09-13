@@ -5,7 +5,7 @@ macro_rules! create_function {
     ($func_name:ident) => (
         fn $func_name() {
             // Макрос `stringify!` преобразует `ident` в строку.
-            println!("You called {:?}()",
+            println!("Вызвана функция {:?}()",
                      stringify!($func_name))
         }
     )
@@ -20,7 +20,7 @@ macro_rules! print_result {
     // его как строку вместе с результатом.
     // Указатель `expr` используют для обозначения выражений.
     ($expression:expr) => (
-        // `stringify!` преобразует выражение *как это* в строку.
+        // `stringify!` преобразует выражение *как есть* в строку.
         println!("{:?} = {:?}",
                  stringify!($expression),
                  $expression)
