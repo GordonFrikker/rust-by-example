@@ -5,35 +5,35 @@ struct Droppable {
 // Это простая реализация `drop`, которая добавляет вывод в консоль.
 impl Drop for Droppable {
     fn drop(&mut self) {
-        println!("> Dropping {}", self.name);
+        println!("> Сбросили {}", self.name);
     }
 }
 
 fn main() {
     let _a = Droppable { name: "a" };
 
-    // блок A
+    // блок А
     {
         let _b = Droppable { name: "b" };
 
-        // блок B
+        // блок Б
         {
             let _c = Droppable { name: "c" };
             let _d = Droppable { name: "d" };
 
-            println!("Exiting block B");
+            println!("Выходим из блока Б");
         }
-        println!("Just exited block B");
+        println!("Вышли из блока Б");
 
-        println!("Exiting block A");
+        println!("Выходим из блока А");
     }
-    println!("Just exited block A");
+    println!("Вышли из блока А");
 
     // Переменную можно сбросить вручную с помощью функции `drop`.
     drop(_a);
     // ЗАДАНИЕ ^ Попробуйте закомментировать эту строку
 
-    println!("end of the main function");
+    println!("Конец главной функции.");
 
     // *Нельзя* сбросить `_a` снова, потому что переменная уже
     // (вручную) сброшена.

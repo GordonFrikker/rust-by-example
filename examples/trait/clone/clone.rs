@@ -13,19 +13,19 @@ fn main() {
     let copied_nil = nil;
 
     // Оба `Nil`s могут быть использованы независимо
-    println!("original: {:?}", nil);
-    println!("copy: {:?}", copied_nil);
+    println!("оригинал: {:?}", nil);
+    println!("копия: {:?}", copied_nil);
 
     // Объявим экземпляр `Pair`
     let pair = Pair(Box::new(1), Box::new(2));
-    println!("original: {:?}", pair);
+    println!("оригинал: {:?}", pair);
 
     // Скопируем `pair` в `moved_pair`, перенаправляя ресурсы
     let moved_pair = pair;
-    println!("copy: {:?}", moved_pair);
+    println!("копия: {:?}", moved_pair);
 
     // Ошибка! `pair` потеряла свои ресурсы
-    //println!("original: {:?}", pair);
+    //println!("оригинал: {:?}", pair);
     // ЗАДАНИЕ ^ Попробуйте раскомментировать эту строку
 
     // Скопируем `moved_pair` в `cloned_pair` (включая ресурсы)
@@ -34,9 +34,9 @@ fn main() {
     drop(moved_pair);
 
     // Ошибка! `moved_pair` была сброшена
-    //println!("copy: {:?}", moved_pair);
+    //println!("копия: {:?}", moved_pair);
     // ЗАДАНИЕ ^ Попробуйте раскомментировать эту строку
 
     // Полученный результат из .clone() все ещё можно использовать!
-    println!("clone: {:?}", cloned_pair);
+    println!("клон: {:?}", cloned_pair);
 }

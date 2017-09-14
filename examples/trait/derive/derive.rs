@@ -21,7 +21,7 @@ fn main() {
     let _one_second = Seconds(1);
 
     // Ошибка: `Seconds` не может быть напечатана; не реализован типаж `Debug`
-    //println!("One second looks like: {:?}", _one_second);
+    //println!("Одна секунда выглядит как: {:?}", _one_second);
     // ЗАДАНИЕ ^ Попробуйте раскомментировать эту строку
 
     // Ошибка: `Seconds` нельзя сравнить; не реализован типаж `PartialEq`
@@ -30,16 +30,16 @@ fn main() {
 
     let foot = Inches(12);
 
-    println!("One foot equals {:?}", foot);
+    println!("Один фут равен {:?}", foot);
 
     let meter = Centimeters(100.0);
 
     let cmp =
         if foot.to_centimeters() < meter {
-            "smaller"
+            "меньше"
         } else {
-            "bigger"
+            "больше"
         };
 
-    println!("One foot is {} than one meter.", cmp);
+    println!("Один фут {} одного метра.", cmp);
 }

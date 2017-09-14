@@ -26,8 +26,8 @@ fn main() {
     let reference = Either::Ref(&x);
     let number = Either::Num(y);
 
-    println!("x is borrowed in {:?}", single);
-    println!("x and y are borrowed in {:?}", double);
-    println!("x is borrowed in {:?}", reference);
-    println!("y is *not* borrowed in {:?}", number);
+    println!("x заимствован в {:?}", single);
+    println!("x и y заимствованы в {:?}", double);
+    println!("x заимствован в {:?}", reference);
+    println!("y *не* заимствован в {:?}", number);
 }

@@ -10,7 +10,7 @@ struct Ref<'a, T: 'a>(&'a T);
 // Обобщённая функция, которая показывает использование типажа `Debug`.
 fn print<T>(t: T) where
     T: Debug {
-    println!("`print`: t is {:?}", t);
+    println!("`print`: t это {:?}", t);
 }
 
 // Здесь приводится ссылка на `T`, где `T` реализует
@@ -18,7 +18,7 @@ fn print<T>(t: T) where
 // К тому же, `'a` должен пережить функцию.
 fn print_ref<'a, T>(t: &'a T) where
     T: Debug + 'a {
-    println!("`print_ref`: t is {:?}", t);
+    println!("`print_ref`: t это {:?}", t);
 }
 
 fn main() {
