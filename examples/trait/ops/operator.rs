@@ -17,7 +17,7 @@ impl ops::Add<Bar> for Foo {
     type Output = FooBar;
 
     fn add(self, _rhs: Bar) -> FooBar {
-        println!("> Объявили Foo.add(Bar)");
+        println!("> Вызвали Foo.add(Bar)");
 
         FooBar
     }
@@ -31,7 +31,7 @@ impl ops::Add<Foo> for Bar {
     type Output = BarFoo;
 
     fn add(self, _rhs: Foo) -> BarFoo {
-        println!("> Объявили Bar.add(Foo)");
+        println!("> Вызвали Bar.add(Foo)");
 
         BarFoo
     }
