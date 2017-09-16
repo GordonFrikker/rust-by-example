@@ -1,9 +1,10 @@
-Macros can use `+` in the argument list to indicate that an argument may
-repeat at least once, or `*`, to indicate that the argument may repeat zero or
-more times.
+Макросы могут использовать знак `+` в списке аргументов, чтобы указать, какие аргументы
+могут повторяться хоть один раз, или знак `*`, чтобы указать, какие аргументы могут
+повторяться ноль или несколько раз.
 
-In the following example, surrounding the matcher with `$(...),+` will
-match one or more expression, separated by commas.
-Also note that the semicolon is optional on the last case.
+В следующем примере, шаблон, окруженный `$(...),+` будет
+сопоставлять одно или несколько выражений, разделённых запятыми.
+Также обратите внимание, что точка с запятой является
+необязательной в последнем случае.
 
 {repeat.play}
