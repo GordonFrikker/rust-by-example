@@ -138,7 +138,7 @@
         { "id": "designators", "title": "Указатели", "children": null },
         { "id": "overload", "title": "Перегрузка", "children": null },
         { "id": "repeat", "title": "Повторение", "children": null },
-        { "id": "dry", "title": "DRY (Don't Repeat Yourself)", "children": null }
+        { "id": "dry", "title": "DRY (Не повторяйся)", "children": null }
     ] },
     { "id": "error", "title": "Обработка ошибок", "children": [
         { "id": "panic", "title": "`panic`", "children": null },

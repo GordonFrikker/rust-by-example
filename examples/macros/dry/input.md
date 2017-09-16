@@ -1,6 +1,6 @@
-Macros allow writing DRY code by factoring out the common parts of functions
-and/or test suites. Here is an example that implements and tests the `+=`, `*=`
-and `-=` operators on `Vec<T>`:
+Макросы позволяют писать DRY код , путем разделения общих частей функций
+и/или набор тестов. Вот пример, который реализует и тестирует операторы
+`+=`, `*=` и `-=` на `Vec<T>`:
 
 {dry.rs}
 
