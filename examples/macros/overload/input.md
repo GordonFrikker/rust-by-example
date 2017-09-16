@@ -1,4 +1,4 @@
-Macros can be overloaded to accept different combinations of arguments.
-In that regard, `macro_rules!` can work similarly to a match block:
+Макросы могут быть перегружены, принимая различные комбинации аргументов.
+В этом плане, `macro_rules!` может работать аналогично блоку сопоставления (match):
 
 {overload.play}

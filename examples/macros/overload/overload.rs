@@ -1,17 +1,17 @@
-// `test!` will compare `$left` and `$right`
-// in different ways depending on how you invoke it:
+// `test!` будет сравнивать `$left` и `$right`
+// по разному, в зависимости от того, как вы объявите их:
 macro_rules! test {
-    // Arguments don't need to be separated by a comma.
-    // Any template can be used!
+    // Не нужно разделять аргументы запятой.
+    // Можно использовать любой шаблон!
     ($left:expr; and $right:expr) => (
-        println!("{:?} and {:?} is {:?}",
+        println!("{:?} и {:?} это {:?}",
                  stringify!($left),
                  stringify!($right),
                  $left && $right)
     );
-    // ^ each arm must end with a semicolon.
+    // ^ каждый блок должнен заканчиваться точкой с запятой.
     ($left:expr; or $right:expr) => (
-        println!("{:?} or {:?} is {:?}",
+        println!("{:?} или {:?} это {:?}",
                  stringify!($left),
                  stringify!($right),
                  $left || $right)
