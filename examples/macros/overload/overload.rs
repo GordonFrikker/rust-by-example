@@ -9,7 +9,7 @@ macro_rules! test {
                  stringify!($right),
                  $left && $right)
     );
-    // ^ каждый блок должнен заканчиваться точкой с запятой.
+    // ^ каждый блок должен заканчиваться точкой с запятой.
     ($left:expr; or $right:expr) => (
         println!("{:?} или {:?} это {:?}",
                  stringify!($left),
