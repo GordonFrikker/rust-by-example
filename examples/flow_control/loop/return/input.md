@@ -1,6 +1,6 @@
-One of the uses of a `loop` is to retry an operation until it succeded. If the
-operation returns a value though, you might need to pass it to the rest of the
-code: put it after the `break`, and it will be returned by the `loop`
-expression.
+Одним из видов использования цикла `loop` является повторение операции, пока
+она не будет выполнена. Если операция возвращает значение, вам может
+потребоваться передать его в другую часть кода: поместите его после `break`,
+и оно будет возвращено выражением `loop`.
 
 {return.play}
