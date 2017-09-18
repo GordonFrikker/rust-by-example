@@ -1,13 +1,13 @@
-How about when we want to reuse a specific `Result` type many times?
-Recall that Rust allows us to create [aliases][typealias]. Conveniently,
-we can define one for the specific `Result` in question.
+Как насчёт того, когда мы хотим использовать конкретный тип `Result` много раз?
+Напомним, что Rust позволяет нам создавать [псевдонимы][typealias]. Мы можем
+удобно объявить псевдоним для конкретного `Result` в вопросе.
 
-At a module level, creating aliases can be particularly helpful. Errors
-found in a specific module often have the same `Err` type, so a single alias
-can succinctly define *all* associated `Results`.
-This is so useful that the `std` library even supplies one: `io::Result`!
+Особенно полезным может быть создание псевдонимов на уровне модулей. Ошибки,
+найденные в конкретном модуле, часто имеют один и тот же тип `Err`, поэтому один
+псевдоним может лаконично объявить *все* ассоциированные `Results`.
+Это настолько полезно, что библиотека `std` обеспечивает даже один: `io::Result`!
 
-Here's a quick example to show off the syntax:
+Ниже приведён краткий пример для демонстрации синтаксиса:
 
 {alias.play}
 

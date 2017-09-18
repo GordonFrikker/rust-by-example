@@ -148,7 +148,7 @@
         ] },
         { "id": "result", "title": "`Result`", "children": [
             { "id": "result_map", "title": "`map` for `Result`", "children": null },
-            { "id": "result_alias", "title": "aliases for `Result`", "children": null }
+            { "id": "result_alias", "title": "псевдонимы для `Result`", "children": null }
         ] },
         { "id": "multiple_error_types", "title": "Multiple error types", "children": [
             { "id": "early_returns", "title": "Early returns", "children": null },
