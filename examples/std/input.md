@@ -1,15 +1,15 @@
-The `std` library provides many custom types which expands drastically on
-the `primitives`. Some of these include:
+Бибилиотека `std` предоставляет множество пользовательских типов, которые значительно
+расширяются на `примитивах`. Некоторые из них содержат:
 
-* growable `String`s like: `"hello world"`
-* growable vectors: `[1, 2, 3]`
-* optional types: `Option<i32>`
-* error handling types: `Result<i32, i32>`
-* heap allocated pointers: `Box<i32>`
+* расширяемая строка `String`s: `"hello world"`
+* динамический массив: `[1, 2, 3]`
+* обобщённый тип: `Option<i32>`
+* типы обработки ошибок: `Result<i32, i32>`
+* указатели на объекты в куче: `Box<i32>`
 
 ### Смотрите также:
 
-[primitives][primitives] and [the std library][std]
+[Примитивы][primitives] и [библиотека std][std]
 
 [primitives]: primitives.html
 [std]: https://doc.rust-lang.org/std/
