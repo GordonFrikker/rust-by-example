@@ -158,7 +158,7 @@
         { "id": "reenter_try", "title": "Other uses of `try!`", "children": null },
         { "id": "boxing_errors", "title": "`Box`ing errors", "children": null }
     ] },
-    { "id": "std", "title": "Типы стандартной библиотеки Std", "children": [
+    { "id": "std", "title": "Типы стандартной библиотеки", "children": [
         { "id": "box", "title": "Упаковка, стек и куча", "children": null },
         { "id": "vec", "title": "Вектора", "children": null },
         { "id": "str", "title": "Strings", "children": null },
