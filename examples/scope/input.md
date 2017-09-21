@@ -1,3 +1,4 @@
-Scopes play an important part in ownership, borrowing, and lifetimes.
-That is, they indicate to the compiler when borrows are valid, when
-resources can be freed, and when variables are created or destroyed.
+Области видимости играют важную роль во владении, заимствовании
+и времени жизни. То есть, они указывают компилятору, когда
+заимствования действительны, когда ресурсы могут быть освобождены,
+ и когда переменные создаются или уничтожаются.
