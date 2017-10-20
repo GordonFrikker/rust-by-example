@@ -1,19 +1,19 @@
-// Non-copyable types.
+// Некопируемые типы.
 struct Empty;
 struct Null;
 
-// A trait generic over `T`.
+// Обобщенный trait от `T`.
 trait DoubleDrop<T> {
-    // Define a method on the caller type which takes an
-    // additional single parameter `T` and does nothing with it.
+    // Определим метод для типа вызывающего объекта,
+    // который принимает один дополнительный параметр `T` и ничего с ним не делает.
     fn double_drop(self, _: T);
 }
 
-// Implement `DoubleDrop<T>` for any generic parameter `T` and
-// caller `U`.
+// Реализация `DoubleDrop<T>` для любого общего параметра `T` и
+// вызывающего объекта `U`.
 impl<T, U> DoubleDrop<T> for U {
-    // This method takes ownership of both passed arguments,
-    // deallocating both.
+    // Этот метод получает право владения на оба переданных аргумента и
+    // освобождает их.
     fn double_drop(self, _: T) {}
 }
 
@@ -21,10 +21,10 @@ fn main() {
     let empty = Empty;
     let null  = Null;
 
-    // Deallocate `empty` and `null`.
+    // Освободить `empty` и `null`.
     empty.double_drop(null);
 
     //empty;
     //null;
-    // ^ TODO: Try uncommenting these lines.
+    // ^ TODO: Попробуйте раскомментировать эти строки.
 }
