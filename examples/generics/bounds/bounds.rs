@@ -1,4 +1,4 @@
-// A trait which implements the print marker: `{:?}`.
+// Типаж, который реализует маркер печати: `{:?}`.
 use std::fmt::Debug;
 
 trait HasArea {
@@ -14,14 +14,14 @@ struct Rectangle { length: f64, height: f64 }
 #[allow(dead_code)]
 struct Triangle  { length: f64, height: f64 }
 
-// The generic `T` must implement `Debug`. Regardless
-// of the type, this will work properly.
+// Обобщенный тип `T` должен реализовать `Debug`. Независимо
+// от типа, это будет работать правильно.
 fn print_debug<T: Debug>(t: &T) {
     println!("{:?}", t);
 }
 
-// `T` must implement `HasArea`. Any function which meets
-// the bound can access `HasArea`'s function `area`.
+// `T` должен реализовать `HasArea`. Любая функция, которая встречается
+// в ограничении может получить доступ к функции `area` из `HasArea`.
 fn area<T: HasArea>(t: &T) -> f64 { t.area() }
 
 fn main() {
@@ -33,6 +33,6 @@ fn main() {
 
     //print_debug(&_triangle);
     //println!("Area: {}", area(&_triangle));
-    // ^ TODO: Try uncommenting these.
-    // | Error: Does not implement either `Debug` or `HasArea`.
+    // ^ TODO: Попробуйте раскомментировать эти строки.
+    // | Ошибка: Не реализует `Debug` или `HasArea`.
 }
