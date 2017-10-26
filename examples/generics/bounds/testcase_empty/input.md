@@ -1,12 +1,13 @@
-A consequence of how bounds work is that even if a `trait` doesn't
-include any functionality, you can still use it as a bound. `Eq` and
-`Ord` are examples of such `trait`s from the `std` library.
+Следствием того, как работают ограничения, является то, что даже если
+`типаж` не включает в себя какие-либо функциональные возможности,
+вы все равно можете использовать его в качестве ограничения.
+Примерами таких типажей являются `Eq` и `Ord` из стандартной библиотеки.
 
 {empty.play}
 
 ### Смотрите также:
 
-[`std::cmp::Eq`][eq], [`std::cmp::Ord`s][ord], and [`trait`s][traits]
+[`std::cmp::Eq`][eq], [`std::cmp::Ord`s][ord], и [`типажи`][traits]
 
 [eq]: https://doc.rust-lang.org/std/cmp/trait.Eq.html
 [ord]: https://doc.rust-lang.org/std/cmp/trait.Ord.html

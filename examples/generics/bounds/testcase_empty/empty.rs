@@ -8,20 +8,20 @@ trait Blue {}
 impl Red for Cardinal {}
 impl Blue for BlueJay {}
 
-// These functions are only valid for types which implement these
-// traits. The fact that the traits are empty is irrelevant.
-fn red<T: Red>(_: &T)   -> &'static str { "red" }
-fn blue<T: Blue>(_: &T) -> &'static str { "blue" }
+// Эти функции действительны только для типов реализующих эти типажи.
+// То, что типажи пусты, не имеет значения.
+fn red<T: Red>(_: &T)   -> &'static str { "красная" }
+fn blue<T: Blue>(_: &T) -> &'static str { "синяя" }
 
 fn main() {
     let cardinal = Cardinal;
     let blue_jay = BlueJay;
     let _turkey   = Turkey;
 
-    // `red()` won't work on a blue jay nor vice versa
-    // because of the bounds.
-    println!("A cardinal is {}", red(&cardinal));
-    println!("A blue jay is {}", blue(&blue_jay));
-    //println!("A turkey is {}", red(&_turkey));
-    // ^ TODO: Try uncommenting this line.
+    // `red()` не будет работать для blue_jay, ни наоборот,
+    // из-за ограничений.
+    println!("Кардинал {} птица", red(&cardinal));
+    println!("Голубая сойка {} птица", blue(&blue_jay));
+    //println!("Индюк {} птица", red(&_turkey));
+    // ^ TODO: Попробуйте раскомментировать эту строку.
 }
