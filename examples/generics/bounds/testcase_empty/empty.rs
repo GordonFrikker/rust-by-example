@@ -19,7 +19,7 @@ fn main() {
     let _turkey   = Turkey;
 
     // `red()` не будет работать для blue_jay, ни наоборот,
-    // из-за ограничений.
+    // из-за ограничений по типажу.
     println!("Кардинал {} птица", red(&cardinal));
     println!("Голубая сойка {} птица", blue(&blue_jay));
     //println!("Индюк {} птица", red(&_turkey));
