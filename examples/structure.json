@@ -95,7 +95,7 @@
         { "id": "bounds", "title": "Ограничения", "children": [
             { "id": "testcase_empty", "title": "Пример: пустые ограничения", "children": null }
         ] },
-        { "id": "multi_bounds", "title": "Multiple bounds", "children": null },
+        { "id": "multi_bounds", "title": "Множественные ограничения", "children": null },
         { "id": "where", "title": "Where clauses", "children": null },
         { "id": "assoc_items", "title": "Associated items", "children": [
             { "id": "the_problem", "title": "The Problem", "children": null },

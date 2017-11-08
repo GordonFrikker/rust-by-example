@@ -1,11 +1,11 @@
-Multiple bounds can be applied with a `+`. Like normal, different types are
-separated with `,`.
+Множественные ограничения могут быть применены с помощью `+`.
+Разные типы разделяются с помощью `,`.
 
 {multi.play}
 
 ### Смотрите также:
 
-[`std::fmt`][fmt] and [`trait`s][traits]
+[`std::fmt`][fmt] и [`типажи`][traits]
 
 [fmt]: ../hello/print.html
 [traits]: ../trait.html
