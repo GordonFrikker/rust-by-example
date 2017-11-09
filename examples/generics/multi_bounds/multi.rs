@@ -17,7 +17,7 @@ fn main() {
 
     compare_prints(&string);
     //compare_prints(&array);
-    // ЗАДАНИЕ ^ Раскомментируйте данную строку.
+    // ЗАДАНИЕ ^ Попробуйте удалить комментарий.
 
     compare_types(&array, &vec);
 }
