@@ -85,9 +85,9 @@
     - [`extern crate`](crates/link.md)
 
 - [Cargo](cargo.md)
-    - [Dependencies](cargo/deps.md)
-    - [Conventions](cargo/conventions.md)
-    - [Tests](cargo/test.md)
+    - [Зависимости](cargo/deps.md)
+    - [Соглашения](cargo/conventions.md)
+    - [Тесты](cargo/test.md)
 
 - [Атрибуты](attribute.md)
     - [`Мёртвый код`](attribute/unused.md)
@@ -98,7 +98,7 @@
 - [Обобщения](generics.md)
     - [Функции](generics/gen_fn.md)
     - [Реализация](generics/impl.md)
-    - [Traits](generics/gen_trait.md)
+    - [Типажи](generics/gen_trait.md)
     - [Ограничения](generics/bounds.md)
         - [Пример: пустые ограничения](generics/bounds/testcase_empty.md)
     - [Множественные ограничения](generics/multi_bounds.md)
@@ -129,7 +129,7 @@
         - [Static](scope/lifetime/static_lifetime.md)
         - [Elision](scope/lifetime/elision.md)
 
-- [Traits](trait.md)
+- [Типажи](trait.md)
     - [Derive](trait/derive.md)
     - [Перегрузка операторов](trait/ops.md)
     - [Drop](trait/drop.md)
