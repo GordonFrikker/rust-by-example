@@ -5,20 +5,13 @@ rust:
   - nightly
 branches:
   only:
-  - master
+  - ru-version
 before_script:
-  - |
-    LATEST=$(cargo search mdbook | grep "^mdbook =" | cut -d '"' -f 2)
-    INSTALLED=$(cargo install --list | grep "^mdbook " | cut -d v -f 2 | tr -d :)
-    if [ "$INSTALLED" != "$LATEST" ]; then
-      if [ "$INSTALLED" != "" ]; then
-        echo "mdbook '$INSTALLED' is already installed"
-      fi
-      echo "Installing mdbook '$LATEST'"
-      cargo install mdbook --force --vers "$LATEST"
-    fi
+  - npm install yaspeller -g
+  - cargo install mdbook --force || true
 script:
+  - yaspeller --only-errors src/**/*.md
   - mdbook build
   - mdbook test
 after_success:
-  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && bash deploy.sh
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "ru-version" && bash deploy.sh
