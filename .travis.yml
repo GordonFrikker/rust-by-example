@@ -5,7 +5,7 @@ rust:
   - nightly
 branches:
   only:
-  - ru_version
+  - ru-version
 before_script:
   - npm install yaspeller -g
   - cargo install mdbook --force || true
@@ -13,3 +13,5 @@ script:
   - yaspeller --only-errors src/**/*.md
   - mdbook build
   - mdbook test
+after_success:
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "ru-version" && bash deploy.sh
