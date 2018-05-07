@@ -7,7 +7,7 @@ Similar to [`From` and `Into`][from-into], [`TryFrom`] and [`TryInto`] are gener
 [`TryInto`]: https://doc.rust-lang.org/std/convert/trait.TryInto.html
 [`Result`]: https://doc.rust-lang.org/std/result/enum.Result.html
 
-```rust
+```rust,ignore
 #[derive(Debug, PartialEq)]
 struct EvenNumber(i32);
 

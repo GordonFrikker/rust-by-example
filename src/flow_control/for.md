@@ -30,6 +30,8 @@ Alternatively, `a..=b` can be used for a range that is inclusive on both ends.
 The above can be written as:
 
 ```rust,editable
+#![feature(inclusive_range_syntax)]
+
 fn main() {
     // `n` will take the values: 1, 2, ..., 100 in each iteration
     for n in 1..=100 {
