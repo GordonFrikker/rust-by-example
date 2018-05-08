@@ -6,6 +6,7 @@ rust:
 branches:
   only:
   - ru-version
+  - master
 before_script:
   - npm install yaspeller -g
   - cargo install mdbook --force || true
@@ -14,4 +15,4 @@ script:
   - mdbook build
   - mdbook test
 after_success:
-  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "ru-version" && bash deploy.sh
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && bash deploy.sh
