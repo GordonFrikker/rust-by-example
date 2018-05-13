@@ -20,7 +20,7 @@
 
 ## Как помочь проекту?
 
-Смотри [CONTRIBUTING.md][how-to-contribute].
+Смотри [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Использование
 
@@ -65,4 +65,3 @@ $ mdbook serve
 [travis-image]: https://travis-ci.org/ruRust/rust-by-example-ru.svg?branch=master
 [travis-link]: https://travis-ci.org/ruRust/rust-by-example-ru
 [yaspeller]: https://tech.yandex.ru/speller/
-[how-to-contribute]: CONTRIBUTING.md
