@@ -5,7 +5,6 @@ rust:
   - nightly
 branches:
   only:
-  - ru-version
   - master
 before_script:
   - npm install yaspeller -g
