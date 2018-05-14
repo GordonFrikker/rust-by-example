@@ -5,11 +5,10 @@ rust:
   - nightly
 branches:
   only:
-  - ru-version
   - master
 before_script:
   - npm install yaspeller -g
-  - cargo install mdbook --force || true
+  - cargo install --version=0.1.5 mdbook --force || true
 script:
   - yaspeller --only-errors src/**/*.md
   - mdbook build
