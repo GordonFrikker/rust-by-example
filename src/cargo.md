@@ -1,12 +1,12 @@
 # Cargo
 
-`cargo` is the official Rust package management tool. It has lots of really
-useful features to improve code quality and developer velocity! These include
+`cargo` - официальный менеджер пакетов языка Rust. В нем много функций
+для улучшения качества кода и скорости разработчика! К ним относятся
 
-- Dependency management and integration with [crates.io](https://crates.io) (the
-  official Rust package registry)
-- Awareness of unit tests
-- Awareness of benchmarks
+- Управление зависимостями и интеграция с [crates.io](https://crates.io)(
+  официальный реестр пакетов Rust)
+- Осведомленность о модульных тестах
+- Осведомленность о тестах производительности
 
-This chapter will go through some quick basics, but you can find the
-comprehensive docs in [The Cargo Book](https://doc.rust-lang.org/cargo/).
+Эта глава рассказывает об основах, но вы можете найти полное описание
+по адресу [The Cargo Book](https://doc.rust-lang.org/cargo/).

@@ -1,6 +1,6 @@
-# Conventions
+# Соглашения
 
-In the previous chapter, we saw the following directory hierarchy:
+В предыдущей главе мы видели следующую иерархию каталогов:
 
 ```txt
 foo
@@ -9,12 +9,12 @@ foo
     └── main.rs
 ```
 
-Suppose that we wanted to have two binaries in the same project, though. What
-then?
+Предположим, что мы хотели иметь два двоичных файла в одном проекте. Что
+тогда?
 
-It turns out that `cargo` supports this. The default binary name is `main.rs`, as
-we saw before, but you can add additional binaries by placing them in a `bin/`
-directory:
+Оказывается, `cargo` это поддерживает. Двоичный файл умолчанию называется `main.rs`,
+это мы видели раньше, но вы можете добавить дополнительные файлы, поместив
+их в `bin/`каталог:
 
 ```txt
 foo
@@ -25,13 +25,14 @@ foo
         └── my_other_bin.rs
 ```
 
-To tell `cargo` to compile or run this binary as opposed to the default or other
-binaries, we just pass `cargo` the `--bin my_other_bin` flag, where `my_other_bin`
-is the name of the binary we want to work with.
+Чтобы сказать `cargo` скомпилировать или запустить этот двоичный файл,
+а не по умолчанию или другие двоичные файлы, мы просто передаем `cargo`
+флаг `--bin my_other_bin` флаг, где `my_other_bin`
+это имя двоичного файла, с которым мы хотим работать.
 
-In addition to extra binaries, `cargo` supports [more features] such as
-benchmarks, tests, and examples.
+В дополнение к дополнительным двоичным файлам, `cargo` поддерживает
+[такие функции][more features], как тесты производительности, тесты и примеры.
 
-In the next chapter, we will look more closely at tests.
+В следующей главе мы более подробно рассмотрим тесты.
 
 [more features]: https://doc.rust-lang.org/cargo/guide/project-layout.html
