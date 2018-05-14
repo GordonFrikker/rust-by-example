@@ -1,11 +1,11 @@
-# Dependencies
+# Зависимости
 
-Most programs have dependencies on some libraries. If you have ever managed
-dependencies by hand, you know how much of a pain this can be. Luckily, the Rust
-ecosystem comes standard with `cargo`! `cargo` can manage dependencies for a
-project.
+Большинство программ зависят от некоторых библиотек. Если вам когда-либо управляли
+зависимостями вручную, вы знаете, сколько боли это может доставить боли.
+К счастью экосистема языка Rust содержит такой инструмент как `cargo`!
+`cargo` может управлять зависимостями проекта.
 
-To create a new Rust project,
+Создание нового проекта на языке Rust,
 
 ```sh
 # A binary
@@ -15,10 +15,10 @@ cargo new foo
 cargo new --lib foo
 ```
 
-For the rest of this chapter, I will assume we are making a binary, rather than
-a library, but all of the concepts are the same.
+Для остальной части этой главы я предполагаю, что мы делаем двоичный файл, а не
+библиотеку, но все понятия одинаковы.
 
-After the above commands, you should see something like this:
+После приведённых выше команд, вы должны увидеть что-то вроде этого:
 
 ```txt
 foo
@@ -27,9 +27,9 @@ foo
     └── main.rs
 ```
 
-The `main.rs` is the root source file for your new project -- nothing new there.
-The `Cargo.toml` is the config file for `cargo` for this project (`foo`). If you
-look inside it, you should see something like this:
+`main.rs` - это корневой файл вашего нового проекта.
+`Cargo.toml` - это конфигурационный файл этого проекта (`foo`) для `cargo`.
+Если посмотрите внутрь файла, вы должны увидеть что-то вроде этого:
 
 ```toml
 [package]
@@ -40,28 +40,29 @@ authors = ["mark"]
 [dependencies]
 ```
 
-The `name` field under `package` determines the name of the project. This is
-used by `crates.io` if you publish the crate (more later). It is also the name
-of the output binary when you compile.
+Поле `name` под `package` определяет имя проекта. Оно используется
+если Вы будете его публиковать на `crates.io` (более подробно позже).
+Это так же имя выходного файла при компиляции.
 
-The `version` field is a crate version number using [Semantic
-Versioning](http://semver.org/).
+Поле `version` - это версия пакета, используется система
+[семантического версионирования](http://semver.org/).
 
-The `authors` field is a list of authors used when publishing the crate.
+Поле `authors` одержит список авторов пакета и используется при публикации.
 
-The `dependencies` section lets you add a dependency for your project.
+`dependencies` - секция, где Вы можете указывать зависимости вашего проекта.
 
-For example, suppose that I want my program to have a great CLI. You can find
-lots of great packages on [crates.io](https://crates.io) (the official Rust
-package registry). One popular choice is [clap](https://crates.io/crates/clap).
-As of this writing, the most recent published version of `clap` is `2.27.1`. To
-add a dependency to our program, we can simply add the following to our
-`Cargo.toml` under `dependencies`: `clap = "2.27.1"`.  And of course, `extern
-crate clap` in `main.rs`, just like normal. And that's it! You can start using
-`clap` in your program.
+Например, предположим, что я хочу, чтобы моя программа имела отличный CLI.
+Вы можете найти много отличных пакетов на [crates.io](https://crates.io)
+(официальный реестр пакетов языка Rust). Один из популярных вариантов
+[clap](https://crates.io/crates/clap). На момент написания этой статьи
+самой последней опубликованной версией `clap` является "2.27.1".
+Для добавления зависимости в ваш проект, ввы можете просто добавить
+соответствующую запись в Ваш `Cargo.toml` под `dependencies`: `clap = "2.27.1"`.
+И конечно, , `extern crate clap` в `main.rs`. И это все! Вы можете начать
+использовать `clap` в вашей программе.
 
-`cargo` also supports [other types of dependencies][dependencies]. Here is just
-a small sampling:
+`cargo` также поддерживает [другие типы зависимостей][dependencies]. Здесь только
+небольшие примеры:
 
 ```toml
 [package]
@@ -70,23 +71,21 @@ version = "0.1.0"
 authors = ["mark"]
 
 [dependencies]
-clap = "2.27.1" # from crates.io
-rand = { git = "https://github.com/rust-lang-nursery/rand" } # from online repo
-bar = { path = "../bar" } # from a path in the local filesystem
+clap = "2.27.1" # из crates.io
+rand = { git = "https://github.com/rust-lang-nursery/rand" } # из онлайн репозитория
+bar = { path = "../bar" } # из локальной файловой системы
 ```
 
-`cargo` is more than a dependency manager. All of the available
-configuration options are listed in the [format specification][manifest] of
-`Cargo.toml`.
+`cargo` больше чем менеджер зависимостей. Все поддерживаемые возможности доступны
+в [спецификации формата][manifest] `Cargo.toml`.
 
-To build our project we can execute `cargo build` anywhere in the project
-directory (including subdirectories!). We can also do `cargo run` to build and
-run. Notice that these commands will resolve all dependencies, download crates
-if needed, and build everything, including your crate. (Note that it only
-rebuilds what it has not already built, similar to `make`).
+Для сборки проекта Вы можете выполнить команду `cargo build` в любой директории проекта
+(включая поддиректории!). Также Вы можете выполнить `cargo run` для сборки и запуска.
+Обратите внимание, что эти команды разрешат все зависимости, скачают пакеты
+если нужно, то и соберут все, включая ваш пакет. (Обратите внимание, что это только
+пересобирает то, что он еще не собрано, подобно `make`).
 
-Voila! That's all there is to it!
-
+Вуаля! Вот и все!
 
 [manifest]: https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html
