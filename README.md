@@ -1,6 +1,6 @@
 # Rust на примерах
 
-[[![Build Status][travis-image]][travis-link]
+[![Build Status][travis-image]][travis-link]
 
 Изучение Rust на примерах (Код доступен для редактирования)
 
@@ -55,8 +55,6 @@ $ mdbook serve
    http://www.apache.org/licenses/LICENSE-2.0)
  * MIT license ([LICENSE-MIT](LICENSE-MIT) or
    http://opensource.org/licenses/MIT)
-
-на ваше усмотрение.
 
 Если вы явно не указываете иное, любой вклад преднамеренно представлен
 для включения в `Rust на примерах`, как определено в лицензии Apache-2.0, необходима
