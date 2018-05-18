@@ -1,43 +1,44 @@
-# Functions
+# Функции
 
-Ignoring [elision], function signatures with lifetimes have a few constraints: 
+Игнорирование [elision], сигнатуры функции с указанием времен жизни имеют некоторые ограничения:
 
-* any reference *must* have an annotated lifetime.
-* any reference being returned *must* have the same lifetime as an input or
-be `static`.
+* любая ссылка *должна* иметь аннотированное время жизни
+* любая возвращаемая ссылка *должна* иметь то же время жизни, что входящая ссылка
+или `static`.
 
-Additionally, note that returning references without input is banned if it
-would result in returning references to invalid data. The following example shows
-off some valid forms of functions with lifetimes:
+Кроме того, обратите внимание, что возврат ссылок без входной ссылки запрещен, если он
+приведет к возвращению ссылок на недопустимые данные. В следующем примере показаны
+некоторые действительные формы функции со временем жизни:
 
 ```rust,editable
-// One input reference with lifetime `'a` which must live
-// at least as long as the function.
+// Одна входная ссылка со временем жизни `'a`, которая
+// будет жить как минимум до конца функции.
 fn print_one<'a>(x: &'a i32) {
     println!("`print_one`: x is {}", x);
 }
 
-// Mutable references are possible with lifetimes as well.
+// Использование времени жизни также возможно с изменяемыми ссылками.
 fn add_one<'a>(x: &'a mut i32) {
     *x += 1;
 }
 
-// Multiple elements with different lifetimes. In this case, it
-// would be fine for both to have the same lifetime `'a`, but
-// in more complex cases, different lifetimes may be required.
+// Несколько элементов с различными временами жизни. В этом случае
+// было бы хорошо, чтобы у обоих ссылок было одно время жизни `'a`,
+// в более сложных случаях может потребоваться различное время жизни.
 fn print_multi<'a, 'b>(x: &'a i32, y: &'b i32) {
     println!("`print_multi`: x is {}, y is {}", x, y);
 }
 
-// Returning references that have been passed in is acceptable.
-// However, the correct lifetime must be returned.
+// Возврат переданных на вход ссылок допустим.
+// Однако должен быть указано правильное время жизни.
 fn pass_x<'a, 'b>(x: &'a i32, _: &'b i32) -> &'a i32 { x }
 
 //fn invalid_output<'a>() -> &'a String { &String::from("foo") }
-// The above is invalid: `'a` must live longer than the function.
-// Here, `&String::from("foo")` would create a `String`, followed by a
-// reference. Then the data is dropped upon exiting the scope, leaving
-// a reference to invalid data to be returned.
+// Код написанный выше является недопустимым: время жизни `'a`
+должно жить после выхода из функции.
+// Здесь, `&String::from("foo")` создает ссылку на `String`
+// Данные будут удалены после выхода из области видимости, и
+// будет возвращена ссылка на недопустимые данные.
 
 fn main() {
     let x = 7;
@@ -55,9 +56,9 @@ fn main() {
 }
 ```
 
-### See also:
+### Смотрите также:
 
-[functions][fn]
+[функции][fn]
 
 [elision]: scope/lifetime/elision.html
 [fn]: fn.html
