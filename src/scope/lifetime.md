@@ -1,24 +1,28 @@
-# Lifetimes
+# Времена жизни
 
-A *lifetime* is a construct the compiler (or more specifically, its *borrow
-checker*) uses to ensure all borrows are valid. Specifically, a variable's
-lifetime begins when it is created and ends when it is destroyed. While
-lifetimes and scopes are often referred to together, they are not the same.
+*Время жизни* - эту конструкцию компилятор (или более конкретно,
+его анализатор заимствований) использует, чтобы убедиться, что все
+заимствования действительны. В частности время жизни переменной
+начинается с момента ее создания и заканчивается когда она уничтожается.
+Времена жизни и области видимости упоминаются часто вместе, но
+они не совпадают.
 
-Take, for example, the case where we borrow a variable via `&`. The
-borrow has a lifetime that is determined by where it is declared. As a result,
-the borrow is valid as long as it ends before the lender is destroyed. However,
-the scope of the borrow is determined by where the reference is used.
+Возьмем, например, случай когда мы заимствуем переменную через `&`.
+Срок действия заимствования определяется местом его объявления.
+В результате, заимствование действительно до тех пор,
+пока оно не закончится или пока кредитор не будет уничтожен. Однако,
+область заимствования определяется местом использования ссылки.
 
-In the following example and in the rest of this section, we will see how
-lifetimes relate to scopes, as well as how the two differ.
+В следующем примере и в остальной части этого раздела мы увидим, как
+времена жизни связаны с областями видимости, а также как они различаются.
 
 ```rust,editable
-// Lifetimes are annotated below with lines denoting the creation
-// and destruction of each variable.
-// `i` has the longest lifetime because its scope entirely encloses 
-// both `borrow1` and `borrow2`. The duration of `borrow1` compared 
-// to `borrow2` is irrelevant since they are disjoint.
+// Времена жизни аннотированы линиями, обозначающими
+// создание и уничтожение каждой переменной.
+// `i` имеет самое длинное время жизни, так как его область охватывает
+// полностью оба заимствования `borrow1` и `borrow2`.
+// Продолжительность заимствования `borrow1` по сравнению с
+// заимствованием `borrow2` не имеет значения, так как они не пересекаются.
 fn main() {
     let i = 3; // Lifetime for `i` starts. ────────────────┐
     //                                                     │
@@ -38,5 +42,5 @@ fn main() {
 }   // Lifetime ends. ─────────────────────────────────────┘
 ```
 
-Note that no names or types are assigned to label lifetimes.
-This restricts how lifetimes will be able to be used as we will see.
+Обратите внимание, что для меток времени жизни не назначаются имена или типы.
+Это ограничивает то, как время жизни будет использоваться, как мы увидим далее.
