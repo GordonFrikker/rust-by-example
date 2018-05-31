@@ -84,8 +84,8 @@
     - [`extern crate`](crates/link.md)
 
 - [Cargo](cargo.md)
-    - [Dependencies](cargo/deps.md)
-    - [Conventions](cargo/conventions.md)
+    - [Зависимости](cargo/deps.md)
+    - [Соглашения](cargo/conventions.md)
     - [Testing](cargo/test.md)
 
 - [Атрибуты](attribute.md)
