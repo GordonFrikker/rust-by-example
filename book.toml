@@ -3,6 +3,9 @@ title = "Rust By Example"
 description = "A description"
 author = "The Rust Community"
 
+[output.html]
+google-analytics="UA-142155799-3"
+
 [output.html.playpen]
 editable = true
 editor = "ace"
