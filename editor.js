@@ -1,3 +1,4 @@
+"use strict";
 window.editors = [];
 (function(editors) {
     if (typeof(ace) === 'undefined' || !ace) {
@@ -11,7 +12,8 @@ window.editors = [];
             showPrintMargin: false,
             showLineNumbers: false,
             showGutter: false,
-            maxLines: Infinity
+            maxLines: Infinity,
+            fontSize: "0.875em" // please adjust the font size of the code in general.css
         });
 
         editor.$blockScrolling = Infinity;
