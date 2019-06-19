@@ -1,10 +1,10 @@
-# Conversion
+# Приведение типов
 
-Rust addresses conversion between types by the use of [traits]. The generic
-conversions will use the [`From`] and [`Into`] traits. However there are more
-specific ones for the more common cases, in particular when converting to and
-from `String`s.
+Приведение типов в Rust осуществляется с помощью [типажей].
+В общем, при приведении к типу используются [`From`] и [`Into`],
+но есть и более специфические типажи для часто используемых
+случаев, например, для конвертации в `String` и обратно.
 
-[traits]: trait.html
+[типажей]: trait.html
 [`From`]: https://doc.rust-lang.org/std/convert/trait.From.html
 [`Into`]: https://doc.rust-lang.org/std/convert/trait.Into.html
