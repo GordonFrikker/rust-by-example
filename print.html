@@ -556,7 +556,7 @@ fn main() {
     // println!(&quot;Как выглядит Point2D в виде двоичного кода: {:b}?&quot;, point);
 }
 </code></pre></pre>
-<p>И так, <code>fmt::Display</code> был реализован, но <code>fmt::Binary</code> нет, следовательно не может быть
+<p>Итак, <code>fmt::Display</code> был реализован, но <code>fmt::Binary</code> нет, следовательно не может быть
 использован. <code>std::fmt</code> имеет много таких <a href="trait.html"><code>типажей</code></a> и
 каждый из них требует свою реализацию. Это более подробно описано в документации к
 <a href="https://doc.rust-lang.org/std/fmt/"><code>std::fmt</code></a>.</p>
@@ -1528,11 +1528,11 @@ fn main() {
 псевдонимом типа Result&lt;T, IoError&gt;.</p>
 <a class="header" href="print.html#aСмотрите-также-13" id="aСмотрите-также-13"><h3>Смотрите также:</h3></a>
 <p><a href="attribute.html">Атрибуты</a></p>
-<a class="header" href="print.html#conversion" id="conversion"><h1>Conversion</h1></a>
-<p>Rust addresses conversion between types by the use of <a href="trait.html">traits</a>. The generic
-conversions will use the <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a> and <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into</code></a> traits. However there are more
-specific ones for the more common cases, in particular when converting to and
-from <code>String</code>s.</p>
+<a class="header" href="print.html#aПриведение-типов-1" id="aПриведение-типов-1"><h1>Приведение типов</h1></a>
+<p>Приведение типов в Rust осуществляется с помощью <a href="trait.html">типажей</a>.
+В общем, при приведении к типу используются <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a> и <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into</code></a>,
+но есть и более специфические типажи для часто используемых
+случаев, например, для конвертации в <code>String</code> и обратно.</p>
 <a class="header" href="print.html#from-and-into" id="from-and-into"><h1><code>From</code> and <code>Into</code></h1></a>
 <p>The <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a> and <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into</code></a> traits are inherently linked, and this is actually part of
 its implementation. If you are able to convert type A from type B, then it
@@ -8685,6 +8685,23 @@ behaviour is undefined and there is no knowing what will happen.</p>
 
         
 
+        
+        <!-- Google Analytics Tag -->
+        <script>
+            var localAddrs = ["localhost", "127.0.0.1", ""];
+
+            // make sure we don't activate google analytics if the developer is
+            // inspecting the book locally...
+            if (localAddrs.indexOf(document.location.hostname) === -1) {
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-142155799-3', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
         
 
         
