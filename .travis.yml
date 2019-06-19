@@ -8,7 +8,7 @@ branches:
   - master
 before_script:
   - npm install yaspeller -g
-  - cargo install --version=0.1.5 mdbook --force || true
+  - cargo install --version=0.3.0 mdbook --force || true
 script:
   - yaspeller --only-errors src/**/*.md
   - mdbook build
