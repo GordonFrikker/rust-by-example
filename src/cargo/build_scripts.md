@@ -1,12 +1,8 @@
-# Build Scripts
+# Скрипты сборки
 
-Sometimes a normal build from cargo is not enough. Perhaps your crate needs some
-pre-requisites before cargo will successfully compile, things like code
-generation, or some native code that needs to be compiled. To solve this problem
-we have build scripts that Cargo can run.
+Иногда обычной сборки, предоставляемой cargo, недостаточно. Возможно вашему крейту нужны некоторые предварительные условия, прежде чем он успешно скомпилируется, например кодогенерация или предварительно должен скомпилироваться какой-то нативный код. Для решения этой проблемы, мы имеем скрипты сборки, которые cargo может запустить.
 
-To add a build script to your package it can either be specified in the
-`Cargo.toml` as follows:
+Для добавления скрипта сборки в ваш пакет, вы можете указать его в `Cargo.toml` следующим образом:
 
 ```toml
 [package]
@@ -14,25 +10,15 @@ To add a build script to your package it can either be specified in the
 build = "build.rs"
 ```
 
-Otherwise Cargo will look for a `build.rs` file in the project directory by
-default.
+Иначе по умолчанию cargo будет искать файл `build.rs` в директории проекта.
 
-## How to use a build script
+## Как использовать скрипт сборки
 
-The build script is simply another Rust file that will be compiled and invoked
-prior to compiling anything else in the package. Hence it can be used to fulfil
-pre-requisites of your crate.
+Скрипт сборки - это просто другой файл на Rust, который будет скомпилирован и вызван до компиляции чего-либо другого в пакете. Следовательно он может быть использовать для выполнения предварительных условий вашего крейта.
 
-Cargo provides the script with inputs via environment variables [specified
-here] that can be used.
+Через переменные окружения cargo предоставляет скрипту входные параметры [описанные здесь](https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-build-scripts), которые могут быть использованы.
 
-The script provides output via stdout. All lines printed are written to
-`target/debug/build/<pkg>/output`. Further, lines prefixed with `cargo:` will be
-interpreted by Cargo directly and hence can be used to define parameters for the
-packages compilation.
+Скрипт возвращает значения через stdout. Все напечатанные строки записываются в 
+`target/debug/build/<pkg>/output`. Кроме того, строки с префиксом `cargo:` напрямую интерпретируются cargo и следовательно могут быть использованы для объявления параметров для компиляции пакета.
 
-For further specification and examples have a read of the [cargo specification].
-
-[specified here]: https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-build-scripts
-
-[cargo specification]: https://doc.rust-lang.org/cargo/reference/build-scripts.html
+Больше информации и примеров можно найти в [спецификации cargo](https://doc.rust-lang.org/cargo/reference/build-scripts.html).
