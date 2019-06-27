@@ -160,7 +160,7 @@
         - [Объявление типа ошибки](error/multiple_error_types/define_error_type.md)
         - [Упаковка ошибок (`Box`)](error/multiple_error_types/boxing_errors.md)
         - [Другие способы использования `?`](error/multiple_error_types/reenter_question_mark.md)
-        - [Обёртывание ошибок](error/multiple_error_types/wrap_error.md)
+        - [Оборачивание ошибок](error/multiple_error_types/wrap_error.md)
     - [Итерирование по `Result`](error/iter_result.md)
 
 - [Типы стандартной библиотеки](std.md)
