@@ -1,26 +1,19 @@
-# Testing
+# Тестирование
 
-Rust is a programming language that cares a lot about correctness and it
-includes support for writing software tests within the language itself.
+Rust - это язык программирования, который очень заботится о корректности и
+включает в себя поддержку написания тестов программного обеспечения в самом языке.
 
-Testing comes in three styles:
+Тестирование поставляется в трех стилях:
 
-* [Unit][unit] testing.
-* [Doc][doc] testing.
-* [Integration][integration] testing.
+- [Модульное](testing/unit_testing.md) тестирование.
+- [Тестирование кода из примеров документации](testing/doc_testing.md).
+- [Интеграционное тестирование](testing/integration_testing.md).
 
-Also Rust has support for specifying additional dependencies for tests:
+Также Rust поддерживает указание дополнительных зависимостей для тестов:
 
-* [Dev-dependencies][dev-dependencies]
+- [Dev-dependencies](testing/dev_dependencies.md)
 
-## See Also
+## Смотрите также:
 
-* [The Book][doc-testing] chapter on testing
-* [API Guidelines][doc-nursery] on doc-testing
-
-[unit]: testing/unit_testing.html
-[doc]: testing/doc_testing.html
-[integration]: testing/integration_testing.html
-[dev-dependencies]: testing/dev_dependencies.html
-[doc-testing]: https://doc.rust-lang.org/book/second-edition/ch11-00-testing.html
-[doc-nursery]: https://rust-lang-nursery.github.io/api-guidelines/documentation.html
+- [Глава о тестировании](https://doc.rust-lang.org/book/ch11-00-testing.html) 
+- [Описание API](https://rust-lang-nursery.github.io/api-guidelines/documentation.html) для тестирования примеров из документации.

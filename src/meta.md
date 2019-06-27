@@ -1,12 +1,7 @@
 # Meta
 
-Some topics aren't exactly relevant to how you program but provide you
-tooling or infrastructure support which just makes things better for
-everyone. These topics include:
+Некоторые темы не совсем соответствуют тому, как вы программируете, но предоставляют вам инструменты или инфраструктуру, которые делают лучше для всех. Эти темы включают:
 
-* Documentation: Generate library documentation for users via the included
-`rustdoc`.
-* Testing: Create testsuites for libraries to give confidence that your
-library does exactly what it's supposed to.
-* Benchmarking: Create benchmarks for functionality to be confident that
-they run quickly.
+- Документацию: генерирование пользовательской документации с использованием `rustdoc`.
+- Тестирование: создание набора тестов для библиотек, чтобы быть уверенным, что ваша библиотека делает то, что должна.
+- Бенчмаркинг: создание бенчмарков функциональности для уверенности, что она работает быстро.

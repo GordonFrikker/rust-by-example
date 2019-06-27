@@ -1,13 +1,9 @@
-# Testing
+# Тестирование
 
-As we know testing is integral to any piece of software! Rust has first-class
-support for unit and integration testing ([see this
-chapter](https://doc.rust-lang.org/book/second-edition/ch11-00-testing.html) in
-TRPL).
+Как мы знаем, тестирование является неотъемлемой частью любого программного обеспечения! Rust имеет первоклассную поддержку модульного и интеграционного тестирования (см.
+[главу о тестировании в TRPL](https://doc.rust-lang.org/book/ch11-00-testing.html)).
 
-From the testing chapters linked above, we see how to write unit tests and
-integration tests. Organizationally, we can place unit tests in the modules they
-test and integration tests in their own `tests/` directory:
+Из разделов тестирования, приведённых выше, мы знаем, как писать модульные и интеграционные тесты. Организационно, мы можем расположить модульные тесты в модулях, которые они тестируют, а интеграционные - в собственном каталоге `tests/`:
 
 ```txt
 foo
@@ -19,15 +15,15 @@ foo
     └── my_other_test.rs
 ```
 
-Each file in `tests` is a separate integration test.
+Каждый файл в каталоге `tests` - это отдельный интеграционный тест.
 
-`cargo` naturally provides an easy way to run all of your tests!
+`cargo`  естественно, обеспечивает простой способ запуска всех ваших тестов!
 
 ```sh
 cargo test
 ```
 
-You should see output like this:
+Вы должны увидеть примерно такой результат:
 
 ```txt
 $ cargo test
@@ -44,7 +40,7 @@ test test_foo ... ok
 test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
-You can also run tests whose name matches a pattern:
+Вы также можете запустить тесты, чьё имя соответствует шаблону:
 
 ```sh
 cargo test test_foo
@@ -63,6 +59,4 @@ test test_foo_bar ... ok
 test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out
 ```
 
-One word of caution: Cargo may run multiple tests concurrently, so make sure
-that they don't race with each other. For example, if they all output to a
-file, you should make them write to different files.
+Одно слово предостережения: Cargo может выполнять несколько тестов одновременно, поэтому убедитесь, что они не участвуют в гонках друг с другом. Например, если они все выводят в файл, вы должны заставить их записывать в разные файлы.
