@@ -1,20 +1,20 @@
-# To and from Strings
+# `FromStr` и `ToString`
 
-## `ToString`
+## Конвертация в строку
 
-To convert any type to a `String` it is as simple as implementing the [`ToString`]
-trait for the type.
+Преобразовать любой тип в `String` так же просто, как и реализовать для него типаж [`ToString`](https://doc.rust-lang.org/std/string/trait.ToString.html). Вместо того, чтобы делать это напрямую, вы должны реализовать типаж [`fmt::Display`](https://doc.rust-lang.org/std/fmt/trait.Display.html), который автоматически предоставляет реализацию [`ToString`](https://doc.rust-lang.org/std/string/trait.ToString.html), а 
+также позволяет распечатать тип, как обсуждалось в секции [`print!`](../hello/print.md).
 
 ```rust,editable
-use std::string::ToString;
+use std::fmt;
 
 struct Circle {
     radius: i32
 }
 
-impl ToString for Circle {
-    fn to_string(&self) -> String {
-        format!("Circle of radius {:?}", self.radius)
+impl fmt::Display for Circle {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Круг радиусом {}", self.radius)
     }
 }
 
@@ -24,17 +24,13 @@ fn main() {
 }
 ```
 
-## Parsing a String
+## Парсинг строки
 
-One of the more common types to convert a string into is a number. The idiomatic
-approach to this is to use the [`parse`] function and provide the type for the
-function to parse the string value into, this can be done either without type
-inference or using the 'turbofish' syntax.
+Один из наиболее общим типов конвертации - это преобразование строки в число. Идиоматический подход это сделать при помощи функции [`parse`](https://doc.rust-lang.org/std/primitive.str.html#method.parse) и указания типа, в который будем преобразовывать, что можно сделать либо через выведение типа, либо при помощи 'turbofish'-синтаксиса.
 
-This will convert the string into the type specified so long as the [`FromStr`]
-trait is implemented for that type. This is implemented for numerous types
-within the standard library. To obtain this functionality on a user defined type
-simply implement the [`FromStr`] trait for that type.
+Это преобразует строку в указанный тип при условии, что для этого типа реализован типаж [`FromStr`](https://doc.rust-lang.org/std/str/trait.FromStr.html). 
+Он реализован для множества типов стандартной библиотеки. 
+Чтобы получить эту функциональность для пользовательского типа, надо просто реализовать для этого типа типаж [`FromStr`](https://doc.rust-lang.org/std/str/trait.FromStr.html).
 
 ```rust
 fn main() {
@@ -42,10 +38,6 @@ fn main() {
     let turbo_parsed = "10".parse::<i32>().unwrap();
 
     let sum = parsed + turbo_parsed;
-    println!{"Sum: {:?}", sum};
+    println!("Сумма: {:?}", sum);
 }
 ```
-
-[`ToString`]: https://doc.rust-lang.org/std/string/trait.ToString.html
-[`parse`]: https://doc.rust-lang.org/std/primitive.str.html#method.parse
-[`FromStr`]: https://doc.rust-lang.org/std/str/trait.FromStr.html

@@ -1,31 +1,23 @@
-# Error handling
+# Обработка ошибок
 
-Error handling is the process of handling the possibility of failure. For
-example, failing to read a file and then continuing to use that *bad* input
-would clearly be problematic. Noticing and explicitly managing those errors
-saves the rest of the program from various pitfalls.
+Обработка ошибок - это процесс управления возможными сбоями. 
+Например ошибка чтения файла и последующее использование *плохих* данных могут прояснить проблематику.
+Уведомление и явное управление этими ошибками сохранит оставшуюся часть программы от различных неожиданностей.
 
-There are various ways to deal with errors in Rust, which are described in the
-following subchapters. They all have more or less subtle differences and different
-use cases. As a rule of thumb:
+В Rust есть разные пути работы с ошибками, которые описаны в следующих главах. Они все имеют те или иные отличия и разные варианты использования. Как правило большого пальца:
 
-An explicit `panic` is mainly useful for tests and dealing with unrecoverable errors.
-For prototyping it can be useful, for example when dealing with functions that
-haven't been implemented yet, but in those cases the more descriptive `unimplemented`
-is better. In tests `panic` is a reasonable way to explicitly fail.
+Явный `panic` в основном применим для тестирования и работы с невосстановимыми ошибками.
+При прототипировании его можно использовать, например, когда работаем с ещё не реализованными функциями, но в этом случае лучше использовать более говорящее `unimplemented`. 
+В тестах `panic` - разумный способ явного оповещения об ошибке.
 
-The `Option` type is for when a value is optional or when the lack of a value is
-not an error condition. For example the parent of a directory - `/` and `C:` don't
-have one. When dealing with `Option`s, `unwrap` is fine for prototyping and cases
-where it's absolutely certain that there is guaranteed to be a value. However `expect`
-is more useful since it lets you specify an error message in case something goes
-wrong anyway.
+Тип `Option` предназначен для случаев, когда значение не обязательно или когда отсутствие значения не является ошибкой. 
+Например, корневые директории `/` и `C:` не имеют родителя. При работе с `Option`, 
+для прототипирования и случаев, когда мы точно знаем, что 
+значение должно быть, отлично подходит `unwrap`. Однако более полезен `expect`, так как он позволяет 
+указать сообщение об ошибке на случай, если что-то пойдёт не так.
 
-When there is a chance that things do go wrong and the caller has to deal with the
-problem, use `Result`. You can `unwrap` and `expect` them as well (please don't
-do that unless it's a test or quick prototype).
+Когда есть вероятность, что что-то пойдёт не так и вызывающая 
+сторона должна как-то обработать эту ситуацию, используйте `Result`. 
+Вы также можете использовать `unwrap` и `expect` (пожалуйста, не делайте этого, если вы не пишете тест или не прототипируете).
 
-For a more rigorous discussion of error handling, refer to the error
-handling section in the [official book][book].
-
-[book]: https://doc.rust-lang.org/book/second-edition/ch09-00-error-handling.html
+Для более полного изучения обработки ошибок, обратитесь к [соответствующему разделу в книге](https://doc.rust-lang.org/book/ch09-00-error-handling.html).
