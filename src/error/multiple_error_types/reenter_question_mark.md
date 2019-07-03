@@ -1,33 +1,37 @@
-# Other uses of `?`
+# Другие способы использования `?`
 
-Notice in the previous example that our immediate reaction to calling
-`parse` is to `map` the error from a library error into a boxed
-error:
+Вы обратили внимание, что сразу же после вызова 
+`parse`, мы в `map_err` упаковали ошибку 
+из библиотеки?
 
 ```rust,ignore
 .and_then(|s| s.parse::<i32>()
     .map_err(|e| e.into())
 ```
 
-Since this is a simple and common operation, it would be convenient if it
-could be elided. Alas, because `and_then` is not sufficiently flexible, it
-cannot. However, we can instead use `?`.
+Это простая и распространённая операция и было бы не плохо, 
+если бы мы могли её опустить. Но из-за того, что 
+`and_then` недостаточно гибок, мы не можем этого 
+сделать. Однако, тут нам может помочь `?`.
 
-`?` was previously explained as either `unwrap` or `return Err(err)`.
-This is only mostly true. It actually means `unwrap` or
-`return Err(From::from(err))`. Since `From::from` is a conversion utility
-between different types, this means that if you `?` where the error is
-convertible to the return type, it will convert automatically.
+Ранее `?` был рассмотрен как `unwrap` 
+или `return Err(err)`. По большей части это правда: на 
+самом деле `?` означает `unwrap` или 
+`return Err(From::from(err))`. Поскольку 
+`From::from` используется для преобразования между 
+разными типами, применение `?` к ошибке 
+автоматически преобразует её в возвращаемый тип (при условии, 
+что исходная ошибка может быть в него сконвертирована).
 
-Here, we rewrite the previous example using `?`. As a result, the
-`map_err` will go away when `From::from` is implemented for our error type:
+Теперь мы перепишем наш предыдущий пример с использованием 
+`?`. В результате у нас пропал `map_err`, 
+так как для нашего типа реализован `From::from`:
 
 ```rust,editable
 use std::error;
 use std::fmt;
-use std::num::ParseIntError;
 
-// Change the alias to `Box<error::Error>`.
+// Создадим псевдоним с типом ошибки `Box<error::Error>`.
 type Result<T> = std::result::Result<T, Box<error::Error>>;
 
 #[derive(Debug)]
@@ -35,23 +39,24 @@ struct EmptyVec;
 
 impl fmt::Display for EmptyVec {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "invalid first item to double")
+        write!(f, "неверный первый элемент")
     }
 }
 
 impl error::Error for EmptyVec {
     fn description(&self) -> &str {
-        "invalid first item to double"
+        "неверный первый элемент"
     }
 
     fn cause(&self) -> Option<&error::Error> {
-        // Generic error, underlying cause isn't tracked.
+        // Общая ошибка, основная причина не отслеживается.
         None
     }
 }
 
-// The same structure as before but rather than chain all `Results`
-// and `Options` along, we `?` to get the inner value out immediately.
+// Такая же последовательность, как и раньше, но вместо объединения 
+// всех `Result` и `Option`, мы используем `?` чтобы незамедлительно 
+// получить внутреннее значение.
 fn double_first(vec: Vec<&str>) -> Result<i32> {
     let first = vec.first().ok_or(EmptyVec)?;
     let parsed = first.parse::<i32>()?;
@@ -60,8 +65,8 @@ fn double_first(vec: Vec<&str>) -> Result<i32> {
 
 fn print(result: Result<i32>) {
     match result {
-        Ok(n)  => println!("The first doubled is {}", n),
-        Err(e) => println!("Error: {}", e),
+        Ok(n)  => println!("Удвоенный первый элемент: {}", n),
+        Err(e) => println!("Ошибка: {}", e),
     }
 }
 
@@ -76,14 +81,12 @@ fn main() {
 }
 ```
 
-This is actually fairly clean now. Compared with the original `panic`, it
-is very similar to replacing the `unwrap` calls with `?` except that the
-return types are `Result`. As a result, they must be destructured at the
-top level.
+Сейчас код выглядит довольно чисто. По сравнению с 
+`panic`, это похоже на замену вызова 
+`unwrap` на `?` за исключением того, что 
+возвращаемый тип будет `Result`. В результате, он 
+может быть обработан уровнем выше.
 
-### See also:
+### Смотрите также:
 
-[`From::from`][from] and [`?`][q_mark]
-
-[from]: https://doc.rust-lang.org/std/convert/trait.From.html
-[q_mark]: https://doc.rust-lang.org/reference/expressions/operator-expr.html#the--operator
+[`From::from`](https://doc.rust-lang.org/std/convert/trait.From.html) и [`?`](https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-question-mark-operator)

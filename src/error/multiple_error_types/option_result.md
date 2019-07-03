@@ -1,7 +1,6 @@
-# Pulling `Result`s out of `Option`s
+# Извлечение `Result` из `Option`
 
-The most basic way of handling mixed error types is to just embed them in each
-other.
+Наиболее простой способ обработки ошибок разных типов - это встраивание их друг в друга.
 
 ```rust,editable
 use std::num::ParseIntError;
@@ -17,19 +16,21 @@ fn main() {
     let empty = vec![];
     let strings = vec!["tofu", "93", "18"];
 
-    println!("The first doubled is {:?}", double_first(numbers));
+    println!("Первое удвоенное: {:?}", double_first(numbers));
 
-    println!("The first doubled is {:?}", double_first(empty));
-    // Error 1: the input vector is empty
+    println!("Первое удвоенное: {:?}", double_first(empty));
+    // Ошибка первая: исходный вектор пустой
 
-    println!("The first doubled is {:?}", double_first(strings));
-    // Error 2: the element doesn't parse to a number
+    println!("Первое удвоенное {:?}", double_first(strings));
+    // Ошибка вторая: элемент не переводится в число
 }
 ```
 
-There are times when we'll want to stop processing on errors (like with
-[`?`][enter_question_mark]) but keep going when the `Option` is `None`. A
-couple of combinators come in handy to swap the `Result` and `Option`.
+Бывает, мы хотим приостановить работу при ошибке (как при 
+помощи оператора [`?`](../result/enter_question_mark.md)), но продолжать 
+работать, если `Option` `None`. Есть 
+пара комбинаторов, которые поменяют местами 
+`Result` и `Option`.
 
 ```rust,editable
 use std::num::ParseIntError;
@@ -49,10 +50,8 @@ fn main() {
     let empty = vec![];
     let strings = vec!["tofu", "93", "18"];
 
-    println!("The first doubled is {:?}", double_first(numbers));
-    println!("The first doubled is {:?}", double_first(empty));
-    println!("The first doubled is {:?}", double_first(strings));
+    println!("Первое удвоенное: {:?}", double_first(numbers));
+    println!("Первое удвоенное: {:?}", double_first(empty));
+    println!("Первое удвоенное: {:?}", double_first(strings));
 }
 ```
-
-[enter_question_mark]: error/result/enter_question_mark.html
