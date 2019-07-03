@@ -145,18 +145,22 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#boxing-errors" id="boxing-errors"><code>Box</code>ing errors</a></h1>
-<p>A way to write simple code while preserving the original errors is to <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a>
-them.  The drawback is that the underlying error type is only known at runtime and not
-<a href="https://doc.rust-lang.org/book/second-edition/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">statically determined</a>.</p>
-<p>The stdlib helps in boxing our errors by having <code>Box</code> implement conversion from
-any type that implements the <code>Error</code> trait into the trait object <code>Box&lt;Error&gt;</code>,
-via <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a>.</p>
+                        <h1><a class="header" href="#Упаковка-ошибок-box" id="Упаковка-ошибок-box">Упаковка ошибок (<code>Box</code>)</a></h1>
+<p>Чтобы написать простой код и при этом использовать 
+оригинальные ошибки, необходимо упаковать 
+(<a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a>) их.
+Минусом данного способа является то, что тип ошибок известен 
+только во время выполнения программы, а не <a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">определён 
+статически</a>.</p>
+<p>Стандартная библиотека помогает упаковывать наши ошибки.
+Это достигается за счёт того, что для <code>Box</code> 
+реализована конвертация из любого типа, реализующего типаж 
+<code>Error</code>, в типаж-объект <code>Box&lt;Error&gt;</code> 
+через <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a>.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::error;
 use std::fmt;
-use std::num::ParseIntError;
 
-// Change the alias to `Box&lt;error::Error&gt;`.
+// Создадим псевдоним с типом ошибки `Box&lt;error::Error&gt;`.
 type Result&lt;T&gt; = std::result::Result&lt;T, Box&lt;error::Error&gt;&gt;;
 
 #[derive(Debug, Clone)]
@@ -164,33 +168,35 @@ struct EmptyVec;
 
 impl fmt::Display for EmptyVec {
     fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
-        write!(f, &quot;invalid first item to double&quot;)
+        write!(f, &quot;неверный первый элемент&quot;)
     }
 }
 
 impl error::Error for EmptyVec {
     fn description(&amp;self) -&gt; &amp;str {
-        &quot;invalid first item to double&quot;
+        &quot;неверный первый элемент&quot;
     }
 
     fn cause(&amp;self) -&gt; Option&lt;&amp;error::Error&gt; {
-        // Generic error, underlying cause isn't tracked.
+        // Общая ошибка, основная причина не отслеживается.
         None
     }
 }
 
 fn double_first(vec: Vec&lt;&amp;str&gt;) -&gt; Result&lt;i32&gt; {
     vec.first()
-       .ok_or_else(|| EmptyVec.into())  // Converts to Box
-       .and_then(|s| s.parse::&lt;i32&gt;()
-            .map_err(|e| e.into())  // Converts to Box
-            .map(|i| 2 * i))
+        .ok_or_else(|| EmptyVec.into()) // Упаковка (преобразование в Box)
+        .and_then(|s| {
+            s.parse::&lt;i32&gt;()
+                .map_err(|e| e.into()) // Упаковка (преобразование в Box)
+                .map(|i| 2 * i)
+        })
 }
 
 fn print(result: Result&lt;i32&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;The first doubled is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n) =&gt; println!(&quot;Удвоенный первый элемент: {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 
@@ -204,8 +210,8 @@ fn main() {
     print(double_first(strings));
 }
 </code></pre></pre>
-<h3><a class="header" href="#see-also" id="see-also">See also:</a></h3>
-<p><a href="https://doc.rust-lang.org/book/second-edition/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">Dynamic dispatch</a> and <a href="https://doc.rust-lang.org/std/error/trait.Error.html"><code>Error</code> trait</a></p>
+<h3><a class="header" href="#Смотрите-также" id="Смотрите-также">Смотрите также:</a></h3>
+<p><a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">Динамическая диспетчеризация</a> и <a href="https://doc.rust-lang.org/std/error/trait.Error.html">типаж <code>Error</code></a></p>
 
                     </main>
 

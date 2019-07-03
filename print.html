@@ -746,18 +746,18 @@ RGB (0, 0, 0) 0x000000
     inferred_type = 4294967296i64;
     
     // Значение изменяемой переменной может быть изменено.
-    let mut mutable = 12; // Mutable `i32`
+    let mut mutable = 12; // Изменяемое `i32`
     mutable = 21;
     
     // Ошибка! Тип переменной изменить нельзя.
     mutable = true;
     
-    // Переменные могут быть переопределены с помощью затемнения.
+    // Переменные могут быть переопределены с помощью затенения.
     let mutable = true;
 }
 </code></pre></pre>
 <h3><a class="header" href="#Смотрите-также-6" id="Смотрите-также-6">Смотрите также:</a></h3>
-<p><a href="https://doc.rust-lang.org/std/">the <code>std</code> library</a>, <a href="variable_bindings/mut.html"><code>mut</code></a>, <a href="types/inference.html">inference</a>, and <a href="variable_bindings/scope.html">shadowing</a></p>
+<p><a href="https://doc.rust-lang.org/std/">стандартная библиотека (<code>std</code>)</a>, <a href="variable_bindings/mut.html"><code>mut</code></a>, <a href="types/inference.html">вывод типов</a> и <a href="variable_bindings/scope.html">затенение</a></p>
 <h1><a class="header" href="#Литералы-и-операторы" id="Литералы-и-операторы">Литералы и операторы</a></h1>
 <p>Целочисленное <code>1</code>, вещественное <code>1.2</code>, символ <code>'a'</code>, строка <code>&quot;abc&quot;</code>, логическое <code>true</code>
 и единичный тип <code>()</code> могут быть выражены с помощью литералов.</p>
@@ -1373,7 +1373,7 @@ fn main() {
 и пользовательских типов:</p>
 <ul>
 <li><a href="types/cast.html">Приведение</a> между примитивными типами</li>
-<li>Указание желаемого типа <a href="types/literals.html">литералы</a></li>
+<li>Указание желаемого типа при помощи <a href="types/literals.html">литералов</a></li>
 <li>Использование <a href="types/inference.html">вывода типов</a></li>
 <li><a href="types/alias.html">Псевдонимы</a> типов</li>
 </ul>
@@ -1532,23 +1532,18 @@ fn main() {
 В общем, при приведении к типу используются <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a> и <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into</code></a>,
 но есть и более специфические типажи для часто используемых
 случаев, например, для конвертации в <code>String</code> и обратно.</p>
-<h1><a class="header" href="#from-and-into" id="from-and-into"><code>From</code> and <code>Into</code></a></h1>
-<p>The <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a> and <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into</code></a> traits are inherently linked, and this is actually part of
-its implementation. If you are able to convert type A from type B, then it
-should be easy to believe that we should be able to convert type B to type A.</p>
+<h1><a class="header" href="#from-и-into" id="from-и-into"><code>From</code> и <code>Into</code></a></h1>
+<p>Типажи <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a> и <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into</code></a> связаны по своей сути, и это стало частью их реализации. Если вы можете конвертировать тип <code>А</code> в тип <code>В</code>, то будет легко предположить, что мы должны быть в состоянии конвертировать тип <code>В</code> в тип <code>А</code>.</p>
 <h2><a class="header" href="#from" id="from"><code>From</code></a></h2>
-<p>The <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a> trait allows for a type to define how to create itself from another
-type, hence providing a very simple mechanism for converting between several
-types. There are numerous implementations of this trait within the standard
-library for conversion of primitive and common types.</p>
-<p>For example we can easily convert a <code>str</code> into a <code>String</code></p>
+<p>Типаж <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a> позволяет типу определить, как он будет создаваться из другого типа, что предоставляет очень простой механизм конвертации между несколькими типами. Есть несколько реализаций этот типажа в стандартной библиотеке для преобразования примитивов и общих типов.</p>
+<p>Для примера, мы можем легко конвертировать <code>str</code> в <code>String</code></p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
-let my_str = &quot;hello&quot;;
+let my_str = &quot;привет&quot;;
 let my_string = String::from(my_str);
 #}</code></pre></pre>
-<p>We can do similar for defining a conversion for our own type.</p>
+<p>Мы можем сделать нечто похожее для определения конвертации для нашего собственного типа.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::convert::From;
 
 #[derive(Debug)]
@@ -1564,16 +1559,13 @@ impl From&lt;i32&gt; for Number {
 
 fn main() {
     let num = Number::from(30);
-    println!(&quot;My number is {:?}&quot;, num);
+    println!(&quot;Мой номер {:?}&quot;, num);
 }
 </code></pre></pre>
 <h2><a class="header" href="#into" id="into"><code>Into</code></a></h2>
-<p>The <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into</code></a> trait is simply the reciprocal of the <code>From</code> trait. That is, if you
-have implemented the <code>From</code> trait for your type you get the <code>Into</code>
-implementation for free.</p>
-<p>Using the <code>Into</code> trait will typically require specification of the type to
-convert into as the compiler is unable to determine this most of the time.
-However this is a small trade-off considering we get the functionality for free.</p>
+<p>Типаж <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into</code></a> является полной противоположностью типажа <code>From</code>. Так что если вы реализовали для вашего типа типаж  <code>From</code>, реализацию типажа <code>Into</code> вы получите бесплатно.</p>
+<p>Использование типажа <code>Into</code> обычно требует спецификации типа, в который мы собираемся конвертировать, так как компилятор чаще всего не может это вывести.
+Однако это небольшой компромисс, учитывая, что данную функциональность мы получаем бесплатно.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::convert::From;
 
 #[derive(Debug)]
@@ -1589,24 +1581,24 @@ impl From&lt;i32&gt; for Number {
 
 fn main() {
     let int = 5;
-    // Try removing the type declaration
+    // Попробуйте убрать аннотацию типа
     let num: Number = int.into();
-    println!(&quot;My number is {:?}&quot;, num);
+    println!(&quot;Мой номер {:?}&quot;, num);
 }
 </code></pre></pre>
-<h1><a class="header" href="#to-and-from-strings" id="to-and-from-strings">To and from Strings</a></h1>
-<h2><a class="header" href="#tostring" id="tostring"><code>ToString</code></a></h2>
-<p>To convert any type to a <code>String</code> it is as simple as implementing the <a href="https://doc.rust-lang.org/std/string/trait.ToString.html"><code>ToString</code></a>
-trait for the type.</p>
-<pre><pre class="playpen"><code class="language-rust editable">use std::string::ToString;
+<h1><a class="header" href="#fromstr-и-tostring" id="fromstr-и-tostring"><code>FromStr</code> и <code>ToString</code></a></h1>
+<h2><a class="header" href="#Конвертация-в-строку" id="Конвертация-в-строку">Конвертация в строку</a></h2>
+<p>Преобразовать любой тип в <code>String</code> так же просто, как и реализовать для него типаж <a href="https://doc.rust-lang.org/std/string/trait.ToString.html"><code>ToString</code></a>. Вместо того, чтобы делать это напрямую, вы должны реализовать типаж <a href="https://doc.rust-lang.org/std/fmt/trait.Display.html"><code>fmt::Display</code></a>, который автоматически предоставляет реализацию <a href="https://doc.rust-lang.org/std/string/trait.ToString.html"><code>ToString</code></a>, а 
+также позволяет распечатать тип, как обсуждалось в секции <a href="conversion/../hello/print.html"><code>print!</code></a>.</p>
+<pre><pre class="playpen"><code class="language-rust editable">use std::fmt;
 
 struct Circle {
     radius: i32
 }
 
-impl ToString for Circle {
-    fn to_string(&amp;self) -&gt; String {
-        format!(&quot;Circle of radius {:?}&quot;, self.radius)
+impl fmt::Display for Circle {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
+        write!(f, &quot;Круг радиусом {}&quot;, self.radius)
     }
 }
 
@@ -1615,21 +1607,17 @@ fn main() {
     println!(&quot;{}&quot;, circle.to_string());
 }
 </code></pre></pre>
-<h2><a class="header" href="#parsing-a-string" id="parsing-a-string">Parsing a String</a></h2>
-<p>One of the more common types to convert a string into is a number. The idiomatic
-approach to this is to use the <a href="https://doc.rust-lang.org/std/primitive.str.html#method.parse"><code>parse</code></a> function and provide the type for the
-function to parse the string value into, this can be done either without type
-inference or using the 'turbofish' syntax.</p>
-<p>This will convert the string into the type specified so long as the <a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code></a>
-trait is implemented for that type. This is implemented for numerous types
-within the standard library. To obtain this functionality on a user defined type
-simply implement the <a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code></a> trait for that type.</p>
+<h2><a class="header" href="#Парсинг-строки" id="Парсинг-строки">Парсинг строки</a></h2>
+<p>Один из наиболее общим типов конвертации - это преобразование строки в число. Идиоматический подход это сделать при помощи функции <a href="https://doc.rust-lang.org/std/primitive.str.html#method.parse"><code>parse</code></a> и указания типа, в который будем преобразовывать, что можно сделать либо через выведение типа, либо при помощи 'turbofish'-синтаксиса.</p>
+<p>Это преобразует строку в указанный тип при условии, что для этого типа реализован типаж <a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code></a>. 
+Он реализован для множества типов стандартной библиотеки. 
+Чтобы получить эту функциональность для пользовательского типа, надо просто реализовать для этого типа типаж <a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code></a>.</p>
 <pre><pre class="playpen"><code class="language-rust">fn main() {
     let parsed: i32 = &quot;5&quot;.parse().unwrap();
     let turbo_parsed = &quot;10&quot;.parse::&lt;i32&gt;().unwrap();
 
     let sum = parsed + turbo_parsed;
-    println!{&quot;Sum: {:?}&quot;, sum};
+    println!(&quot;Сумма: {:?}&quot;, sum);
 }
 </code></pre></pre>
 <h1><a class="header" href="#Выражения" id="Выражения">Выражения</a></h1>
@@ -1653,7 +1641,7 @@ simply implement the <a href="https://doc.rust-lang.org/std/str/trait.FromStr.ht
 }
 </code></pre>
 <p>Блоки так же могут быть частью оператора выражения.
-Они используются в качестве <a href="https://en.wikipedia.org/wiki/Value_%28computer_science%29#lrvalue">r-values</a> при присваивание.
+Они используются в качестве <a href="https://en.wikipedia.org/wiki/Value_%28computer_science%29#lrvalue">r-values</a> при присваивании.
 Последнее выражение в блоке будет присвоено <a href="https://en.wikipedia.org/wiki/Value_%28computer_science%29#lrvalue">l-value</a>.
 Однако, если последнее выражение в блоке оканчивается точкой с запятой,
 в качестве значения будет возвращено <code>()</code>.</p>
@@ -1673,9 +1661,9 @@ simply implement the <a href="https://doc.rust-lang.org/std/str/trait.FromStr.ht
         2 * x;
     };
 
-    println!(&quot;x is {:?}&quot;, x);
-    println!(&quot;y is {:?}&quot;, y);
-    println!(&quot;z is {:?}&quot;, z);
+    println!(&quot;x равен {:?}&quot;, x);
+    println!(&quot;y равен {:?}&quot;, y);
+    println!(&quot;z равен {:?}&quot;, z);
 }
 </code></pre></pre>
 <h1><a class="header" href="#Управление-потоком" id="Управление-потоком">Управление потоком</a></h1>
@@ -2965,10 +2953,10 @@ in <code>match</code> branches. This allows us to write code like this:</p>
 <p>It is also the return type of functions that loop forever (e.g. <code>loop {}</code>) like
 network servers or functions that terminates the process (e.g. <code>exit()</code>).</p>
 <h1><a class="header" href="#Модули" id="Модули">Модули</a></h1>
-<p>Rust предоставляет мощную систему модулей, которая используется,
-чтобы иерархически разделить код на логические единицы (модули) и
-управлять видимостью (публичное и приватное) между ними.</p>
-<p>Модуль это набор элементов, таких как: функции, структуры, типажи, блоки реализации
+<p>Rust предоставляет мощную систему модулей, которая используется
+для иерархического разделения кода на логические единицы (модули) и
+управления видимостью (публичное и приватное) между ними.</p>
+<p>Модуль - это набор элементов, таких как: функции, структуры, типажи, блоки реализации (<code>impl</code>)
 и даже другие модули.</p>
 <h1><a class="header" href="#Видимость" id="Видимость">Видимость</a></h1>
 <p>По умолчанию, элементы модуля являются приватными,
@@ -3519,9 +3507,9 @@ test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out
 <li>пометить функции как юнит тесты</li>
 <li>пометить функции, которые будут частью бенчмарка</li>
 </ul>
-<p>Когда атрибуты применяются ко всему контейнеру, их синтаксис будет #![crate_attribute],
-когда они применяются к модулю или элементу модуля,
-их синтаксис станет #[item_attribute] (обратите внимание на отсутствие !).</p>
+<p>Когда атрибуты применяются ко всему контейнеру, их синтаксис будет <code>#![crate_attribute]</code>,
+а когда они применяются к модулю или элементу модуля,
+их синтаксис станет <code>#[item_attribute]</code> (обратите внимание на отсутствие <code>!</code>).</p>
 <p>Атрибуты могут принимать аргументы с различным синтаксисом:</p>
 <ul>
 <li><code>#[attribute = &quot;value&quot;]</code></li>
@@ -3638,7 +3626,7 @@ fn main() {
 condition met!
 </code></pre>
 <h1><a class="header" href="#Обобщения" id="Обобщения">Обобщения</a></h1>
-<p><em>Обобщения</em> позволяют генерализировать типы и функционал для более общих случаев. Они
+<p><em>Обобщения</em> позволяют обобщить типы и функциональность для более общих случаев. Они
 чрезвычайно полезны благодаря уменьшению дублирования кода, однако могут привести к
 сравнительному усложнению синтаксиса. А именно, использование обобщений требует особого
 внимания при определении допустимых реальных типов которыми могут заменяться обобщённые.
@@ -3653,11 +3641,9 @@ condition met!
 <pre><code class="language-rust ignore">fn foo&lt;T&gt;(arg: T) { ... }
 </code></pre>
 <p>Поскольку <code>T</code> был объявлен как обобщённый тип, посредством <code>&lt;T&gt;</code>, он считается обобщённым
-когда используется как <code>(arg: T)</code>. Это работает даже если <code>T</code> был определён как [структура]
-<a href="custom_types/structs.html">structs</a>.</p>
+когда используется как <code>(arg: T)</code>. Это работает даже если <code>T</code> был определён как <code>структура</code>.</p>
 <p>Пример ниже демонстрирует синтаксис в действии:</p>
-<pre><pre class="playpen"><code class="language-rust editable">// A concrete type `A`.
-// Конкретный тип `A`.
+<pre><pre class="playpen"><code class="language-rust editable">// Конкретный тип `A`.
 struct A;
 
 // В определении типа `Single` первому использованию `A` не предшествует `&lt;A&gt;`.
@@ -3687,7 +3673,7 @@ fn main() {
 }
 </code></pre></pre>
 <h3><a class="header" href="#Смотрите-также-31" id="Смотрите-также-31">Смотрите также:</a></h3>
-<p><a href="custom_types/structs.html">Структуры</a></p>
+<p><a href="custom_types/structs.html"><code>Структуры</code> </a></p>
 <h1><a class="header" href="#Функции-1" id="Функции-1">Функции</a></h1>
 <p>Тот же набор правил применяется и к функциям: тип <code>T</code> становится
 обобщённым, когда предшествует <code>&lt;T&gt;</code>.</p>
@@ -5092,7 +5078,7 @@ trait Animal {
 
     // Типаж может содержать определение метода по умолчанию
     fn talk(&amp;self) {
-        println!(&quot;{} says {}&quot;, self.name(), self.noise());
+        println!(&quot;{} говорит {}&quot;, self.name(), self.noise());
     }
 }
 
@@ -5104,9 +5090,9 @@ impl Sheep {
     fn shear(&amp;mut self) {
         if self.is_naked() {
             // Методы типа могут использовать методы типажа, реализованного для этого типа.
-            println!(&quot;{} is already naked...&quot;, self.name());
+            println!(&quot;{} уже без волос...&quot;, self.name());
         } else {
-            println!(&quot;{} gets a haircut!&quot;, self.name);
+            println!(&quot;{} подстригается!&quot;, self.name);
 
             self.naked = true;
         }
@@ -5135,7 +5121,7 @@ impl Animal for Sheep {
     // Методы по умолчанию могут быть переопределены.
     fn talk(&amp;self) {
         // Например, мы добавили немного спокойного миросозерцания...
-        println!(&quot;{} pauses briefly... {}&quot;, self.name, self.noise());
+        println!(&quot;{} делает паузу... {}&quot;, self.name, self.noise());
     }
 }
 
@@ -5469,11 +5455,11 @@ fn main() {
 <ol>
 <li>
 <p>Не повторяйтесь. Есть много случаев, когда вам может понадобиться подобная
-функциональность в нескольких местах, но с различными типами. Часто пишут
-макрос - это полезный способ избежать повторения кода. (Подробнее об этом позже)</p>
+функциональность в нескольких местах, но с различными типами. Чаще всего написание
+макроса - это полезный способ избежать повторения кода. (Подробнее об этом позже)</p>
 </li>
 <li>
-<p>Предметно ориентированные языки. Макросы позволяют определить специальный синтаксис для
+<p>Предметно-ориентированные языки. Макросы позволяют определить специальный синтаксис для
 конкретной цели. (Подробнее об этом позже)</p>
 </li>
 <li>
@@ -5741,29 +5727,23 @@ fn main() {
 3 + 4 = 7
 (2 * 3) + 1 = 7
 </code></pre>
-<h1><a class="header" href="#error-handling" id="error-handling">Error handling</a></h1>
-<p>Error handling is the process of handling the possibility of failure. For
-example, failing to read a file and then continuing to use that <em>bad</em> input
-would clearly be problematic. Noticing and explicitly managing those errors
-saves the rest of the program from various pitfalls.</p>
-<p>There are various ways to deal with errors in Rust, which are described in the
-following subchapters. They all have more or less subtle differences and different
-use cases. As a rule of thumb:</p>
-<p>An explicit <code>panic</code> is mainly useful for tests and dealing with unrecoverable errors.
-For prototyping it can be useful, for example when dealing with functions that
-haven't been implemented yet, but in those cases the more descriptive <code>unimplemented</code>
-is better. In tests <code>panic</code> is a reasonable way to explicitly fail.</p>
-<p>The <code>Option</code> type is for when a value is optional or when the lack of a value is
-not an error condition. For example the parent of a directory - <code>/</code> and <code>C:</code> don't
-have one. When dealing with <code>Option</code>s, <code>unwrap</code> is fine for prototyping and cases
-where it's absolutely certain that there is guaranteed to be a value. However <code>expect</code>
-is more useful since it lets you specify an error message in case something goes
-wrong anyway.</p>
-<p>When there is a chance that things do go wrong and the caller has to deal with the
-problem, use <code>Result</code>. You can <code>unwrap</code> and <code>expect</code> them as well (please don't
-do that unless it's a test or quick prototype).</p>
-<p>For a more rigorous discussion of error handling, refer to the error
-handling section in the <a href="https://doc.rust-lang.org/book/second-edition/ch09-00-error-handling.html">official book</a>.</p>
+<h1><a class="header" href="#Обработка-ошибок" id="Обработка-ошибок">Обработка ошибок</a></h1>
+<p>Обработка ошибок - это процесс управления возможными сбоями. 
+Например ошибка чтения файла и последующее использование <em>плохих</em> данных могут прояснить проблематику.
+Уведомление и явное управление этими ошибками сохранит оставшуюся часть программы от различных неожиданностей.</p>
+<p>В Rust есть разные пути работы с ошибками, которые описаны в следующих главах. Они все имеют те или иные отличия и разные варианты использования. Как правило большого пальца:</p>
+<p>Явный <code>panic</code> в основном применим для тестирования и работы с невосстановимыми ошибками.
+При прототипировании его можно использовать, например, когда работаем с ещё не реализованными функциями, но в этом случае лучше использовать более говорящее <code>unimplemented</code>. 
+В тестах <code>panic</code> - разумный способ явного оповещения об ошибке.</p>
+<p>Тип <code>Option</code> предназначен для случаев, когда значение не обязательно или когда отсутствие значения не является ошибкой. 
+Например, корневые директории <code>/</code> и <code>C:</code> не имеют родителя. При работе с <code>Option</code>, 
+для прототипирования и случаев, когда мы точно знаем, что 
+значение должно быть, отлично подходит <code>unwrap</code>. Однако более полезен <code>expect</code>, так как он позволяет 
+указать сообщение об ошибке на случай, если что-то пойдёт не так.</p>
+<p>Когда есть вероятность, что что-то пойдёт не так и вызывающая 
+сторона должна как-то обработать эту ситуацию, используйте <code>Result</code>. 
+Вы также можете использовать <code>unwrap</code> и <code>expect</code> (пожалуйста, не делайте этого, если вы не пишете тест или не прототипируете).</p>
+<p>Для более полного изучения обработки ошибок, обратитесь к <a href="https://doc.rust-lang.org/book/ch09-00-error-handling.html">соответствующему разделу в книге</a>.</p>
 <h1><a class="header" href="#panic" id="panic"><code>panic</code></a></h1>
 <p>Самый простой механизм обработки ошибок, с которым мы познакомимся – это <code>panic</code>.
 Он печатает сообщение с ошибкой, начинает процедуру
@@ -6256,9 +6236,8 @@ fn main() {
 }
 </code></pre></pre>
 <p>Over the next sections, we'll see several strategies for handling these kind of problems.</p>
-<h1><a class="header" href="#pulling-results-out-of-options" id="pulling-results-out-of-options">Pulling <code>Result</code>s out of <code>Option</code>s</a></h1>
-<p>The most basic way of handling mixed error types is to just embed them in each
-other.</p>
+<h1><a class="header" href="#Извлечение-result-из-option" id="Извлечение-result-из-option">Извлечение <code>Result</code> из <code>Option</code></a></h1>
+<p>Наиболее простой способ обработки ошибок разных типов - это встраивание их друг в друга.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::num::ParseIntError;
 
 fn double_first(vec: Vec&lt;&amp;str&gt;) -&gt; Option&lt;Result&lt;i32, ParseIntError&gt;&gt; {
@@ -6272,18 +6251,20 @@ fn main() {
     let empty = vec![];
     let strings = vec![&quot;tofu&quot;, &quot;93&quot;, &quot;18&quot;];
 
-    println!(&quot;The first doubled is {:?}&quot;, double_first(numbers));
+    println!(&quot;Первое удвоенное: {:?}&quot;, double_first(numbers));
 
-    println!(&quot;The first doubled is {:?}&quot;, double_first(empty));
-    // Error 1: the input vector is empty
+    println!(&quot;Первое удвоенное: {:?}&quot;, double_first(empty));
+    // Ошибка первая: исходный вектор пустой
 
-    println!(&quot;The first doubled is {:?}&quot;, double_first(strings));
-    // Error 2: the element doesn't parse to a number
+    println!(&quot;Первое удвоенное {:?}&quot;, double_first(strings));
+    // Ошибка вторая: элемент не переводится в число
 }
 </code></pre></pre>
-<p>There are times when we'll want to stop processing on errors (like with
-<a href="error/multiple_error_types/error/result/enter_question_mark.html"><code>?</code></a>) but keep going when the <code>Option</code> is <code>None</code>. A
-couple of combinators come in handy to swap the <code>Result</code> and <code>Option</code>.</p>
+<p>Бывает, мы хотим приостановить работу при ошибке (как при 
+помощи оператора <a href="error/multiple_error_types/../result/enter_question_mark.html"><code>?</code></a>), но продолжать 
+работать, если <code>Option</code> <code>None</code>. Есть 
+пара комбинаторов, которые поменяют местами 
+<code>Result</code> и <code>Option</code>.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::num::ParseIntError;
 
 fn double_first(vec: Vec&lt;&amp;str&gt;) -&gt; Result&lt;Option&lt;i32&gt;, ParseIntError&gt; {
@@ -6301,9 +6282,9 @@ fn main() {
     let empty = vec![];
     let strings = vec![&quot;tofu&quot;, &quot;93&quot;, &quot;18&quot;];
 
-    println!(&quot;The first doubled is {:?}&quot;, double_first(numbers));
-    println!(&quot;The first doubled is {:?}&quot;, double_first(empty));
-    println!(&quot;The first doubled is {:?}&quot;, double_first(strings));
+    println!(&quot;Первое удвоенное: {:?}&quot;, double_first(numbers));
+    println!(&quot;Первое удвоенное: {:?}&quot;, double_first(empty));
+    println!(&quot;Первое удвоенное: {:?}&quot;, double_first(strings));
 }
 </code></pre></pre>
 <h1><a class="header" href="#defining-an-error-type" id="defining-an-error-type">Defining an error type</a></h1>
@@ -6389,18 +6370,22 @@ fn main() {
     print(double_first(strings));
 }
 </code></pre></pre>
-<h1><a class="header" href="#boxing-errors" id="boxing-errors"><code>Box</code>ing errors</a></h1>
-<p>A way to write simple code while preserving the original errors is to <a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a>
-them.  The drawback is that the underlying error type is only known at runtime and not
-<a href="https://doc.rust-lang.org/book/second-edition/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">statically determined</a>.</p>
-<p>The stdlib helps in boxing our errors by having <code>Box</code> implement conversion from
-any type that implements the <code>Error</code> trait into the trait object <code>Box&lt;Error&gt;</code>,
-via <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a>.</p>
+<h1><a class="header" href="#Упаковка-ошибок-box" id="Упаковка-ошибок-box">Упаковка ошибок (<code>Box</code>)</a></h1>
+<p>Чтобы написать простой код и при этом использовать 
+оригинальные ошибки, необходимо упаковать 
+(<a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a>) их.
+Минусом данного способа является то, что тип ошибок известен 
+только во время выполнения программы, а не <a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">определён 
+статически</a>.</p>
+<p>Стандартная библиотека помогает упаковывать наши ошибки.
+Это достигается за счёт того, что для <code>Box</code> 
+реализована конвертация из любого типа, реализующего типаж 
+<code>Error</code>, в типаж-объект <code>Box&lt;Error&gt;</code> 
+через <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a>.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::error;
 use std::fmt;
-use std::num::ParseIntError;
 
-// Change the alias to `Box&lt;error::Error&gt;`.
+// Создадим псевдоним с типом ошибки `Box&lt;error::Error&gt;`.
 type Result&lt;T&gt; = std::result::Result&lt;T, Box&lt;error::Error&gt;&gt;;
 
 #[derive(Debug, Clone)]
@@ -6408,33 +6393,35 @@ struct EmptyVec;
 
 impl fmt::Display for EmptyVec {
     fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
-        write!(f, &quot;invalid first item to double&quot;)
+        write!(f, &quot;неверный первый элемент&quot;)
     }
 }
 
 impl error::Error for EmptyVec {
     fn description(&amp;self) -&gt; &amp;str {
-        &quot;invalid first item to double&quot;
+        &quot;неверный первый элемент&quot;
     }
 
     fn cause(&amp;self) -&gt; Option&lt;&amp;error::Error&gt; {
-        // Generic error, underlying cause isn't tracked.
+        // Общая ошибка, основная причина не отслеживается.
         None
     }
 }
 
 fn double_first(vec: Vec&lt;&amp;str&gt;) -&gt; Result&lt;i32&gt; {
     vec.first()
-       .ok_or_else(|| EmptyVec.into())  // Converts to Box
-       .and_then(|s| s.parse::&lt;i32&gt;()
-            .map_err(|e| e.into())  // Converts to Box
-            .map(|i| 2 * i))
+        .ok_or_else(|| EmptyVec.into()) // Упаковка (преобразование в Box)
+        .and_then(|s| {
+            s.parse::&lt;i32&gt;()
+                .map_err(|e| e.into()) // Упаковка (преобразование в Box)
+                .map(|i| 2 * i)
+        })
 }
 
 fn print(result: Result&lt;i32&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;The first doubled is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n) =&gt; println!(&quot;Удвоенный первый элемент: {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 
@@ -6448,30 +6435,34 @@ fn main() {
     print(double_first(strings));
 }
 </code></pre></pre>
-<h3><a class="header" href="#see-also-12" id="see-also-12">See also:</a></h3>
-<p><a href="https://doc.rust-lang.org/book/second-edition/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">Dynamic dispatch</a> and <a href="https://doc.rust-lang.org/std/error/trait.Error.html"><code>Error</code> trait</a></p>
-<h1><a class="header" href="#other-uses-of-" id="other-uses-of-">Other uses of <code>?</code></a></h1>
-<p>Notice in the previous example that our immediate reaction to calling
-<code>parse</code> is to <code>map</code> the error from a library error into a boxed
-error:</p>
+<h3><a class="header" href="#Смотрите-также-47" id="Смотрите-также-47">Смотрите также:</a></h3>
+<p><a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">Динамическая диспетчеризация</a> и <a href="https://doc.rust-lang.org/std/error/trait.Error.html">типаж <code>Error</code></a></p>
+<h1><a class="header" href="#Другие-способы-использования-" id="Другие-способы-использования-">Другие способы использования <code>?</code></a></h1>
+<p>Вы обратили внимание, что сразу же после вызова 
+<code>parse</code>, мы в <code>map_err</code> упаковали ошибку 
+из библиотеки?</p>
 <pre><code class="language-rust ignore">.and_then(|s| s.parse::&lt;i32&gt;()
     .map_err(|e| e.into())
 </code></pre>
-<p>Since this is a simple and common operation, it would be convenient if it
-could be elided. Alas, because <code>and_then</code> is not sufficiently flexible, it
-cannot. However, we can instead use <code>?</code>.</p>
-<p><code>?</code> was previously explained as either <code>unwrap</code> or <code>return Err(err)</code>.
-This is only mostly true. It actually means <code>unwrap</code> or
-<code>return Err(From::from(err))</code>. Since <code>From::from</code> is a conversion utility
-between different types, this means that if you <code>?</code> where the error is
-convertible to the return type, it will convert automatically.</p>
-<p>Here, we rewrite the previous example using <code>?</code>. As a result, the
-<code>map_err</code> will go away when <code>From::from</code> is implemented for our error type:</p>
+<p>Это простая и распространённая операция и было бы не плохо, 
+если бы мы могли её опустить. Но из-за того, что 
+<code>and_then</code> недостаточно гибок, мы не можем этого 
+сделать. Однако, тут нам может помочь <code>?</code>.</p>
+<p>Ранее <code>?</code> был рассмотрен как <code>unwrap</code> 
+или <code>return Err(err)</code>. По большей части это правда: на 
+самом деле <code>?</code> означает <code>unwrap</code> или 
+<code>return Err(From::from(err))</code>. Поскольку 
+<code>From::from</code> используется для преобразования между 
+разными типами, применение <code>?</code> к ошибке 
+автоматически преобразует её в возвращаемый тип (при условии, 
+что исходная ошибка может быть в него сконвертирована).</p>
+<p>Теперь мы перепишем наш предыдущий пример с использованием 
+<code>?</code>. В результате у нас пропал <code>map_err</code>, 
+так как для нашего типа реализован <code>From::from</code>:</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::error;
 use std::fmt;
-use std::num::ParseIntError;
 
-// Change the alias to `Box&lt;error::Error&gt;`.
+// Создадим псевдоним с типом ошибки `Box&lt;error::Error&gt;`.
 type Result&lt;T&gt; = std::result::Result&lt;T, Box&lt;error::Error&gt;&gt;;
 
 #[derive(Debug)]
@@ -6479,23 +6470,24 @@ struct EmptyVec;
 
 impl fmt::Display for EmptyVec {
     fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
-        write!(f, &quot;invalid first item to double&quot;)
+        write!(f, &quot;неверный первый элемент&quot;)
     }
 }
 
 impl error::Error for EmptyVec {
     fn description(&amp;self) -&gt; &amp;str {
-        &quot;invalid first item to double&quot;
+        &quot;неверный первый элемент&quot;
     }
 
     fn cause(&amp;self) -&gt; Option&lt;&amp;error::Error&gt; {
-        // Generic error, underlying cause isn't tracked.
+        // Общая ошибка, основная причина не отслеживается.
         None
     }
 }
 
-// The same structure as before but rather than chain all `Results`
-// and `Options` along, we `?` to get the inner value out immediately.
+// Такая же последовательность, как и раньше, но вместо объединения 
+// всех `Result` и `Option`, мы используем `?` чтобы незамедлительно 
+// получить внутреннее значение.
 fn double_first(vec: Vec&lt;&amp;str&gt;) -&gt; Result&lt;i32&gt; {
     let first = vec.first().ok_or(EmptyVec)?;
     let parsed = first.parse::&lt;i32&gt;()?;
@@ -6504,8 +6496,8 @@ fn double_first(vec: Vec&lt;&amp;str&gt;) -&gt; Result&lt;i32&gt; {
 
 fn print(result: Result&lt;i32&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;The first doubled is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n)  =&gt; println!(&quot;Удвоенный первый элемент: {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 
@@ -6519,12 +6511,13 @@ fn main() {
     print(double_first(strings));
 }
 </code></pre></pre>
-<p>This is actually fairly clean now. Compared with the original <code>panic</code>, it
-is very similar to replacing the <code>unwrap</code> calls with <code>?</code> except that the
-return types are <code>Result</code>. As a result, they must be destructured at the
-top level.</p>
-<h3><a class="header" href="#see-also-13" id="see-also-13">See also:</a></h3>
-<p><a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From::from</code></a> and <a href="https://doc.rust-lang.org/reference/expressions/operator-expr.html#the--operator"><code>?</code></a></p>
+<p>Сейчас код выглядит довольно чисто. По сравнению с 
+<code>panic</code>, это похоже на замену вызова 
+<code>unwrap</code> на <code>?</code> за исключением того, что 
+возвращаемый тип будет <code>Result</code>. В результате, он 
+может быть обработан уровнем выше.</p>
+<h3><a class="header" href="#Смотрите-также-48" id="Смотрите-также-48">Смотрите также:</a></h3>
+<p><a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From::from</code></a> и <a href="https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-question-mark-operator"><code>?</code></a></p>
 <h1><a class="header" href="#wrapping-errors" id="wrapping-errors">Wrapping errors</a></h1>
 <p>An alternative to boxing errors is to wrap them in your own error type.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::error;
@@ -6608,7 +6601,7 @@ fn main() {
 <p>This adds a bit more boilerplate for handling errors and might not be needed in
 all applications. There are some libraries that can take care of the boilerplate
 for you.</p>
-<h3><a class="header" href="#see-also-14" id="see-also-14">See also:</a></h3>
+<h3><a class="header" href="#see-also-12" id="see-also-12">See also:</a></h3>
 <p><a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From::from</code></a> and <a href="error/multiple_error_types/custom_types/enum.html"><code>Enums</code></a></p>
 <h1><a class="header" href="#iterating-over-results" id="iterating-over-results">Iterating over <code>Result</code>s</a></h1>
 <p>An <code>Iter::map</code> operation might fail, for example:</p>
@@ -6674,8 +6667,8 @@ can be turned into a result with a vector (<code>Result&lt;Vec&lt;T&gt;, E&gt;</
 }
 </code></pre></pre>
 <h1><a class="header" href="#Типы-стандартной-библиотеки" id="Типы-стандартной-библиотеки">Типы стандартной библиотеки</a></h1>
-<p>Стандартная библиотека <code>std</code> предоставляет множество пользовательских типов, которые значительно
-расширяют на <code>примитивах</code>. Некоторые из них содержат:</p>
+<p>Стандартная библиотека (<code>std</code>) предоставляет множество пользовательских типов, которые значительно
+расширяют <code>примитивы</code>. Некоторые из них:</p>
 <ul>
 <li>расширяемую строку <code>String</code>s: <code>&quot;hello world&quot;</code></li>
 <li>динамический массив: <code>[1, 2, 3]</code></li>
@@ -6683,8 +6676,8 @@ can be turned into a result with a vector (<code>Result&lt;Vec&lt;T&gt;, E&gt;</
 <li>типы для обработки ошибок: <code>Result&lt;i32, i32&gt;</code></li>
 <li>указатели на объекты в куче: <code>Box&lt;i32&gt;</code></li>
 </ul>
-<h3><a class="header" href="#Смотрите-также-47" id="Смотрите-также-47">Смотрите также:</a></h3>
-<p><a href="primitives.html">Примитивы</a> и <a href="https://doc.rust-lang.org/std/">стандартная библиотека std</a></p>
+<h3><a class="header" href="#Смотрите-также-49" id="Смотрите-также-49">Смотрите также:</a></h3>
+<p><a href="primitives.html">Примитивы</a> и <a href="https://doc.rust-lang.org/std/"><code>std</code></a></p>
 <h1><a class="header" href="#box-стек-и-куча" id="box-стек-и-куча"><code>Box</code>, стек и куча</a></h1>
 <p>Все значения в Rust по умолчанию аллоцируются на стеке. Значения могут быть <em>упакованы</em>
 (аллоцированы в куче) при помощи создания <code>Box&lt;T&gt;</code>. <code>Box</code> - это умный указатель на аллоцированное в куче значение типа <code>T</code>. Когда <code>Box</code> покидает область видимости, вызывается его деструктор, который уничтожает внутренний объект, и занятая им память в куче освобождается.</p>
@@ -7405,10 +7398,10 @@ fn main() {
 <ul>
 <li>Потоки</li>
 <li>Каналы</li>
-<li>Файловые операции Ввода/Вывода</li>
+<li>Операции файлового ввода/вывода</li>
 </ul>
 <p>Они расширяют возможности, которые предоставляют <a href="primitives.html">примитивы</a>.</p>
-<h3><a class="header" href="#Смотрите-также-48" id="Смотрите-также-48">Смотрите также:</a></h3>
+<h3><a class="header" href="#Смотрите-также-50" id="Смотрите-также-50">Смотрите также:</a></h3>
 <p><a href="primitives.html">примитивы</a> и <a href="https://doc.rust-lang.org/std/">стандартная библиотека</a></p>
 <h1><a class="header" href="#Потоки" id="Потоки">Потоки</a></h1>
 <p>В Rust имеется механизм для запуска потоков ОС посредством функции <code>scoped</code>,
@@ -7560,7 +7553,7 @@ fn main() {
 What if the user decides to insert a lot of spaces? Do we <em>really</em> want to spawn 2,000 threads?
 Modify the program so that the data is always chunked into a limited number of chunks,
 defined by a static constant at the beginning of the program.</p>
-<h3><a class="header" href="#see-also-15" id="see-also-15">See also:</a></h3>
+<h3><a class="header" href="#see-also-13" id="see-also-13">See also:</a></h3>
 <ul>
 <li><a href="std_misc/threads/std_misc/threads.html">Threads</a></li>
 <li><a href="std_misc/threads/std/vec.html">vectors</a> and <a href="std_misc/threads/trait/iter.html">iterators</a></li>
@@ -7647,7 +7640,7 @@ fn main() {
 </code></pre></pre>
 <p>Be sure to check at other <code>Path</code> methods (<code>posix::Path</code> or <code>windows::Path</code>) and
 the <code>Metadata</code> struct.</p>
-<h3><a class="header" href="#see-also-16" id="see-also-16">See also</a></h3>
+<h3><a class="header" href="#see-also-14" id="see-also-14">See also</a></h3>
 <p><a href="https://doc.rust-lang.org/std/ffi/struct.OsStr.html">OsStr</a> and <a href="https://doc.rust-lang.org/std/fs/struct.Metadata.html">Metadata</a>.</p>
 <h1><a class="header" href="#file-io" id="file-io">File I/O</a></h1>
 <p>The <code>File</code> struct represents a file that has been opened (it wraps a file
@@ -8011,7 +8004,7 @@ a
     Ok(s)
 }
 </code></pre>
-<h3><a class="header" href="#see-also-17" id="see-also-17">See also:</a></h3>
+<h3><a class="header" href="#see-also-15" id="see-also-15">See also:</a></h3>
 <p><a href="std_misc/attribute/cfg.html"><code>cfg!</code></a></p>
 <h1><a class="header" href="#program-arguments" id="program-arguments">Program arguments</a></h1>
 <h2><a class="header" href="#standard-library" id="standard-library">Standard Library</a></h2>
@@ -8195,9 +8188,9 @@ impl fmt::Debug for Complex {
 <ul>
 <li><a href="testing/dev_dependencies.html">Dev-dependencies</a></li>
 </ul>
-<h2><a class="header" href="#Смотрите-также-49" id="Смотрите-также-49">Смотрите также:</a></h2>
+<h2><a class="header" href="#Смотрите-также-51" id="Смотрите-также-51">Смотрите также:</a></h2>
 <ul>
-<li><a href="https://doc.rust-lang.org/book/ch11-00-testing.html">Глава о тестировании</a> </li>
+<li><a href="https://doc.rust-lang.org/book/ch11-00-testing.html">Глава о тестировании</a> в &quot;The Rust Programming Language&quot;</li>
 <li><a href="https://rust-lang-nursery.github.io/api-guidelines/documentation.html">Описание API</a> для тестирования примеров из документации.</li>
 </ul>
 <h1><a class="header" href="#unit-testing" id="unit-testing">Unit testing</a></h1>
@@ -8490,7 +8483,7 @@ pub fn try_div(a: i32, b: i32) -&gt; Result&lt;i32, String&gt; {
     }
 }
 </code></pre>
-<h2><a class="header" href="#see-also-18" id="see-also-18">See Also</a></h2>
+<h2><a class="header" href="#see-also-16" id="see-also-16">See Also</a></h2>
 <ul>
 <li><a href="https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md">RFC505</a> on documentation style</li>
 <li><a href="https://rust-lang-nursery.github.io/api-guidelines/documentation.html">API Guidelines</a> on documentation guidelines</li>
@@ -8560,19 +8553,17 @@ fn test_add() {
 </code></pre>
 <p>Modules with common code follow the ordinary <a href="testing/mod.html">modules</a> rules, so it's ok to
 create common module as <code>tests/common/mod.rs</code>.</p>
-<h1><a class="header" href="#development-dependencies" id="development-dependencies">Development dependencies</a></h1>
-<p>Sometimes there is a need to have a dependencies for tests (examples,
-benchmarks) only. Such dependencies are added to <code>Cargo.toml</code> in
-<code>[dev-dependencies]</code> section. These dependencies are not propagated to other
-packages which depend on this package.</p>
-<p>One such example is using a crate that extends standard <code>assert!</code> macros.<br />
-File <code>Cargo.toml</code>:</p>
-<pre><code class="language-ignore"># standard crate data is left out
+<h1><a class="header" href="#dev-dependencies" id="dev-dependencies"><code>dev-dependencies</code></a></h1>
+<p>Иногда возникает необходимость иметь зависимости только для тестов (примеры, бенчмарки). Такие зависимости добавляются в <code>Cargo.toml</code> в секцию
+<code>[dev-dependencies]</code>. Эти зависимости не распространяются как зависимости на другие пакеты, которые зависят от этого пакета.</p>
+<p>Одним из таких примеров является пакет расширяющий стандартный макрос <code>assert!</code>.</p>
+<p>Файл <code>Cargo.toml</code>:</p>
+<pre><code class="language-ignore"># при стандартной сборке проекта данная зависимость не будет использоваться.
 [dev-dependencies]
 pretty_assertions = &quot;0.4.0&quot;
 </code></pre>
-<p>File <code>src/lib.rs</code>:</p>
-<pre><code class="language-rust ignore">// externing crate for test-only use
+<p>Файл <code>src/lib.rs</code>:</p>
+<pre><code class="language-rust ignore">// внешний пакет используется только для тестирования
 #[cfg(test)]
 #[macro_use]
 extern crate pretty_assertions;
@@ -8591,26 +8582,21 @@ mod tests {
     }
 }
 </code></pre>
-<h2><a class="header" href="#see-also-19" id="see-also-19">See Also</a></h2>
-<p><a href="http://doc.crates.io/specifying-dependencies.html">Cargo</a> docs on specifying dependencies.</p>
-<h1><a class="header" href="#unsafe-operations" id="unsafe-operations">Unsafe Operations</a></h1>
-<p>As an introduction to this section, to borrow from <a href="https://doc.rust-lang.org/book/second-edition/ch19-01-unsafe-rust.html">the official docs</a>,
-&quot;one should try to minimize the amount of unsafe code in a code base.&quot; With that
-in mind, let's get started! Unsafe blocks in Rust are used to bypass protections
-put in place by the compiler; specifically, there are four primary things that
-unsafe blocks are used for:</p>
+<h2><a class="header" href="#Смотрите-также-52" id="Смотрите-также-52">Смотрите также:</a></h2>
+<p>Документация <a href="http://doc.crates.io/specifying-dependencies.html">Cargo</a> по указанию зависимостей.</p>
+<h1><a class="header" href="#Небезопасные-операции" id="Небезопасные-операции">Небезопасные операции</a></h1>
+<p>В качестве введения в этот раздел процитируем <a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html">официальную документацию</a>,
+&quot;нужно стараться минимизировать количество небезопасного кода в кодовой базе.&quot; Имея это в виду, давайте начнем! Небезопасные аннотации в Rust используются для обхода блокировок
+защиты, устанавливаемых компилятором; в частности, существует четыре основных варианта использования небезопасного кода:</p>
 <ul>
-<li>dereferencing raw pointers</li>
-<li>calling a function over FFI (but this is covered in <a href="std_misc/ffi.html">a previous
-chapter</a> of the book)</li>
-<li>calling functions which are <code>unsafe</code></li>
-<li>inline assembly</li>
+<li>разыменование сырых указателей</li>
+<li>вызов функций или методов, которые являются <code>unsafe</code> (включая вызов функциичерез FFI см. <a href="std_misc/ffi.html">предыдущую главу</a> книги)</li>
+<li>доступ или изменение статических изменяемых переменных</li>
+<li>реализация небезопасных типажей</li>
 </ul>
-<h3><a class="header" href="#raw-pointers" id="raw-pointers">Raw Pointers</a></h3>
-<p>Raw pointers <code>*</code> and references <code>&amp;T</code> function similarly, but references are
-always safe because they are guaranteed to point to valid data due to the
-borrow checker. Dereferencing a raw pointer can only be done through an unsafe
-block.</p>
+<h3><a class="header" href="#Сырые-указатели" id="Сырые-указатели">Сырые указатели</a></h3>
+<p>Сырые указатели <code>*</code> и ссылки <code>&amp;T</code> имеют схожую функциональность, но ссылки
+всегда безопасны, потому что они гарантированно указывают на достоверные данные за счёт механизма проверки заимствований. Разыменование же сырого указателя можно выполнить только через небезопасный блок.</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     let raw_p: *const u32 = &amp;10;
 
@@ -8619,11 +8605,9 @@ block.</p>
     }
 }
 </code></pre></pre>
-<h3><a class="header" href="#calling-unsafe-functions" id="calling-unsafe-functions">Calling Unsafe Functions</a></h3>
-<p>Some functions can be declared as <code>unsafe</code>, meaning it is the programmer's
-responsibility to ensure correctness instead of the compiler's. One example
-of this is <a href="https://doc.rust-lang.org/std/slice/fn.from_raw_parts.html"><code>std::slice::from_raw_parts</code></a> which will create a slice given a
-pointer to the first element and a length.</p>
+<h3><a class="header" href="#Вызов-небезопасных-функций" id="Вызов-небезопасных-функций">Вызов небезопасных функций</a></h3>
+<p>Некоторые функции могут быть объявлены как <code>unsafe</code>, то есть за корректность этого кода несёт ответственность программист, написавший его, вместо компилятора. Пример -
+это метод <a href="https://doc.rust-lang.org/std/slice/fn.from_raw_parts.html"><code>std::slice::from_raw_parts</code></a>, который создаст срез из указателя на первый элемент и длины.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::slice;
 
 fn main() {
@@ -8634,21 +8618,19 @@ fn main() {
 
     unsafe {
         let my_slice: &amp;[u32] = slice::from_raw_parts(pointer, length);
-        
+
         assert_eq!(some_vector.as_slice(), my_slice);
     }
 }
 </code></pre></pre>
-<p>For <code>slice::from_raw_parts</code>, one of the assumptions which <em>must</em> be upheld is 
-that the pointer passed in points to valid memory and that the memory pointed to
-is of the correct type. If these invariants aren't upheld then the program's 
-behaviour is undefined and there is no knowing what will happen.</p>
+<p>Для <code>slice::from_raw_parts</code> одно из предположений, которое <em>должно</em> быть поддержано,
+что переданный указатель указывает на допустимую память и что в памяти лежит значение правильного типа. Если эти инварианты не поддерживаются, то поведение программы не определено, и неизвестно, что произойдет.</p>
 <h1><a class="header" href="#Совместимость" id="Совместимость">Совместимость</a></h1>
 <p>Rust быстро развивается и из-за этого могут возникнуть определённые проблемы совместимости, не смотря на усилия по обеспечению обратной совместимости везде, где это возможно.</p>
 <ul>
 <li><a href="compatibility/raw_identifiers.html">Сырые идентификаторы</a></li>
 </ul>
-<h1><a class="header" href="#raw-identifiers" id="raw-identifiers">Raw identifiers</a></h1>
+<h1><a class="header" href="#Сырые-идентификаторы" id="Сырые-идентификаторы">Сырые идентификаторы</a></h1>
 <p>В Rust, как и во многих других языках программирования, существует концепция &quot;ключевых слов&quot;.
 Эти идентификаторы что-то значат для языка и из-за этого вы не можете использовать их в качестве названия переменных, именах функций и других местах.
 Сырые идентификаторы позволяют использовать ключевые слова там, где они обычно не разрешены.

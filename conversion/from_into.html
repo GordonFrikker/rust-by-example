@@ -145,23 +145,18 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#from-and-into" id="from-and-into"><code>From</code> and <code>Into</code></a></h1>
-<p>The <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a> and <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into</code></a> traits are inherently linked, and this is actually part of
-its implementation. If you are able to convert type A from type B, then it
-should be easy to believe that we should be able to convert type B to type A.</p>
+                        <h1><a class="header" href="#from-и-into" id="from-и-into"><code>From</code> и <code>Into</code></a></h1>
+<p>Типажи <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a> и <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into</code></a> связаны по своей сути, и это стало частью их реализации. Если вы можете конвертировать тип <code>А</code> в тип <code>В</code>, то будет легко предположить, что мы должны быть в состоянии конвертировать тип <code>В</code> в тип <code>А</code>.</p>
 <h2><a class="header" href="#from" id="from"><code>From</code></a></h2>
-<p>The <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a> trait allows for a type to define how to create itself from another
-type, hence providing a very simple mechanism for converting between several
-types. There are numerous implementations of this trait within the standard
-library for conversion of primitive and common types.</p>
-<p>For example we can easily convert a <code>str</code> into a <code>String</code></p>
+<p>Типаж <a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From</code></a> позволяет типу определить, как он будет создаваться из другого типа, что предоставляет очень простой механизм конвертации между несколькими типами. Есть несколько реализаций этот типажа в стандартной библиотеке для преобразования примитивов и общих типов.</p>
+<p>Для примера, мы можем легко конвертировать <code>str</code> в <code>String</code></p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
-let my_str = &quot;hello&quot;;
+let my_str = &quot;привет&quot;;
 let my_string = String::from(my_str);
 #}</code></pre></pre>
-<p>We can do similar for defining a conversion for our own type.</p>
+<p>Мы можем сделать нечто похожее для определения конвертации для нашего собственного типа.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::convert::From;
 
 #[derive(Debug)]
@@ -177,16 +172,13 @@ impl From&lt;i32&gt; for Number {
 
 fn main() {
     let num = Number::from(30);
-    println!(&quot;My number is {:?}&quot;, num);
+    println!(&quot;Мой номер {:?}&quot;, num);
 }
 </code></pre></pre>
 <h2><a class="header" href="#into" id="into"><code>Into</code></a></h2>
-<p>The <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into</code></a> trait is simply the reciprocal of the <code>From</code> trait. That is, if you
-have implemented the <code>From</code> trait for your type you get the <code>Into</code>
-implementation for free.</p>
-<p>Using the <code>Into</code> trait will typically require specification of the type to
-convert into as the compiler is unable to determine this most of the time.
-However this is a small trade-off considering we get the functionality for free.</p>
+<p>Типаж <a href="https://doc.rust-lang.org/std/convert/trait.Into.html"><code>Into</code></a> является полной противоположностью типажа <code>From</code>. Так что если вы реализовали для вашего типа типаж  <code>From</code>, реализацию типажа <code>Into</code> вы получите бесплатно.</p>
+<p>Использование типажа <code>Into</code> обычно требует спецификации типа, в который мы собираемся конвертировать, так как компилятор чаще всего не может это вывести.
+Однако это небольшой компромисс, учитывая, что данную функциональность мы получаем бесплатно.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::convert::From;
 
 #[derive(Debug)]
@@ -202,9 +194,9 @@ impl From&lt;i32&gt; for Number {
 
 fn main() {
     let int = 5;
-    // Try removing the type declaration
+    // Попробуйте убрать аннотацию типа
     let num: Number = int.into();
-    println!(&quot;My number is {:?}&quot;, num);
+    println!(&quot;Мой номер {:?}&quot;, num);
 }
 </code></pre></pre>
 

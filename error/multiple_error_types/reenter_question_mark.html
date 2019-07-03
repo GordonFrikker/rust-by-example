@@ -145,28 +145,32 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#other-uses-of-" id="other-uses-of-">Other uses of <code>?</code></a></h1>
-<p>Notice in the previous example that our immediate reaction to calling
-<code>parse</code> is to <code>map</code> the error from a library error into a boxed
-error:</p>
+                        <h1><a class="header" href="#Другие-способы-использования-" id="Другие-способы-использования-">Другие способы использования <code>?</code></a></h1>
+<p>Вы обратили внимание, что сразу же после вызова 
+<code>parse</code>, мы в <code>map_err</code> упаковали ошибку 
+из библиотеки?</p>
 <pre><code class="language-rust ignore">.and_then(|s| s.parse::&lt;i32&gt;()
     .map_err(|e| e.into())
 </code></pre>
-<p>Since this is a simple and common operation, it would be convenient if it
-could be elided. Alas, because <code>and_then</code> is not sufficiently flexible, it
-cannot. However, we can instead use <code>?</code>.</p>
-<p><code>?</code> was previously explained as either <code>unwrap</code> or <code>return Err(err)</code>.
-This is only mostly true. It actually means <code>unwrap</code> or
-<code>return Err(From::from(err))</code>. Since <code>From::from</code> is a conversion utility
-between different types, this means that if you <code>?</code> where the error is
-convertible to the return type, it will convert automatically.</p>
-<p>Here, we rewrite the previous example using <code>?</code>. As a result, the
-<code>map_err</code> will go away when <code>From::from</code> is implemented for our error type:</p>
+<p>Это простая и распространённая операция и было бы не плохо, 
+если бы мы могли её опустить. Но из-за того, что 
+<code>and_then</code> недостаточно гибок, мы не можем этого 
+сделать. Однако, тут нам может помочь <code>?</code>.</p>
+<p>Ранее <code>?</code> был рассмотрен как <code>unwrap</code> 
+или <code>return Err(err)</code>. По большей части это правда: на 
+самом деле <code>?</code> означает <code>unwrap</code> или 
+<code>return Err(From::from(err))</code>. Поскольку 
+<code>From::from</code> используется для преобразования между 
+разными типами, применение <code>?</code> к ошибке 
+автоматически преобразует её в возвращаемый тип (при условии, 
+что исходная ошибка может быть в него сконвертирована).</p>
+<p>Теперь мы перепишем наш предыдущий пример с использованием 
+<code>?</code>. В результате у нас пропал <code>map_err</code>, 
+так как для нашего типа реализован <code>From::from</code>:</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::error;
 use std::fmt;
-use std::num::ParseIntError;
 
-// Change the alias to `Box&lt;error::Error&gt;`.
+// Создадим псевдоним с типом ошибки `Box&lt;error::Error&gt;`.
 type Result&lt;T&gt; = std::result::Result&lt;T, Box&lt;error::Error&gt;&gt;;
 
 #[derive(Debug)]
@@ -174,23 +178,24 @@ struct EmptyVec;
 
 impl fmt::Display for EmptyVec {
     fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
-        write!(f, &quot;invalid first item to double&quot;)
+        write!(f, &quot;неверный первый элемент&quot;)
     }
 }
 
 impl error::Error for EmptyVec {
     fn description(&amp;self) -&gt; &amp;str {
-        &quot;invalid first item to double&quot;
+        &quot;неверный первый элемент&quot;
     }
 
     fn cause(&amp;self) -&gt; Option&lt;&amp;error::Error&gt; {
-        // Generic error, underlying cause isn't tracked.
+        // Общая ошибка, основная причина не отслеживается.
         None
     }
 }
 
-// The same structure as before but rather than chain all `Results`
-// and `Options` along, we `?` to get the inner value out immediately.
+// Такая же последовательность, как и раньше, но вместо объединения 
+// всех `Result` и `Option`, мы используем `?` чтобы незамедлительно 
+// получить внутреннее значение.
 fn double_first(vec: Vec&lt;&amp;str&gt;) -&gt; Result&lt;i32&gt; {
     let first = vec.first().ok_or(EmptyVec)?;
     let parsed = first.parse::&lt;i32&gt;()?;
@@ -199,8 +204,8 @@ fn double_first(vec: Vec&lt;&amp;str&gt;) -&gt; Result&lt;i32&gt; {
 
 fn print(result: Result&lt;i32&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;The first doubled is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n)  =&gt; println!(&quot;Удвоенный первый элемент: {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 
@@ -214,12 +219,13 @@ fn main() {
     print(double_first(strings));
 }
 </code></pre></pre>
-<p>This is actually fairly clean now. Compared with the original <code>panic</code>, it
-is very similar to replacing the <code>unwrap</code> calls with <code>?</code> except that the
-return types are <code>Result</code>. As a result, they must be destructured at the
-top level.</p>
-<h3><a class="header" href="#see-also" id="see-also">See also:</a></h3>
-<p><a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From::from</code></a> and <a href="https://doc.rust-lang.org/reference/expressions/operator-expr.html#the--operator"><code>?</code></a></p>
+<p>Сейчас код выглядит довольно чисто. По сравнению с 
+<code>panic</code>, это похоже на замену вызова 
+<code>unwrap</code> на <code>?</code> за исключением того, что 
+возвращаемый тип будет <code>Result</code>. В результате, он 
+может быть обработан уровнем выше.</p>
+<h3><a class="header" href="#Смотрите-также" id="Смотрите-также">Смотрите также:</a></h3>
+<p><a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From::from</code></a> и <a href="https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-question-mark-operator"><code>?</code></a></p>
 
                     </main>
 

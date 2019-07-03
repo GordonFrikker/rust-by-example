@@ -145,19 +145,19 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#to-and-from-strings" id="to-and-from-strings">To and from Strings</a></h1>
-<h2><a class="header" href="#tostring" id="tostring"><code>ToString</code></a></h2>
-<p>To convert any type to a <code>String</code> it is as simple as implementing the <a href="https://doc.rust-lang.org/std/string/trait.ToString.html"><code>ToString</code></a>
-trait for the type.</p>
-<pre><pre class="playpen"><code class="language-rust editable">use std::string::ToString;
+                        <h1><a class="header" href="#fromstr-и-tostring" id="fromstr-и-tostring"><code>FromStr</code> и <code>ToString</code></a></h1>
+<h2><a class="header" href="#Конвертация-в-строку" id="Конвертация-в-строку">Конвертация в строку</a></h2>
+<p>Преобразовать любой тип в <code>String</code> так же просто, как и реализовать для него типаж <a href="https://doc.rust-lang.org/std/string/trait.ToString.html"><code>ToString</code></a>. Вместо того, чтобы делать это напрямую, вы должны реализовать типаж <a href="https://doc.rust-lang.org/std/fmt/trait.Display.html"><code>fmt::Display</code></a>, который автоматически предоставляет реализацию <a href="https://doc.rust-lang.org/std/string/trait.ToString.html"><code>ToString</code></a>, а 
+также позволяет распечатать тип, как обсуждалось в секции <a href="../hello/print.html"><code>print!</code></a>.</p>
+<pre><pre class="playpen"><code class="language-rust editable">use std::fmt;
 
 struct Circle {
     radius: i32
 }
 
-impl ToString for Circle {
-    fn to_string(&amp;self) -&gt; String {
-        format!(&quot;Circle of radius {:?}&quot;, self.radius)
+impl fmt::Display for Circle {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
+        write!(f, &quot;Круг радиусом {}&quot;, self.radius)
     }
 }
 
@@ -166,21 +166,17 @@ fn main() {
     println!(&quot;{}&quot;, circle.to_string());
 }
 </code></pre></pre>
-<h2><a class="header" href="#parsing-a-string" id="parsing-a-string">Parsing a String</a></h2>
-<p>One of the more common types to convert a string into is a number. The idiomatic
-approach to this is to use the <a href="https://doc.rust-lang.org/std/primitive.str.html#method.parse"><code>parse</code></a> function and provide the type for the
-function to parse the string value into, this can be done either without type
-inference or using the 'turbofish' syntax.</p>
-<p>This will convert the string into the type specified so long as the <a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code></a>
-trait is implemented for that type. This is implemented for numerous types
-within the standard library. To obtain this functionality on a user defined type
-simply implement the <a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code></a> trait for that type.</p>
+<h2><a class="header" href="#Парсинг-строки" id="Парсинг-строки">Парсинг строки</a></h2>
+<p>Один из наиболее общим типов конвертации - это преобразование строки в число. Идиоматический подход это сделать при помощи функции <a href="https://doc.rust-lang.org/std/primitive.str.html#method.parse"><code>parse</code></a> и указания типа, в который будем преобразовывать, что можно сделать либо через выведение типа, либо при помощи 'turbofish'-синтаксиса.</p>
+<p>Это преобразует строку в указанный тип при условии, что для этого типа реализован типаж <a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code></a>. 
+Он реализован для множества типов стандартной библиотеки. 
+Чтобы получить эту функциональность для пользовательского типа, надо просто реализовать для этого типа типаж <a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code></a>.</p>
 <pre><pre class="playpen"><code class="language-rust">fn main() {
     let parsed: i32 = &quot;5&quot;.parse().unwrap();
     let turbo_parsed = &quot;10&quot;.parse::&lt;i32&gt;().unwrap();
 
     let sum = parsed + turbo_parsed;
-    println!{&quot;Sum: {:?}&quot;, sum};
+    println!(&quot;Сумма: {:?}&quot;, sum);
 }
 </code></pre></pre>
 
