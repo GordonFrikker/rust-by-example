@@ -1,70 +1,66 @@
-# Defining an error type
+# Объявление типа ошибки
 
-Sometimes it simplifies the code to mask all of the different errors with a
-single type of error.  We'll show this with a custom error.
+Иногда для упрощения кода необходимо скрыть все типы ошибок за какой-то одной ошибкой. Мы скроем их за пользовательской ошибкой.
 
-Rust allows us to define our own error types. In general, a "good" error type:
+Rust позволяет нам определить наш собственный тип ошибок. 
+В общем случае "хороший" тип ошибки должен:
 
-* Represents different errors with the same type
-* Presents nice error messages to the user
-* Is easy to compare with other types
-    - Good: `Err(EmptyVec)`
-    - Bad: `Err("Please use a vector with at least one element".to_owned())`
-* Can hold information about the error
-    - Good: `Err(BadChar(c, position))`
-    - Bad: `Err("+ cannot be used here".to_owned())`
-* Composes well with other errors
+- Представлять разные ошибки с таким же типом
+- Предоставлять хорошее сообщение об ошибке пользователю
+- Легко сравниваться с другими типами
+    - Хорошо: `Err(EmptyVec)`
+    - Плохо: `Err("Пожалуйста, используйте вектор хотя бы с одним элементом".to_owned())`
+- Содержать информацию об ошибке
+    - Хорошо: `Err(BadChar(c, position))`
+    - Плохо: `Err("+ не может быть использован в данном месте".to_owned())`
+- Хорошо сочетаться с другими ошибками
 
 ```rust,editable
 use std::error;
 use std::fmt;
-use std::num::ParseIntError;
 
 type Result<T> = std::result::Result<T, DoubleError>;
 
+// Определите типы ошибок. Они могут быть настроены для наших случаев обработки ошибок.
+// Теперь мы сможем написать наши собственные ошибки, реализовать приведение до основной ошибки
+// или сделать что-то ещё между приведениями.
 #[derive(Debug, Clone)]
-// Define our error types. These may be customized for our error handling cases.
-// Now we will be able to write our own errors, defer to an underlying error
-// implementation, or do something in between.
 struct DoubleError;
 
-// Generation of an error is completely separate from how it is displayed.
-// There's no need to be concerned about cluttering complex logic with the display style.
+// Генерация ошибки полностью отделена от того, как она отображается.
+// Нет необходимости в загромождении сложной логикой построения отображения ошибки.
 //
-// Note that we don't store any extra info about the errors. This means we can't state
-// which string failed to parse without modifying our types to carry that information.
+// Мы не храним дополнительной информации об ошибках. Это означает, что мы не можем вывести строку, которую не удалось обработать, без изменения наших типов.
 impl fmt::Display for DoubleError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "invalid first item to double")
+        write!(f, "неверный первый элемент")
     }
 }
 
-// This is important for other errors to wrap this one.
+// Все ошибки сворачиваются в одну.
 impl error::Error for DoubleError {
-    fn description(&self) -> &str {
-        "invalid first item to double"
-    }
-
-    fn cause(&self) -> Option<&error::Error> {
-        // Generic error, underlying cause isn't tracked.
+    fn source(&self) -> Option<&(dyn error::Error + 'static)> {
+        // Общая ошибка не обрабатывается.
         None
     }
 }
 
 fn double_first(vec: Vec<&str>) -> Result<i32> {
     vec.first()
-       // Change the error to our new type.
-       .ok_or(DoubleError)
-       .and_then(|s| s.parse::<i32>()
-            // Update to the new error type here also.
-            .map_err(|_| DoubleError)
-            .map(|i| 2 * i))
+        // Изменим ошибку на наш новый тип.
+        .ok_or(DoubleError)
+        .and_then(|s| {
+            s.parse::<i32>()
+                // Обновим тип ошибки также здесь.
+                .map_err(|_| DoubleError)
+                .map(|i| 2 * i)
+        })
 }
 
 fn print(result: Result<i32>) {
     match result {
-        Ok(n)  => println!("The first doubled is {}", n),
-        Err(e) => println!("Error: {}", e),
+        Ok(n) => println!("Первое удвоение {}", n),
+        Err(e) => println!("Ошибка: {}", e),
     }
 }
 
