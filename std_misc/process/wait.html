@@ -145,22 +145,20 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#wait" id="wait">Wait</a></h1>
-<p>If you'd like to wait for a <code>process::Child</code> to finish, you must call
-<code>Child::wait</code>, which will return a <code>process::ExitStatus</code>.</p>
+                        <h1><a class="header" href="#Ожидание" id="Ожидание">Ожидание</a></h1>
+<p>Если вы хотите дождаться завершения <code>process::Child</code>, вы должны вызвать <code>Child::wait</code>, который вернёт <code>process::ExitStatus</code>.</p>
 <pre><code class="language-rust ignore">use std::process::Command;
 
 fn main() {
     let mut child = Command::new(&quot;sleep&quot;).arg(&quot;5&quot;).spawn().unwrap();
     let _result = child.wait().unwrap();
 
-    println!(&quot;reached end of main&quot;);
+    println!(&quot;достигнут конец функции main&quot;);
 }
 </code></pre>
 <pre><code class="language-bash">$ rustc wait.rs &amp;&amp; ./wait
-reached end of main
-# `wait` keeps running for 5 seconds
-# `sleep 5` command ends, and then our `wait` program finishes
+# `wait` продолжает работать в течение 5 секунд, пока команда `sleep 5` не завершится
+достигнут конец функции main
 </code></pre>
 
                     </main>

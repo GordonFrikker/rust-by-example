@@ -148,7 +148,7 @@
                         <h1><a class="header" href="#panic" id="panic"><code>panic</code></a></h1>
 <p>Самый простой механизм обработки ошибок, с которым мы познакомимся – это <code>panic</code>.
 Он печатает сообщение с ошибкой, начинает процедуру
-раскрутки стека и, чаще всего, завершает программу. В данном примере мы явно вызывает <code>panic</code> в случае ошибки:</p>
+раскрутки стека и, чаще всего, завершает программу. В данном примере мы явно вызываем <code>panic</code> в случае ошибки:</p>
 <pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">fn give_princess(gift: &amp;str) {
     // Принцесса ненавидит змей, поэтому нам нужно остановиться, если она не одобрит!
     if gift == &quot;змея&quot; { panic!(&quot;AAAaaaaa!!!!&quot;); }

@@ -145,31 +145,30 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#child-processes" id="child-processes">Child processes</a></h1>
-<p>The <code>process::Output</code> struct represents the output of a finished child process,
-and the <code>process::Command</code> struct is a process builder.</p>
+                        <h1><a class="header" href="#Дочерние-процессы" id="Дочерние-процессы">Дочерние процессы</a></h1>
+<p>Структура <code>process::Output</code> представляет результат завершённого дочернего процесса,
+и структура <code>process::Command</code> - это строитель процесса.</p>
 <pre><code class="language-rust editable ignore">use std::process::Command;
 
 fn main() {
     let output = Command::new(&quot;rustc&quot;)
         .arg(&quot;--version&quot;)
         .output().unwrap_or_else(|e| {
-            panic!(&quot;failed to execute process: {}&quot;, e)
+            panic!(&quot;Ошибка выполнения процесса {}&quot;, e)
     });
 
     if output.status.success() {
         let s = String::from_utf8_lossy(&amp;output.stdout);
 
-        print!(&quot;rustc succeeded and stdout was:\n{}&quot;, s);
+        print!(&quot;rustc завершился успешно и вывел в stdout:\n{}&quot;, s);
     } else {
         let s = String::from_utf8_lossy(&amp;output.stderr);
 
-        print!(&quot;rustc failed and stderr was:\n{}&quot;, s);
+        print!(&quot;rustc завершился с ошибкой и вывел в stderr:\n{}&quot;, s);
     }
 }
 </code></pre>
-<p>(You are encouraged to try the previous example with an incorrect flag passed
-to <code>rustc</code>)</p>
+<p>(Рекомендуется попробовать предыдущий пример с неправильным флагом обращения к <code>rustc</code>)</p>
 
                     </main>
 

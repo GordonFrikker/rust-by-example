@@ -145,76 +145,72 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#defining-an-error-type" id="defining-an-error-type">Defining an error type</a></h1>
-<p>Sometimes it simplifies the code to mask all of the different errors with a
-single type of error.  We'll show this with a custom error.</p>
-<p>Rust allows us to define our own error types. In general, a &quot;good&quot; error type:</p>
+                        <h1><a class="header" href="#Объявление-типа-ошибки" id="Объявление-типа-ошибки">Объявление типа ошибки</a></h1>
+<p>Иногда для упрощения кода необходимо скрыть все типы ошибок за какой-то одной ошибкой. Мы скроем их за пользовательской ошибкой.</p>
+<p>Rust позволяет нам определить наш собственный тип ошибок. 
+В общем случае &quot;хороший&quot; тип ошибки должен:</p>
 <ul>
-<li>Represents different errors with the same type</li>
-<li>Presents nice error messages to the user</li>
-<li>Is easy to compare with other types
+<li>Представлять разные ошибки с таким же типом</li>
+<li>Предоставлять хорошее сообщение об ошибке пользователю</li>
+<li>Легко сравниваться с другими типами
 <ul>
-<li>Good: <code>Err(EmptyVec)</code></li>
-<li>Bad: <code>Err(&quot;Please use a vector with at least one element&quot;.to_owned())</code></li>
+<li>Хорошо: <code>Err(EmptyVec)</code></li>
+<li>Плохо: <code>Err(&quot;Пожалуйста, используйте вектор хотя бы с одним элементом&quot;.to_owned())</code></li>
 </ul>
 </li>
-<li>Can hold information about the error
+<li>Содержать информацию об ошибке
 <ul>
-<li>Good: <code>Err(BadChar(c, position))</code></li>
-<li>Bad: <code>Err(&quot;+ cannot be used here&quot;.to_owned())</code></li>
+<li>Хорошо: <code>Err(BadChar(c, position))</code></li>
+<li>Плохо: <code>Err(&quot;+ не может быть использован в данном месте&quot;.to_owned())</code></li>
 </ul>
 </li>
-<li>Composes well with other errors</li>
+<li>Хорошо сочетаться с другими ошибками</li>
 </ul>
 <pre><pre class="playpen"><code class="language-rust editable">use std::error;
 use std::fmt;
-use std::num::ParseIntError;
 
 type Result&lt;T&gt; = std::result::Result&lt;T, DoubleError&gt;;
 
+// Определите типы ошибок. Они могут быть настроены для наших случаев обработки ошибок.
+// Теперь мы сможем написать наши собственные ошибки, реализовать приведение до основной ошибки
+// или сделать что-то ещё между приведениями.
 #[derive(Debug, Clone)]
-// Define our error types. These may be customized for our error handling cases.
-// Now we will be able to write our own errors, defer to an underlying error
-// implementation, or do something in between.
 struct DoubleError;
 
-// Generation of an error is completely separate from how it is displayed.
-// There's no need to be concerned about cluttering complex logic with the display style.
+// Генерация ошибки полностью отделена от того, как она отображается.
+// Нет необходимости в загромождении сложной логикой построения отображения ошибки.
 //
-// Note that we don't store any extra info about the errors. This means we can't state
-// which string failed to parse without modifying our types to carry that information.
+// Мы не храним дополнительной информации об ошибках. Это означает, что мы не можем вывести строку, которую не удалось обработать, без изменения наших типов.
 impl fmt::Display for DoubleError {
     fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
-        write!(f, &quot;invalid first item to double&quot;)
+        write!(f, &quot;неверный первый элемент&quot;)
     }
 }
 
-// This is important for other errors to wrap this one.
+// Все ошибки сворачиваются в одну.
 impl error::Error for DoubleError {
-    fn description(&amp;self) -&gt; &amp;str {
-        &quot;invalid first item to double&quot;
-    }
-
-    fn cause(&amp;self) -&gt; Option&lt;&amp;error::Error&gt; {
-        // Generic error, underlying cause isn't tracked.
+    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn error::Error + 'static)&gt; {
+        // Общая ошибка не обрабатывается.
         None
     }
 }
 
 fn double_first(vec: Vec&lt;&amp;str&gt;) -&gt; Result&lt;i32&gt; {
     vec.first()
-       // Change the error to our new type.
-       .ok_or(DoubleError)
-       .and_then(|s| s.parse::&lt;i32&gt;()
-            // Update to the new error type here also.
-            .map_err(|_| DoubleError)
-            .map(|i| 2 * i))
+        // Изменим ошибку на наш новый тип.
+        .ok_or(DoubleError)
+        .and_then(|s| {
+            s.parse::&lt;i32&gt;()
+                // Обновим тип ошибки также здесь.
+                .map_err(|_| DoubleError)
+                .map(|i| 2 * i)
+        })
 }
 
 fn print(result: Result&lt;i32&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;The first doubled is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n) =&gt; println!(&quot;Первое удвоение {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 

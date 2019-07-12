@@ -373,26 +373,24 @@ Rust предоставляет несколько способов коммен
 отображением текста. Базовая форма двух самых важных рассмотрена ниже:</p>
 <ul>
 <li><code>fmt::Debug</code>: Использует маркер <code>{:?}</code>. Форматирует текст для отладочных целей.</li>
-<li><code>fmt::Display</code>: Использует маркер <code>{}</code>. Форматирует текст в более элегантном,
-удобном для пользователя стиле.</li>
+<li><code>fmt::Display</code>: Использует маркер <code>{}</code>. Форматирует текст в более элегантном,удобном для пользователя стиле.</li>
 </ul>
 <p>В данном примере используется <code>fmt::Display</code>, потому что стандартная библиотека предоставляет
 реализацию для данного типа. Для отображения собственных типов потребуется
 больше дополнительных шагов.</p>
+<p>Реализация типажа <code>fmt::Display</code> автоматически
+предоставляет реализацию типажа
+<a href="https://doc.rust-lang.org/std/string/trait.ToString.html"><code>ToString</code></a>,
+который позволяет нам <a href="hello/../conversion/string.html">конвертировать</a> наш тип в
+<a href="hello/../std/str.html"><code>String</code></a>.</p>
 <h3><a class="header" href="#Задания" id="Задания">Задания</a></h3>
 <ul>
-<li>Исправьте две ошибки в коде выше (смотрите <code>ИСПРАВЬТЕ</code>), чтобы код
-компилировался без ошибок</li>
-<li>Добавьте макрос <code>println!</code>, который выводит: <code>Pi is roughly 3.142</code> c помощью
-управления количеством знаков после запятой. Для выполнения данного задания создайте
-переменную, которая будет хранить в себе значение числа Пи: <code>let pi = 3.141592</code>.
-(Подсказка: вам необходимо ознакомиться с документация по
-<a href="https://doc.rust-lang.org/std/fmt/"><code>std::fmt</code></a>, чтобы узнать,
-как отобразить только часть знаков после запятой в консоли.)</li>
+<li>Исправьте две ошибки в коде выше (смотрите <code>ИСПРАВЬТЕ</code>), чтобы код компилировался без ошибок</li>
+<li>Добавьте макрос <code>println!</code>, который выводит: <code>Pi is roughly 3.142</code> c помощью управления количеством знаков после запятой. Для выполнения данного задания создайте переменную, которая будет хранить в себе значение числа Пи: <code>let pi = 3.141592</code>.(Подсказка: вам необходимо ознакомиться с документация по<a href="https://doc.rust-lang.org/std/fmt/"><code>std::fmt</code></a>, чтобы узнать,как отобразить только часть знаков после запятой в консоли.)</li>
 </ul>
 <h3><a class="header" href="#Смотрите-также-1" id="Смотрите-также-1">Смотрите также</a></h3>
-<p><a href="https://doc.rust-lang.org/std/fmt/"><code>std::fmt</code></a>, <a href="hello/macros.html"><code>макросы</code></a>, <a href="hello/custom_types/structs.html"><code>структуры</code></a>,
-and <a href="hello/trait.html"><code>traits</code></a></p>
+<p><a href="https://doc.rust-lang.org/std/fmt/"><code>std::fmt</code></a>, <a href="hello/../macros.html"><code>макросы</code></a>, <a href="hello/../custom_types/structs.html"><code>структуры</code></a>,
+и <a href="hello/../trait.html"><code>типажи</code></a></p>
 <h1><a class="header" href="#debug" id="debug">Debug</a></h1>
 <p>Все типы, которые будут использовать <code>типажи (traits)</code> форматирования <code>std::fmt</code> требуют
 их реализации для возможности печати. Автоматическая реализация предоставлена только для
@@ -1805,8 +1803,8 @@ fn main() {
     }
 }
 </code></pre></pre>
-<h1><a class="header" href="#for-loops" id="for-loops">for loops</a></h1>
-<h2><a class="header" href="#for-and-range" id="for-and-range">for and range</a></h2>
+<h1><a class="header" href="#Цикл-for" id="Цикл-for">Цикл for</a></h1>
+<h2><a class="header" href="#for-и-диапазоны" id="for-и-диапазоны"><code>for</code> и диапазоны</a></h2>
 <p>Конструкция <code>for in</code> может быть использована для итерации по <code>Итераторам (Iterator)</code>.
 Один из самых простых способов создать итератор это использовать
 диапазон значений <code>a..b</code>. Это вернёт нам значения от <code>a</code> (включительно) до <code>b</code>
@@ -1827,12 +1825,10 @@ fn main() {
     }
 }
 </code></pre></pre>
-<p>Alternatively, <code>a..=b</code> can be used for a range that is inclusive on both ends.
-The above can be written as:</p>
-<pre><pre class="playpen"><code class="language-rust editable">#![feature(inclusive_range_syntax)]
-
-fn main() {
-    // `n` will take the values: 1, 2, ..., 100 in each iteration
+<p>Также, может быть использован диапазон <code>a..=b</code>, включающий оба конца.
+Код выше может быть записан следующим образом:</p>
+<pre><pre class="playpen"><code class="language-rust editable">fn main() {
+    // `n` будет принимать значения: 1, 2, ..., 100 с каждой итерации
     for n in 1..=100 {
         if n % 15 == 0 {
             println!(&quot;fizzbuzz&quot;);
@@ -1846,66 +1842,67 @@ fn main() {
     }
 }
 </code></pre></pre>
-<h2><a class="header" href="#for-and-iterators" id="for-and-iterators">for and iterators</a></h2>
-<p>The <code>for in</code> construct is able to interact with an <code>Iterator</code> in several ways.
-As discussed in with the <a href="flow_control/trait/iter.html">Iterator</a> trait, if not specified, the <code>for</code>
-loop will apply the <code>into_iter</code> function on the collection provided to convert
-the collection into an iterator. This is not the only means to convert a
-collection into an iterator however, the other functions available include
-<code>iter</code> and <code>iter_mut</code>.</p>
-<p>These 3 functions will return different views of the data within your
-collection.</p>
+<h2><a class="header" href="#for-и-итераторы" id="for-и-итераторы"><code>for</code> и итераторы</a></h2>
+<p>Конструкция <code>for in</code> может взаимодействовать с  <code>Iterator</code> разными способами. 
+Как обсуждается далее про <a href="flow_control/../trait/iter.html">типаж <code>Iterator</code></a>, цикл 
+<code>for</code> применяет к предоставленной коллекции метод 
+<code>into_iter</code>, чтобы преобразовать её в итератор. 
+Это не единственный способ преобразования коллекции в 
+итератор, также существуют другие функции: <code>iter</code> и 
+<code>iter_mut</code>.</p>
+<p>Эти 3 функции вернут разные отображения данных в вашей 
+коллекции.</p>
 <ul>
-<li><code>iter</code> - This borrows each element of the collection through each iteration.
-Thus leaving the collection untouched and available for reuse after the loop.</li>
+<li><code>iter</code> - эта функция заимствует каждый элемент коллекции на каждой итерации.Благодаря этому, он оставляет коллекцию нетронутой и доступной для использования после цикла.</li>
 </ul>
-<pre><pre class="playpen"><code class="language-rust editable">fn main() {
+<pre><pre class="playpen"><code class="language-rust ">fn main() {
     let names = vec![&quot;Bob&quot;, &quot;Frank&quot;, &quot;Ferris&quot;];
 
     for name in names.iter() {
         match name {
-            &amp;&quot;Ferris&quot; =&gt; println!(&quot;There is a rustacean among us!&quot;),
-            _ =&gt; println!(&quot;Hello {}&quot;, name),
+            &amp;&quot;Ferris&quot; =&gt; println!(&quot;Программисты Rust вокруг нас!&quot;),
+            _ =&gt; println!(&quot;Привет {}&quot;, name),
         }
     }
 }
 </code></pre></pre>
 <ul>
-<li><code>into_iter</code> - This consumes the collection so that on each iteration the exact
-data is provided. Once the collection has been consumed it is no longer
-available for reuse as it has been 'moved' within the loop.</li>
+<li><code>into_iter</code> - эта функция потребляет коллекцию так что на каждой итерации предоставляются данные.Коллекция больше не доступна для использования так как владение ею перешло в эту функцию.</li>
 </ul>
-<pre><pre class="playpen"><code class="language-rust editable">fn main() {
+<pre><pre class="playpen"><code class="language-rust ">fn main() {
     let names = vec![&quot;Bob&quot;, &quot;Frank&quot;, &quot;Ferris&quot;];
 
     for name in names.into_iter() {
         match name {
-            &quot;Ferris&quot; =&gt; println!(&quot;There is a rustacean among us!&quot;),
-            _ =&gt; println!(&quot;Hello {}&quot;, name),
+            &quot;Ferris&quot; =&gt; println!(&quot;Программисты Rust вокруг нас!&quot;),
+            _ =&gt; println!(&quot;Привет {}&quot;, name),
         }
     }
 }
 </code></pre></pre>
 <ul>
-<li><code>iter_mut</code> - This mutably borrows each element of the collection, allowing for
-the collection to be modified in place.</li>
+<li><code>iter_mut</code> - эта функция делает изменяемое заимствование каждого элемента коллекции, позволяя изменять коллекцию на месте.</li>
 </ul>
-<pre><pre class="playpen"><code class="language-rust editable">fn main() {
+<pre><pre class="playpen"><code class="language-rust ">fn main() {
     let mut names = vec![&quot;Bob&quot;, &quot;Frank&quot;, &quot;Ferris&quot;];
 
     for name in names.iter_mut() {
-        match name {
-            &amp;mut &quot;Ferris&quot; =&gt; println!(&quot;There is a rustacean among us!&quot;),
-            _ =&gt; println!(&quot;Hello {}&quot;, name),
+        *name = match name {
+            &amp;mut &quot;Ferris&quot; =&gt; &quot;Программисты Rust вокруг нас!&quot;,
+            _ =&gt; &quot;Привет&quot;,
         }
     }
+
+    println!(&quot;имена: {:?}&quot;, names);
 }
 </code></pre></pre>
-<p>In the above snippets note the type of <code>match</code> branch, that is the key
-difference in the types or iteration. The difference in type then of course
-implies differing actions that are able to be performed.</p>
+<p>В вышеуказанных кусках кода, обратите на ветку 
+<code>match</code>, которая имеет ключевое отличие в 
+зависимости от типа выполнения итераций. Разница в типе, конечно, 
+подразумевает различные действия, которые могут быть 
+выполнены.</p>
 <h3><a class="header" href="#Смотрите-также-14" id="Смотрите-также-14">Смотрите также:</a></h3>
-<p><a href="flow_control/trait/iter.html">Итераторы (Iterator)</a></p>
+<p><a href="flow_control/../trait/iter.html">Итераторы (Iterator)</a></p>
 <h1><a class="header" href="#match" id="match">match</a></h1>
 <p>Rust предоставляет ключевое слово <code>match</code>, которое используется для проверки на
 соответствие шаблону. <code>match</code> можно использовать как <code>switch</code> в языке C.</p>
@@ -2894,64 +2891,68 @@ fn main() {
 и
 <a href="https://doc.rust-lang.org/core/iter/trait.Iterator.html">Iterator</a>
 реализуют свою часть функций высшего порядка..</p>
-<h1><a class="header" href="#diverging-functions" id="diverging-functions">Diverging functions</a></h1>
-<p>Diverging functions never return. They are marked using <code>!</code>, which is an empty type.</p>
+<h1><a class="header" href="#Расходящиеся-функции" id="Расходящиеся-функции">Расходящиеся функции</a></h1>
+<p>Расходящиеся функции никогда не возвращают результат. Они помечены с помощью <code>!</code>, который является пустым типом.</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
 fn foo() -&gt; ! {
-    panic!(&quot;This call never returns.&quot;);
+    panic!(&quot;Этот вызов никогда не вернёт управление.&quot;);
 }
 #}</code></pre></pre>
-<p>As opposed to all the other types, this one cannot be instantiated, because the
-set of all possible values this type can have is empty. Note, that it is
-different from the <code>()</code> type, which has exactly one possible value.</p>
-<p>For example, this functions returns as usual, although there is no information
-in the return value.</p>
+<p>В отличие от всех других типов, этот не может быть создан, потому что
+набор всех возможных значений этого типа пуст. Обратите 
+внимание, что он отличается от типа <code>()</code>, который 
+имеет ровно одно возможное значение.</p>
+<p>Например, эта функция имеет возвращаемое значение, хотя о нём
+нет информации.</p>
 <pre><pre class="playpen"><code class="language-rust">fn some_fn() {
     ()
 }
 
 fn main() {
     let a: () = some_fn();
-    println!(&quot;This functions returns and you can see this line.&quot;)
+    println!(&quot;Эта функция возвращает управление и вы можете увидеть эту строку.&quot;)
 }
 </code></pre></pre>
-<p>As opposed to this function, which will never return the control back to the caller.</p>
+<p>В отличие от этой функции, которая никогда не вернёт элемент управления вызывающей стороне.</p>
 <pre><code class="language-rust ignore">#![feature(never_type)]
 
 fn main() {
-    let x: ! = panic!(&quot;This call never returns.&quot;);
-    println!(&quot;You will never see this line!&quot;);
+    let x: ! = panic!(&quot;Этот вызов никогда не вернёт управление.&quot;);
+    println!(&quot;вы никогда не увидете эту строку!&quot;);
 }
 </code></pre>
-<p>Although this might seem like an abstract concept, it is in fact very useful and
-often handy. The main advantage of this type is that it can be cast to any other
-one and therefore used at places where an exact type is required, for instance
-in <code>match</code> branches. This allows us to write code like this:</p>
+<p>Хотя это может показаться абстрактным понятием, на самом деле 
+это очень полезно и может пригодится. Главное преимущество 
+этого типа в том, что его можно привести к любому другому типу и 
+поэтому используется в местах, где требуется точный тип, 
+например в ветвях <code>match</code>. Это позволяет нам писать 
+такой код:</p>
 <pre><pre class="playpen"><code class="language-rust">fn main() {
     fn sum_odd_numbers(up_to: u32) -&gt; u32 {
         let mut acc = 0;
         for i in 0..up_to {
-            // Notice that the return type of this match expression must be u32
-            // because of the type of the &quot;addition&quot; variable.
+            // Обратите внимание, что возвращаемый тип этого выражения match должен быть u32
+            // потому что такой тип в переменной &quot;addition&quot; .
             let addition: u32 = match i%2 == 1 {
-                // The &quot;i&quot; variable is of type u32, which is perfectly fine.
+                // Переменная &quot;i&quot; типа u32, что совершенно нормально.
                 true =&gt; i,
-                // On the other hand, the &quot;continue&quot; expression does not return
-                // u32, but it is still fine, because it never returns and therefore
-                // does not violate the type requirements of the match expression.
+                // С другой стороны выражение &quot;continue&quot; не возвращает
+                // u32, но это тоже нормально, потому что это тип не возвращающий управление,
+                // не нарушает требования к типу выражения match.
                 false =&gt; continue,
             };
             acc += addition;
         }
         acc
     }
-    println!(&quot;Sum of odd numbers up to 9 (excluding): {}&quot;, sum_odd_numbers(9));
+    println!(&quot;Сумма нечётных чисел до 9 (исключая): {}&quot;, sum_odd_numbers(9));
 }
 </code></pre></pre>
-<p>It is also the return type of functions that loop forever (e.g. <code>loop {}</code>) like
-network servers or functions that terminates the process (e.g. <code>exit()</code>).</p>
+<p>Это также возвращаемый тип функций, которые содержат вечный 
+цикл (например,  <code>loop {}</code>), как сетевые серверы или 
+функции, завершающие процесс (например,  <code>exit()</code>).</p>
 <h1><a class="header" href="#Модули" id="Модули">Модули</a></h1>
 <p>Rust предоставляет мощную систему модулей, которая используется
 для иерархического разделения кода на логические единицы (модули) и
@@ -3128,6 +3129,19 @@ fn main() {
 <h1><a class="header" href="#Декларация-use-1" id="Декларация-use-1">Декларация <code>use</code></a></h1>
 <p>Декларация <code>use</code> используется, чтобы связать полный путь с новым именем,
 что упрощает доступ.</p>
+<pre><code class="language-rust editable ignore">// extern crate deeply; // обычно эта строка есть и она не закомментирована!
+
+use crate::deeply::nested::{
+    my_first_function,
+    my_second_function,
+    AndATraitType
+};
+
+fn main() {
+    my_first_function();
+}
+</code></pre>
+<p>Вы можете использовать ключевое слово <code>as</code>, что импортировать сущности и функции под другим именем:</p>
 <pre><pre class="playpen"><code class="language-rust editable">// Привязать путь `deeply::nested::function` к `other_function`.
 use deeply::nested::function as other_function;
 
@@ -3300,7 +3314,7 @@ pub fn public_function() {
 будет объединено с файлом контейнера <em>перед</em> его компиляцией.
 Другими словами, модули <em>не</em> собираются отдельно, собираются лишь контейнеры.</p>
 <p>Контейнер может быть скомпилирован в исполняемый файл или в библиотеку.
-По умолчанию, <code>rustc</code> создаёт исполняемый файл из контейнера.
+По умолчанию, <code>rustc</code> создаёт из контейнера исполняемый файл.
 Это поведение может быть изменено добавлением флага <code>--crate-type</code> к <code>rustc</code>.</p>
 <h1><a class="header" href="#Библиотеки" id="Библиотеки">Библиотеки</a></h1>
 <p>Давайте создадим библиотеку и посмотрим, как связать её с другим контейнером.</p>
@@ -5747,7 +5761,7 @@ fn main() {
 <h1><a class="header" href="#panic" id="panic"><code>panic</code></a></h1>
 <p>Самый простой механизм обработки ошибок, с которым мы познакомимся – это <code>panic</code>.
 Он печатает сообщение с ошибкой, начинает процедуру
-раскрутки стека и, чаще всего, завершает программу. В данном примере мы явно вызывает <code>panic</code> в случае ошибки:</p>
+раскрутки стека и, чаще всего, завершает программу. В данном примере мы явно вызываем <code>panic</code> в случае ошибки:</p>
 <pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">fn give_princess(gift: &amp;str) {
     // Принцесса ненавидит змей, поэтому нам нужно остановиться, если она не одобрит!
     if gift == &quot;змея&quot; { panic!(&quot;AAAaaaaa!!!!&quot;); }
@@ -6287,76 +6301,72 @@ fn main() {
     println!(&quot;Первое удвоенное: {:?}&quot;, double_first(strings));
 }
 </code></pre></pre>
-<h1><a class="header" href="#defining-an-error-type" id="defining-an-error-type">Defining an error type</a></h1>
-<p>Sometimes it simplifies the code to mask all of the different errors with a
-single type of error.  We'll show this with a custom error.</p>
-<p>Rust allows us to define our own error types. In general, a &quot;good&quot; error type:</p>
+<h1><a class="header" href="#Объявление-типа-ошибки" id="Объявление-типа-ошибки">Объявление типа ошибки</a></h1>
+<p>Иногда для упрощения кода необходимо скрыть все типы ошибок за какой-то одной ошибкой. Мы скроем их за пользовательской ошибкой.</p>
+<p>Rust позволяет нам определить наш собственный тип ошибок. 
+В общем случае &quot;хороший&quot; тип ошибки должен:</p>
 <ul>
-<li>Represents different errors with the same type</li>
-<li>Presents nice error messages to the user</li>
-<li>Is easy to compare with other types
+<li>Представлять разные ошибки с таким же типом</li>
+<li>Предоставлять хорошее сообщение об ошибке пользователю</li>
+<li>Легко сравниваться с другими типами
 <ul>
-<li>Good: <code>Err(EmptyVec)</code></li>
-<li>Bad: <code>Err(&quot;Please use a vector with at least one element&quot;.to_owned())</code></li>
+<li>Хорошо: <code>Err(EmptyVec)</code></li>
+<li>Плохо: <code>Err(&quot;Пожалуйста, используйте вектор хотя бы с одним элементом&quot;.to_owned())</code></li>
 </ul>
 </li>
-<li>Can hold information about the error
+<li>Содержать информацию об ошибке
 <ul>
-<li>Good: <code>Err(BadChar(c, position))</code></li>
-<li>Bad: <code>Err(&quot;+ cannot be used here&quot;.to_owned())</code></li>
+<li>Хорошо: <code>Err(BadChar(c, position))</code></li>
+<li>Плохо: <code>Err(&quot;+ не может быть использован в данном месте&quot;.to_owned())</code></li>
 </ul>
 </li>
-<li>Composes well with other errors</li>
+<li>Хорошо сочетаться с другими ошибками</li>
 </ul>
 <pre><pre class="playpen"><code class="language-rust editable">use std::error;
 use std::fmt;
-use std::num::ParseIntError;
 
 type Result&lt;T&gt; = std::result::Result&lt;T, DoubleError&gt;;
 
+// Определите типы ошибок. Они могут быть настроены для наших случаев обработки ошибок.
+// Теперь мы сможем написать наши собственные ошибки, реализовать приведение до основной ошибки
+// или сделать что-то ещё между приведениями.
 #[derive(Debug, Clone)]
-// Define our error types. These may be customized for our error handling cases.
-// Now we will be able to write our own errors, defer to an underlying error
-// implementation, or do something in between.
 struct DoubleError;
 
-// Generation of an error is completely separate from how it is displayed.
-// There's no need to be concerned about cluttering complex logic with the display style.
+// Генерация ошибки полностью отделена от того, как она отображается.
+// Нет необходимости в загромождении сложной логикой построения отображения ошибки.
 //
-// Note that we don't store any extra info about the errors. This means we can't state
-// which string failed to parse without modifying our types to carry that information.
+// Мы не храним дополнительной информации об ошибках. Это означает, что мы не можем вывести строку, которую не удалось обработать, без изменения наших типов.
 impl fmt::Display for DoubleError {
     fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
-        write!(f, &quot;invalid first item to double&quot;)
+        write!(f, &quot;неверный первый элемент&quot;)
     }
 }
 
-// This is important for other errors to wrap this one.
+// Все ошибки сворачиваются в одну.
 impl error::Error for DoubleError {
-    fn description(&amp;self) -&gt; &amp;str {
-        &quot;invalid first item to double&quot;
-    }
-
-    fn cause(&amp;self) -&gt; Option&lt;&amp;error::Error&gt; {
-        // Generic error, underlying cause isn't tracked.
+    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn error::Error + 'static)&gt; {
+        // Общая ошибка не обрабатывается.
         None
     }
 }
 
 fn double_first(vec: Vec&lt;&amp;str&gt;) -&gt; Result&lt;i32&gt; {
     vec.first()
-       // Change the error to our new type.
-       .ok_or(DoubleError)
-       .and_then(|s| s.parse::&lt;i32&gt;()
-            // Update to the new error type here also.
-            .map_err(|_| DoubleError)
-            .map(|i| 2 * i))
+        // Изменим ошибку на наш новый тип.
+        .ok_or(DoubleError)
+        .and_then(|s| {
+            s.parse::&lt;i32&gt;()
+                // Обновим тип ошибки также здесь.
+                .map_err(|_| DoubleError)
+                .map(|i| 2 * i)
+        })
 }
 
 fn print(result: Result&lt;i32&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;The first doubled is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n) =&gt; println!(&quot;Первое удвоение {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 
@@ -6518,8 +6528,8 @@ fn main() {
 может быть обработан уровнем выше.</p>
 <h3><a class="header" href="#Смотрите-также-48" id="Смотрите-также-48">Смотрите также:</a></h3>
 <p><a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From::from</code></a> и <a href="https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-question-mark-operator"><code>?</code></a></p>
-<h1><a class="header" href="#wrapping-errors" id="wrapping-errors">Wrapping errors</a></h1>
-<p>An alternative to boxing errors is to wrap them in your own error type.</p>
+<h1><a class="header" href="#Оборачивание-ошибок" id="Оборачивание-ошибок">Оборачивание ошибок</a></h1>
+<p>Альтернативой упаковке ошибок является оборачивание их в ваш собственный тип.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::error;
 use std::num::ParseIntError;
 use std::fmt;
@@ -6529,8 +6539,8 @@ type Result&lt;T&gt; = std::result::Result&lt;T, DoubleError&gt;;
 #[derive(Debug)]
 enum DoubleError {
     EmptyVec,
-    // We will defer to the parse error implementation for their error.
-    // Supplying extra info requires adding more data to the type.
+    // Мы не будем обрабатывать ошибку разбора сами, а передадим её в программу.
+    // Предоставление дополнительной информации требует добавления дополнительных данных к типу
     Parse(ParseIntError),
 }
 
@@ -6538,36 +6548,28 @@ impl fmt::Display for DoubleError {
     fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
         match *self {
             DoubleError::EmptyVec =&gt;
-                write!(f, &quot;please use a vector with at least one element&quot;),
-            // This is a wrapper, so defer to the underlying types' implementation of `fmt`.
+                write!(f, &quot;пожалуйста используйте вектор хотя бы с одним элементом&quot;),
+            // Это адаптер, так что обратимся к нижележащей реализации `fmt`.
             DoubleError::Parse(ref e) =&gt; e.fmt(f),
         }
     }
 }
 
 impl error::Error for DoubleError {
-    fn description(&amp;self) -&gt; &amp;str {
-        match *self {
-            DoubleError::EmptyVec =&gt; &quot;empty vectors not allowed&quot;,
-            // This already impls `Error`, so defer to its own implementation.
-            DoubleError::Parse(ref e) =&gt; e.description(),
-        }
-    }
-
-    fn cause(&amp;self) -&gt; Option&lt;&amp;error::Error&gt; {
+    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn error::Error + 'static)&gt; {
         match *self {
             DoubleError::EmptyVec =&gt; None,
-            // The cause is the underlying implementation error type. Is implicitly
-            // cast to the trait object `&amp;error::Error`. This works because the
-            // underlying type already implements the `Error` trait.
+            // Причиной ошибки является адаптированный тип. Здесь происходит
+            // неявное преобразование к типажу `&amp;error::Error`. Это работает
+            // так как основной тип реализует типаж `Error`.
             DoubleError::Parse(ref e) =&gt; Some(e),
         }
     }
 }
 
-// Implement the conversion from `ParseIntError` to `DoubleError`.
-// This will be automatically called by `?` if a `ParseIntError`
-// needs to be converted into a `DoubleError`.
+// Реализуем преобразование из `ParseIntError` в `DoubleError`.
+// Это преобразование будет автоматически вызвано оператором `?`, 
+// если будет необходимо преобразовать `ParseIntError` в `DoubleError`.
 impl From&lt;ParseIntError&gt; for DoubleError {
     fn from(err: ParseIntError) -&gt; DoubleError {
         DoubleError::Parse(err)
@@ -6583,8 +6585,8 @@ fn double_first(vec: Vec&lt;&amp;str&gt;) -&gt; Result&lt;i32&gt; {
 
 fn print(result: Result&lt;i32&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;The first doubled is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n)  =&gt; println!(&quot;Первое удвоение {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 
@@ -6598,11 +6600,11 @@ fn main() {
     print(double_first(strings));
 }
 </code></pre></pre>
-<p>This adds a bit more boilerplate for handling errors and might not be needed in
-all applications. There are some libraries that can take care of the boilerplate
-for you.</p>
-<h3><a class="header" href="#see-also-12" id="see-also-12">See also:</a></h3>
-<p><a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From::from</code></a> and <a href="error/multiple_error_types/custom_types/enum.html"><code>Enums</code></a></p>
+<p>Это добавляет чуть больше шаблонного кода для обработки ошибок 
+и может быть не нужно всем приложениям. Есть библиотеки, 
+которые могут избавить вас от написания этого шаблонного кода.</p>
+<h3><a class="header" href="#Смотрите-также-49" id="Смотрите-также-49">Смотрите также:</a></h3>
+<p><a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From::from</code></a> и <a href="error/multiple_error_types/../../custom_types/enum.html"><code>Enums</code></a></p>
 <h1><a class="header" href="#iterating-over-results" id="iterating-over-results">Iterating over <code>Result</code>s</a></h1>
 <p>An <code>Iter::map</code> operation might fail, for example:</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
@@ -6676,7 +6678,7 @@ can be turned into a result with a vector (<code>Result&lt;Vec&lt;T&gt;, E&gt;</
 <li>типы для обработки ошибок: <code>Result&lt;i32, i32&gt;</code></li>
 <li>указатели на объекты в куче: <code>Box&lt;i32&gt;</code></li>
 </ul>
-<h3><a class="header" href="#Смотрите-также-49" id="Смотрите-также-49">Смотрите также:</a></h3>
+<h3><a class="header" href="#Смотрите-также-50" id="Смотрите-также-50">Смотрите также:</a></h3>
 <p><a href="primitives.html">Примитивы</a> и <a href="https://doc.rust-lang.org/std/"><code>std</code></a></p>
 <h1><a class="header" href="#box-стек-и-куча" id="box-стек-и-куча"><code>Box</code>, стек и куча</a></h1>
 <p>Все значения в Rust по умолчанию аллоцируются на стеке. Значения могут быть <em>упакованы</em>
@@ -7401,34 +7403,33 @@ fn main() {
 <li>Операции файлового ввода/вывода</li>
 </ul>
 <p>Они расширяют возможности, которые предоставляют <a href="primitives.html">примитивы</a>.</p>
-<h3><a class="header" href="#Смотрите-также-50" id="Смотрите-также-50">Смотрите также:</a></h3>
+<h3><a class="header" href="#Смотрите-также-51" id="Смотрите-также-51">Смотрите также:</a></h3>
 <p><a href="primitives.html">примитивы</a> и <a href="https://doc.rust-lang.org/std/">стандартная библиотека</a></p>
 <h1><a class="header" href="#Потоки" id="Потоки">Потоки</a></h1>
-<p>В Rust имеется механизм для запуска потоков ОС посредством функции <code>scoped</code>,
-которая принимает перемещающее окружение замыкания в качестве аргумента.</p>
+<p>Rust предоставляет механизм для создания собственных потоков операционной системы через функцию <code>spawn</code>. Аргументом этой функции является замыкание, которое принимает владение захваченным ею окружением.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::thread;
 
 static NTHREADS: i32 = 10;
 
-// Это основной поток `main`
+// Это главный поток `main`
 fn main() {
-    // Создадим вектор, в котором будет хранить созданные потоки.
+    // Создаём вектор дочерних потоков.
     let mut children = vec![];
 
     for i in 0..NTHREADS {
-        // Запустить ещё один поток
+        // Создаём очередной поток
         children.push(thread::spawn(move || {
-            println!(&quot;Это поток под номером  {}&quot;, i)
+            println!(&quot;этот поток номер {}&quot;, i);
         }));
     }
 
     for child in children {
-        // Ждём завершения работы потока. Возвращаем результат.
+        // Ждём пока поток завершится и вернёт результат.
         let _ = child.join();
     }
 }
 </code></pre></pre>
-<p>Эти потоки управляются ОС.</p>
+<p>Эти потоки будут запланированы ОС.</p>
 <h1><a class="header" href="#testcase-map-reduce" id="testcase-map-reduce">Testcase: map-reduce</a></h1>
 <p>Rust makes it very easy to parallelise data processing, without many of the headaches traditionally associated with such an attempt.</p>
 <p>The standard library provides great threading primitives out of the box.
@@ -7553,7 +7554,7 @@ fn main() {
 What if the user decides to insert a lot of spaces? Do we <em>really</em> want to spawn 2,000 threads?
 Modify the program so that the data is always chunked into a limited number of chunks,
 defined by a static constant at the beginning of the program.</p>
-<h3><a class="header" href="#see-also-13" id="see-also-13">See also:</a></h3>
+<h3><a class="header" href="#see-also-12" id="see-also-12">See also:</a></h3>
 <ul>
 <li><a href="std_misc/threads/std_misc/threads.html">Threads</a></li>
 <li><a href="std_misc/threads/std/vec.html">vectors</a> and <a href="std_misc/threads/trait/iter.html">iterators</a></li>
@@ -7640,7 +7641,7 @@ fn main() {
 </code></pre></pre>
 <p>Be sure to check at other <code>Path</code> methods (<code>posix::Path</code> or <code>windows::Path</code>) and
 the <code>Metadata</code> struct.</p>
-<h3><a class="header" href="#see-also-14" id="see-also-14">See also</a></h3>
+<h3><a class="header" href="#see-also-13" id="see-also-13">See also</a></h3>
 <p><a href="https://doc.rust-lang.org/std/ffi/struct.OsStr.html">OsStr</a> and <a href="https://doc.rust-lang.org/std/fs/struct.Metadata.html">Metadata</a>.</p>
 <h1><a class="header" href="#file-io" id="file-io">File I/O</a></h1>
 <p>The <code>File</code> struct represents a file that has been opened (it wraps a file
@@ -7787,31 +7788,30 @@ $ rustc read_lines.rs &amp;&amp; ./read_lines
 </code></pre>
 <p>This process is more efficient than creating a <code>String</code> in memory
 especially working with larger files.</p>
-<h1><a class="header" href="#child-processes" id="child-processes">Child processes</a></h1>
-<p>The <code>process::Output</code> struct represents the output of a finished child process,
-and the <code>process::Command</code> struct is a process builder.</p>
+<h1><a class="header" href="#Дочерние-процессы" id="Дочерние-процессы">Дочерние процессы</a></h1>
+<p>Структура <code>process::Output</code> представляет результат завершённого дочернего процесса,
+и структура <code>process::Command</code> - это строитель процесса.</p>
 <pre><code class="language-rust editable ignore">use std::process::Command;
 
 fn main() {
     let output = Command::new(&quot;rustc&quot;)
         .arg(&quot;--version&quot;)
         .output().unwrap_or_else(|e| {
-            panic!(&quot;failed to execute process: {}&quot;, e)
+            panic!(&quot;Ошибка выполнения процесса {}&quot;, e)
     });
 
     if output.status.success() {
         let s = String::from_utf8_lossy(&amp;output.stdout);
 
-        print!(&quot;rustc succeeded and stdout was:\n{}&quot;, s);
+        print!(&quot;rustc завершился успешно и вывел в stdout:\n{}&quot;, s);
     } else {
         let s = String::from_utf8_lossy(&amp;output.stderr);
 
-        print!(&quot;rustc failed and stderr was:\n{}&quot;, s);
+        print!(&quot;rustc завершился с ошибкой и вывел в stderr:\n{}&quot;, s);
     }
 }
 </code></pre>
-<p>(You are encouraged to try the previous example with an incorrect flag passed
-to <code>rustc</code>)</p>
+<p>(Рекомендуется попробовать предыдущий пример с неправильным флагом обращения к <code>rustc</code>)</p>
 <h1><a class="header" href="#pipes" id="pipes">Pipes</a></h1>
 <p>The <code>std::Child</code> struct represents a running child process, and exposes the
 <code>stdin</code>, <code>stdout</code> and <code>stderr</code> handles for interaction with the underlying
@@ -7858,22 +7858,20 @@ fn main() {
     }
 }
 </code></pre>
-<h1><a class="header" href="#wait" id="wait">Wait</a></h1>
-<p>If you'd like to wait for a <code>process::Child</code> to finish, you must call
-<code>Child::wait</code>, which will return a <code>process::ExitStatus</code>.</p>
+<h1><a class="header" href="#Ожидание" id="Ожидание">Ожидание</a></h1>
+<p>Если вы хотите дождаться завершения <code>process::Child</code>, вы должны вызвать <code>Child::wait</code>, который вернёт <code>process::ExitStatus</code>.</p>
 <pre><code class="language-rust ignore">use std::process::Command;
 
 fn main() {
     let mut child = Command::new(&quot;sleep&quot;).arg(&quot;5&quot;).spawn().unwrap();
     let _result = child.wait().unwrap();
 
-    println!(&quot;reached end of main&quot;);
+    println!(&quot;достигнут конец функции main&quot;);
 }
 </code></pre>
 <pre><code class="language-bash">$ rustc wait.rs &amp;&amp; ./wait
-reached end of main
-# `wait` keeps running for 5 seconds
-# `sleep 5` command ends, and then our `wait` program finishes
+# `wait` продолжает работать в течение 5 секунд, пока команда `sleep 5` не завершится
+достигнут конец функции main
 </code></pre>
 <h1><a class="header" href="#filesystem-operations" id="filesystem-operations">Filesystem Operations</a></h1>
 <p>The <code>std::io::fs</code> module contains several functions that deal with the
@@ -8004,7 +8002,7 @@ a
     Ok(s)
 }
 </code></pre>
-<h3><a class="header" href="#see-also-15" id="see-also-15">See also:</a></h3>
+<h3><a class="header" href="#see-also-14" id="see-also-14">See also:</a></h3>
 <p><a href="std_misc/attribute/cfg.html"><code>cfg!</code></a></p>
 <h1><a class="header" href="#program-arguments" id="program-arguments">Program arguments</a></h1>
 <h2><a class="header" href="#standard-library" id="standard-library">Standard Library</a></h2>
@@ -8188,7 +8186,7 @@ impl fmt::Debug for Complex {
 <ul>
 <li><a href="testing/dev_dependencies.html">Dev-dependencies</a></li>
 </ul>
-<h2><a class="header" href="#Смотрите-также-51" id="Смотрите-также-51">Смотрите также:</a></h2>
+<h2><a class="header" href="#Смотрите-также-52" id="Смотрите-также-52">Смотрите также:</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch11-00-testing.html">Глава о тестировании</a> в &quot;The Rust Programming Language&quot;</li>
 <li><a href="https://rust-lang-nursery.github.io/api-guidelines/documentation.html">Описание API</a> для тестирования примеров из документации.</li>
@@ -8483,7 +8481,7 @@ pub fn try_div(a: i32, b: i32) -&gt; Result&lt;i32, String&gt; {
     }
 }
 </code></pre>
-<h2><a class="header" href="#see-also-16" id="see-also-16">See Also</a></h2>
+<h2><a class="header" href="#see-also-15" id="see-also-15">See Also</a></h2>
 <ul>
 <li><a href="https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md">RFC505</a> on documentation style</li>
 <li><a href="https://rust-lang-nursery.github.io/api-guidelines/documentation.html">API Guidelines</a> on documentation guidelines</li>
@@ -8582,7 +8580,7 @@ mod tests {
     }
 }
 </code></pre>
-<h2><a class="header" href="#Смотрите-также-52" id="Смотрите-также-52">Смотрите также:</a></h2>
+<h2><a class="header" href="#Смотрите-также-53" id="Смотрите-также-53">Смотрите также:</a></h2>
 <p>Документация <a href="http://doc.crates.io/specifying-dependencies.html">Cargo</a> по указанию зависимостей.</p>
 <h1><a class="header" href="#Небезопасные-операции" id="Небезопасные-операции">Небезопасные операции</a></h1>
 <p>В качестве введения в этот раздел процитируем <a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html">официальную документацию</a>,

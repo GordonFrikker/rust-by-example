@@ -148,6 +148,19 @@
                         <h1><a class="header" href="#Декларация-use" id="Декларация-use">Декларация <code>use</code></a></h1>
 <p>Декларация <code>use</code> используется, чтобы связать полный путь с новым именем,
 что упрощает доступ.</p>
+<pre><code class="language-rust editable ignore">// extern crate deeply; // обычно эта строка есть и она не закомментирована!
+
+use crate::deeply::nested::{
+    my_first_function,
+    my_second_function,
+    AndATraitType
+};
+
+fn main() {
+    my_first_function();
+}
+</code></pre>
+<p>Вы можете использовать ключевое слово <code>as</code>, что импортировать сущности и функции под другим именем:</p>
 <pre><pre class="playpen"><code class="language-rust editable">// Привязать путь `deeply::nested::function` к `other_function`.
 use deeply::nested::function as other_function;
 

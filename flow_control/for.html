@@ -145,8 +145,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#for-loops" id="for-loops">for loops</a></h1>
-<h2><a class="header" href="#for-and-range" id="for-and-range">for and range</a></h2>
+                        <h1><a class="header" href="#Цикл-for" id="Цикл-for">Цикл for</a></h1>
+<h2><a class="header" href="#for-и-диапазоны" id="for-и-диапазоны"><code>for</code> и диапазоны</a></h2>
 <p>Конструкция <code>for in</code> может быть использована для итерации по <code>Итераторам (Iterator)</code>.
 Один из самых простых способов создать итератор это использовать
 диапазон значений <code>a..b</code>. Это вернёт нам значения от <code>a</code> (включительно) до <code>b</code>
@@ -167,12 +167,10 @@
     }
 }
 </code></pre></pre>
-<p>Alternatively, <code>a..=b</code> can be used for a range that is inclusive on both ends.
-The above can be written as:</p>
-<pre><pre class="playpen"><code class="language-rust editable">#![feature(inclusive_range_syntax)]
-
-fn main() {
-    // `n` will take the values: 1, 2, ..., 100 in each iteration
+<p>Также, может быть использован диапазон <code>a..=b</code>, включающий оба конца.
+Код выше может быть записан следующим образом:</p>
+<pre><pre class="playpen"><code class="language-rust editable">fn main() {
+    // `n` будет принимать значения: 1, 2, ..., 100 с каждой итерации
     for n in 1..=100 {
         if n % 15 == 0 {
             println!(&quot;fizzbuzz&quot;);
@@ -186,66 +184,67 @@ fn main() {
     }
 }
 </code></pre></pre>
-<h2><a class="header" href="#for-and-iterators" id="for-and-iterators">for and iterators</a></h2>
-<p>The <code>for in</code> construct is able to interact with an <code>Iterator</code> in several ways.
-As discussed in with the <a href="trait/iter.html">Iterator</a> trait, if not specified, the <code>for</code>
-loop will apply the <code>into_iter</code> function on the collection provided to convert
-the collection into an iterator. This is not the only means to convert a
-collection into an iterator however, the other functions available include
-<code>iter</code> and <code>iter_mut</code>.</p>
-<p>These 3 functions will return different views of the data within your
-collection.</p>
+<h2><a class="header" href="#for-и-итераторы" id="for-и-итераторы"><code>for</code> и итераторы</a></h2>
+<p>Конструкция <code>for in</code> может взаимодействовать с  <code>Iterator</code> разными способами. 
+Как обсуждается далее про <a href="../trait/iter.html">типаж <code>Iterator</code></a>, цикл 
+<code>for</code> применяет к предоставленной коллекции метод 
+<code>into_iter</code>, чтобы преобразовать её в итератор. 
+Это не единственный способ преобразования коллекции в 
+итератор, также существуют другие функции: <code>iter</code> и 
+<code>iter_mut</code>.</p>
+<p>Эти 3 функции вернут разные отображения данных в вашей 
+коллекции.</p>
 <ul>
-<li><code>iter</code> - This borrows each element of the collection through each iteration.
-Thus leaving the collection untouched and available for reuse after the loop.</li>
+<li><code>iter</code> - эта функция заимствует каждый элемент коллекции на каждой итерации.Благодаря этому, он оставляет коллекцию нетронутой и доступной для использования после цикла.</li>
 </ul>
-<pre><pre class="playpen"><code class="language-rust editable">fn main() {
+<pre><pre class="playpen"><code class="language-rust ">fn main() {
     let names = vec![&quot;Bob&quot;, &quot;Frank&quot;, &quot;Ferris&quot;];
 
     for name in names.iter() {
         match name {
-            &amp;&quot;Ferris&quot; =&gt; println!(&quot;There is a rustacean among us!&quot;),
-            _ =&gt; println!(&quot;Hello {}&quot;, name),
+            &amp;&quot;Ferris&quot; =&gt; println!(&quot;Программисты Rust вокруг нас!&quot;),
+            _ =&gt; println!(&quot;Привет {}&quot;, name),
         }
     }
 }
 </code></pre></pre>
 <ul>
-<li><code>into_iter</code> - This consumes the collection so that on each iteration the exact
-data is provided. Once the collection has been consumed it is no longer
-available for reuse as it has been 'moved' within the loop.</li>
+<li><code>into_iter</code> - эта функция потребляет коллекцию так что на каждой итерации предоставляются данные.Коллекция больше не доступна для использования так как владение ею перешло в эту функцию.</li>
 </ul>
-<pre><pre class="playpen"><code class="language-rust editable">fn main() {
+<pre><pre class="playpen"><code class="language-rust ">fn main() {
     let names = vec![&quot;Bob&quot;, &quot;Frank&quot;, &quot;Ferris&quot;];
 
     for name in names.into_iter() {
         match name {
-            &quot;Ferris&quot; =&gt; println!(&quot;There is a rustacean among us!&quot;),
-            _ =&gt; println!(&quot;Hello {}&quot;, name),
+            &quot;Ferris&quot; =&gt; println!(&quot;Программисты Rust вокруг нас!&quot;),
+            _ =&gt; println!(&quot;Привет {}&quot;, name),
         }
     }
 }
 </code></pre></pre>
 <ul>
-<li><code>iter_mut</code> - This mutably borrows each element of the collection, allowing for
-the collection to be modified in place.</li>
+<li><code>iter_mut</code> - эта функция делает изменяемое заимствование каждого элемента коллекции, позволяя изменять коллекцию на месте.</li>
 </ul>
-<pre><pre class="playpen"><code class="language-rust editable">fn main() {
+<pre><pre class="playpen"><code class="language-rust ">fn main() {
     let mut names = vec![&quot;Bob&quot;, &quot;Frank&quot;, &quot;Ferris&quot;];
 
     for name in names.iter_mut() {
-        match name {
-            &amp;mut &quot;Ferris&quot; =&gt; println!(&quot;There is a rustacean among us!&quot;),
-            _ =&gt; println!(&quot;Hello {}&quot;, name),
+        *name = match name {
+            &amp;mut &quot;Ferris&quot; =&gt; &quot;Программисты Rust вокруг нас!&quot;,
+            _ =&gt; &quot;Привет&quot;,
         }
     }
+
+    println!(&quot;имена: {:?}&quot;, names);
 }
 </code></pre></pre>
-<p>In the above snippets note the type of <code>match</code> branch, that is the key
-difference in the types or iteration. The difference in type then of course
-implies differing actions that are able to be performed.</p>
+<p>В вышеуказанных кусках кода, обратите на ветку 
+<code>match</code>, которая имеет ключевое отличие в 
+зависимости от типа выполнения итераций. Разница в типе, конечно, 
+подразумевает различные действия, которые могут быть 
+выполнены.</p>
 <h3><a class="header" href="#Смотрите-также" id="Смотрите-также">Смотрите также:</a></h3>
-<p><a href="trait/iter.html">Итераторы (Iterator)</a></p>
+<p><a href="../trait/iter.html">Итераторы (Iterator)</a></p>
 
                     </main>
 

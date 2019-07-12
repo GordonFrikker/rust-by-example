@@ -145,8 +145,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#wrapping-errors" id="wrapping-errors">Wrapping errors</a></h1>
-<p>An alternative to boxing errors is to wrap them in your own error type.</p>
+                        <h1><a class="header" href="#Оборачивание-ошибок" id="Оборачивание-ошибок">Оборачивание ошибок</a></h1>
+<p>Альтернативой упаковке ошибок является оборачивание их в ваш собственный тип.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::error;
 use std::num::ParseIntError;
 use std::fmt;
@@ -156,8 +156,8 @@ type Result&lt;T&gt; = std::result::Result&lt;T, DoubleError&gt;;
 #[derive(Debug)]
 enum DoubleError {
     EmptyVec,
-    // We will defer to the parse error implementation for their error.
-    // Supplying extra info requires adding more data to the type.
+    // Мы не будем обрабатывать ошибку разбора сами, а передадим её в программу.
+    // Предоставление дополнительной информации требует добавления дополнительных данных к типу
     Parse(ParseIntError),
 }
 
@@ -165,36 +165,28 @@ impl fmt::Display for DoubleError {
     fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
         match *self {
             DoubleError::EmptyVec =&gt;
-                write!(f, &quot;please use a vector with at least one element&quot;),
-            // This is a wrapper, so defer to the underlying types' implementation of `fmt`.
+                write!(f, &quot;пожалуйста используйте вектор хотя бы с одним элементом&quot;),
+            // Это адаптер, так что обратимся к нижележащей реализации `fmt`.
             DoubleError::Parse(ref e) =&gt; e.fmt(f),
         }
     }
 }
 
 impl error::Error for DoubleError {
-    fn description(&amp;self) -&gt; &amp;str {
-        match *self {
-            DoubleError::EmptyVec =&gt; &quot;empty vectors not allowed&quot;,
-            // This already impls `Error`, so defer to its own implementation.
-            DoubleError::Parse(ref e) =&gt; e.description(),
-        }
-    }
-
-    fn cause(&amp;self) -&gt; Option&lt;&amp;error::Error&gt; {
+    fn source(&amp;self) -&gt; Option&lt;&amp;(dyn error::Error + 'static)&gt; {
         match *self {
             DoubleError::EmptyVec =&gt; None,
-            // The cause is the underlying implementation error type. Is implicitly
-            // cast to the trait object `&amp;error::Error`. This works because the
-            // underlying type already implements the `Error` trait.
+            // Причиной ошибки является адаптированный тип. Здесь происходит
+            // неявное преобразование к типажу `&amp;error::Error`. Это работает
+            // так как основной тип реализует типаж `Error`.
             DoubleError::Parse(ref e) =&gt; Some(e),
         }
     }
 }
 
-// Implement the conversion from `ParseIntError` to `DoubleError`.
-// This will be automatically called by `?` if a `ParseIntError`
-// needs to be converted into a `DoubleError`.
+// Реализуем преобразование из `ParseIntError` в `DoubleError`.
+// Это преобразование будет автоматически вызвано оператором `?`, 
+// если будет необходимо преобразовать `ParseIntError` в `DoubleError`.
 impl From&lt;ParseIntError&gt; for DoubleError {
     fn from(err: ParseIntError) -&gt; DoubleError {
         DoubleError::Parse(err)
@@ -210,8 +202,8 @@ fn double_first(vec: Vec&lt;&amp;str&gt;) -&gt; Result&lt;i32&gt; {
 
 fn print(result: Result&lt;i32&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;The first doubled is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n)  =&gt; println!(&quot;Первое удвоение {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 
@@ -225,11 +217,11 @@ fn main() {
     print(double_first(strings));
 }
 </code></pre></pre>
-<p>This adds a bit more boilerplate for handling errors and might not be needed in
-all applications. There are some libraries that can take care of the boilerplate
-for you.</p>
-<h3><a class="header" href="#see-also" id="see-also">See also:</a></h3>
-<p><a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From::from</code></a> and <a href="custom_types/enum.html"><code>Enums</code></a></p>
+<p>Это добавляет чуть больше шаблонного кода для обработки ошибок 
+и может быть не нужно всем приложениям. Есть библиотеки, 
+которые могут избавить вас от написания этого шаблонного кода.</p>
+<h3><a class="header" href="#Смотрите-также" id="Смотрите-также">Смотрите также:</a></h3>
+<p><a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From::from</code></a> и <a href="../../custom_types/enum.html"><code>Enums</code></a></p>
 
                     </main>
 
