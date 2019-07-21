@@ -145,22 +145,29 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#combinators-and_then" id="combinators-and_then">Combinators: <code>and_then</code></a></h1>
-<p><code>map()</code> was described as a chainable way to simplify <code>match</code> statements. 
-However, using <code>map()</code> on a function that returns an <code>Option&lt;T&gt;</code> results 
-in the nested <code>Option&lt;Option&lt;T&gt;&gt;</code>. Chaining multiple calls together can 
-then become confusing. That's where another combinator called <code>and_then()</code>, 
-known in some languages as flatmap, comes in.</p>
-<p><code>and_then()</code> calls its function input with the wrapped value and returns the result. If the <code>Option</code> is <code>None</code>, then it returns <code>None</code> instead.</p>
-<p>In the following example, <code>cookable_v2()</code> results in an <code>Option&lt;Food&gt;</code>. 
-Using <code>map()</code> instead of <code>and_then()</code> would have given an 
-<code>Option&lt;Option&lt;Food&gt;&gt;</code>, which is an invalid type for <code>eat()</code>.</p>
+                        <h1><a class="header" href="#Комбинаторы-and_then" id="Комбинаторы-and_then">Комбинаторы: <code>and_then</code></a></h1>
+<p><code>map()</code> описывался как использование цепочек 
+функций для упрощения выражения <code>match</code>.
+Однако использование <code>map()</code> с функцией, которая в 
+качестве результата возвращает <code>Option&lt;T&gt;</code> 
+приводит к вложенности <code>Option&lt;Option&lt;T&gt;&gt;</code>. Такая цепочка из множества вызовов в итоге может 
+запутать. Вот тут и появляется другой комбинатор, зовущийся 
+<code>and_then()</code>, известный в некоторых языках как 
+<code>flatmap</code>.</p>
+<p><code>and_then()</code> запускает функцию, которая на вход получает обёрнутое значение, а возвращает результирующее 
+значение. Если <code>Option</code> равен <code>None</code>, то 
+он вернёт <code>None</code>.</p>
+<p>В следующем примере, <code>cookable_v2()</code> возвращает<br />
+<code>Option&lt;Food&gt;</code>. Используя <code>map()</code> 
+вместо <code>and_then()</code> мы получим 
+<code>Option&lt;Option&lt;Food&gt;&gt;</code>, который является 
+не правильным типом для <code>eat()</code>.</p>
 <pre><pre class="playpen"><code class="language-rust editable">#![allow(dead_code)]
 
 #[derive(Debug)] enum Food { CordonBleu, Steak, Sushi }
 #[derive(Debug)] enum Day { Monday, Tuesday, Wednesday }
 
-// We don't have the ingredients to make Sushi.
+// У нас нет ингридиентов для приготовления Sushi.
 fn have_ingredients(food: Food) -&gt; Option&lt;Food&gt; {
     match food {
         Food::Sushi =&gt; None,
@@ -168,7 +175,7 @@ fn have_ingredients(food: Food) -&gt; Option&lt;Food&gt; {
     }
 }
 
-// We have the recipe for everything except Cordon Bleu.
+// У нас есть рецепты для всего, за исключением Cordon Bleu.
 fn have_recipe(food: Food) -&gt; Option&lt;Food&gt; {
     match food {
         Food::CordonBleu =&gt; None,
@@ -176,27 +183,27 @@ fn have_recipe(food: Food) -&gt; Option&lt;Food&gt; {
     }
 }
 
-// To make a dish, we need both the ingredients and the recipe.
-// We can represent the logic with a chain of `match`es:
+// Для приготовления блюда нам необходимы и рецепт, и ингредиент.
+// Мы можем представить логику, как цепочку из`match`:
 fn cookable_v1(food: Food) -&gt; Option&lt;Food&gt; {
-    match have_ingredients(food) {
+    match have_recipe(food) {
         None       =&gt; None,
-        Some(food) =&gt; match have_recipe(food) {
+        Some(food) =&gt; match have_ingredients(food) {
             None       =&gt; None,
             Some(food) =&gt; Some(food),
         },
     }
 }
 
-// This can conveniently be rewritten more compactly with `and_then()`:
+// Для удобства это может быть переписано с использованием более компактного `and_then()`:
 fn cookable_v2(food: Food) -&gt; Option&lt;Food&gt; {
-    have_ingredients(food).and_then(have_recipe)
+    have_recipe(food).and_then(have_ingredients)
 }
 
 fn eat(food: Food, day: Day) {
     match cookable_v2(food) {
-        Some(food) =&gt; println!(&quot;Yay! On {:?} we get to eat {:?}.&quot;, day, food),
-        None       =&gt; println!(&quot;Oh no. We don't get to eat on {:?}?&quot;, day),
+        Some(food) =&gt; println!(&quot;Yay! В {:?} мы будем есть {:?}.&quot;, day, food),
+        None       =&gt; println!(&quot;О, нет. Мы не будем есть в {:?}?&quot;, day),
     }
 }
 
@@ -208,8 +215,8 @@ fn main() {
     eat(sushi, Day::Wednesday);
 }
 </code></pre></pre>
-<h3><a class="header" href="#see-also" id="see-also">See also:</a></h3>
-<p><a href="fn/closures.html">closures</a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>, and <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.and_then"><code>Option::and_then()</code></a></p>
+<h3><a class="header" href="#Смотрите-также" id="Смотрите-также">Смотрите также:</a></h3>
+<p><a href="../../fn/closures.html">Замыкания</a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>, и <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.and_then"><code>Option::and_then()</code></a></p>
 
                     </main>
 

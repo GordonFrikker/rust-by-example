@@ -145,20 +145,20 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#iterating-over-results" id="iterating-over-results">Iterating over <code>Result</code>s</a></h1>
-<p>An <code>Iter::map</code> operation might fail, for example:</p>
+                        <h1><a class="header" href="#Итерирование-по-result" id="Итерирование-по-result">Итерирование по <code>Result</code></a></h1>
+<p>При работе метода <code>Iter::map</code> может случиться ошибка, например:</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     let strings = vec![&quot;tofu&quot;, &quot;93&quot;, &quot;18&quot;];
-    let possible_numbers: Vec&lt;_&gt; = strings
+    let numbers: Vec&lt;_&gt; = strings
         .into_iter()
         .map(|s| s.parse::&lt;i32&gt;())
         .collect();
-    println!(&quot;Results: {:?}&quot;, possible_numbers);
+    println!(&quot;Результаты: {:?}&quot;, numbers);
 }
 </code></pre></pre>
-<p>Let's step through strategies for handling this.</p>
-<h2><a class="header" href="#ignore-the-failed-items-with-filter_map" id="ignore-the-failed-items-with-filter_map">Ignore the failed items with <code>filter_map()</code></a></h2>
-<p><code>filter_map</code> calls a function and filters out the results that are <code>None</code>.</p>
+<p>Давайте рассмотрим стратегии обработки этого.</p>
+<h2><a class="header" href="#Игнорирование-неудачных-элементов-с-filter_map" id="Игнорирование-неудачных-элементов-с-filter_map">Игнорирование неудачных элементов с <code>filter_map()</code></a></h2>
+<p><code>filter_map</code> вызывает функцию и отфильтровывает результаты, вернувшие <code>None</code>.</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     let strings = vec![&quot;tofu&quot;, &quot;93&quot;, &quot;18&quot;];
     let numbers: Vec&lt;_&gt; = strings
@@ -166,36 +166,34 @@
         .map(|s| s.parse::&lt;i32&gt;())
         .filter_map(Result::ok)
         .collect();
-    println!(&quot;Results: {:?}&quot;, numbers);
+    println!(&quot;Результаты: {:?}&quot;, numbers);
 }
 </code></pre></pre>
-<h2><a class="header" href="#fail-the-entire-operation-with-collect" id="fail-the-entire-operation-with-collect">Fail the entire operation with <code>collect()</code></a></h2>
-<p><code>Result</code> implements <code>FromIter</code> so that a vector of results (<code>Vec&lt;Result&lt;T, E&gt;&gt;</code>)
-can be turned into a result with a vector (<code>Result&lt;Vec&lt;T&gt;, E&gt;</code>). Once an
-<code>Result::Err</code> is found, the iteration will terminate.</p>
+<h2><a class="header" href="#Сбой-всей-операции-с-collect" id="Сбой-всей-операции-с-collect">Сбой всей операции с <code>collect()</code></a></h2>
+<p><code>Result</code> реализует <code>FromIter</code> так что вектор из результатов (<code>Vec&lt;Result&lt;T, E&gt;&gt;</code>)
+может быть преобразован в результат с вектором (<code>Result&lt;Vec&lt;T&gt;, E&gt;</code>). Если будет найдена хотя бы одна <code>Result::Err</code>, итерирование завершится.</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     let strings = vec![&quot;tofu&quot;, &quot;93&quot;, &quot;18&quot;];
     let numbers: Result&lt;Vec&lt;_&gt;, _&gt; = strings
         .into_iter()
         .map(|s| s.parse::&lt;i32&gt;())
         .collect();
-    println!(&quot;Results: {:?}&quot;, numbers);
+    println!(&quot;Результаты: {:?}&quot;, numbers);
 }
 </code></pre></pre>
-<p>This same technique can be used with <code>Option</code>.</p>
-<h2><a class="header" href="#collect-all-valid-values-and-failures-with-partition" id="collect-all-valid-values-and-failures-with-partition">Collect all valid values and failures with <code>partition()</code></a></h2>
+<p>Та же самая техника может использоваться с <code>Option</code>.</p>
+<h2><a class="header" href="#Сбор-всех-корректных-значений-и-ошибок-с-помощью-partition" id="Сбор-всех-корректных-значений-и-ошибок-с-помощью-partition">Сбор всех корректных значений и ошибок с помощью <code>partition()</code></a></h2>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     let strings = vec![&quot;tofu&quot;, &quot;93&quot;, &quot;18&quot;];
     let (numbers, errors): (Vec&lt;_&gt;, Vec&lt;_&gt;) = strings
         .into_iter()
         .map(|s| s.parse::&lt;i32&gt;())
         .partition(Result::is_ok);
-    println!(&quot;Numbers: {:?}&quot;, numbers);
-    println!(&quot;Errors: {:?}&quot;, errors);
+    println!(&quot;Числа: {:?}&quot;, numbers);
+    println!(&quot;Ошибки: {:?}&quot;, errors);
 }
 </code></pre></pre>
-<p>When you look at the results, you'll note that everything is still wrapped in
-<code>Result</code>.  A little more boilerplate is needed for this.</p>
+<p>Если вы посмотрите на результаты работы, вы заметите, что они всё ещё обёрнуты в <code>Result</code>. Потребуется немного больше шаблонного кода, чтобы получить нужный результат.</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     let strings = vec![&quot;tofu&quot;, &quot;93&quot;, &quot;18&quot;];
     let (numbers, errors): (Vec&lt;_&gt;, Vec&lt;_&gt;) = strings
@@ -204,8 +202,8 @@ can be turned into a result with a vector (<code>Result&lt;Vec&lt;T&gt;, E&gt;</
         .partition(Result::is_ok);
     let numbers: Vec&lt;_&gt; = numbers.into_iter().map(Result::unwrap).collect();
     let errors: Vec&lt;_&gt; = errors.into_iter().map(Result::unwrap_err).collect();
-    println!(&quot;Numbers: {:?}&quot;, numbers);
-    println!(&quot;Errors: {:?}&quot;, errors);
+    println!(&quot;Числа: {:?}&quot;, numbers);
+    println!(&quot;Ошибки: {:?}&quot;, errors);
 }
 </code></pre></pre>
 

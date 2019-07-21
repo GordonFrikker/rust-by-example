@@ -147,7 +147,7 @@
                     <main>
                         <h1><a class="header" href="#Захват" id="Захват">Захват</a></h1>
 <p>Замыкания довольно гибкие и делают всё, что требуется для работы с ними без
-дополнительных указаний. Это позволяет захватывать переменные, перемещая их или
+дополнительных указаний. Это позволяет захватывать переменные перемещая их или
 заимствуя, в зависимости от необходимости.
 Замыкания могут захватывать переменные:</p>
 <ul>
@@ -155,7 +155,7 @@
 <li>по изменяемой ссылке: <code>&amp;mut T</code></li>
 <li>по значению: <code>T</code></li>
 </ul>
-<p>Они преимущественно захватывают переменные по ссылке, если явно не указан другой
+<p>Преимущественно, они захватывают переменные по ссылке, если явно не указан другой
 способ.</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     use std::mem;
@@ -163,13 +163,13 @@
     let color = &quot;green&quot;;
 
     // Замыкание для вывода `color`, которое немедленно заимствует (`&amp;`)
-    // `color` и сохраняет его и замыкание в переменной `print`.
+    // `color` и сохраняет замыкание в переменной `print`.
     // `color` будет оставаться заимствованным до выхода `print` из области
     // видимости. `println!` требует только ссылку, поэтому он не накладывает
     // дополнительных ограничений.
     let print = || println!(&quot;`color`: {}&quot;, color);
 
-    // Вызываем замыкание, используя заимствование.
+    // Вызываем замыкание, использующее заимствование.
     print();
     print();
 
@@ -193,7 +193,7 @@
     //let reborrow = &amp;mut count;
     // ^ TODO: попробуйте раскомментировать эту строку.
 
-    // Тип без возможности копирования.
+    // Некопируемый тип.
     let movable = Box::new(3);
 
     // `mem::drop` требует `T`, так что захват производится по значению.
@@ -205,16 +205,15 @@
         mem::drop(movable);
     };
 
-    // `consume` поглощает переменную, так что оно может быть вызвано только раз.
+    // `consume` поглощает переменную, так что оно может быть вызвано только один раз.
     consume();
     //consume();
     // ^ TODO: Попробуйте раскомментировать эту строку.
 }
 </code></pre></pre>
-<p>Using <code>move</code> before vertical pipes forces closure
-to take ownership of captured variables:</p>
+<p>Использование <code>move</code> перед вертикальными линиями позваляет получить владение над захваченными переменными:</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
-    // `Vec` has non-copy semantics.
+    // `Vec` не поддерживает копирование.
     let haystack = vec![1, 2, 3];
 
     let contains = move |needle| haystack.contains(needle);
@@ -222,18 +221,17 @@ to take ownership of captured variables:</p>
     println!(&quot;{}&quot;, contains(&amp;1));
     println!(&quot;{}&quot;, contains(&amp;4));
 
-    // `println!(&quot;There're {} elements in vec&quot;, haystack.len());`
-    // ^ Uncommenting above line will result in compile-time error
-    // because borrow checker doesn't allow re-using variable after it
-    // has been moved.
+    // `println!(&quot;Количество элементов {} в векторе&quot;, haystack.len());`
+    // ^ уберите комментарий с этой строки и в результате получите ошибку компиляции,
+    // потому что анализатор заимствований не позволяет использовать
+    // переменную после передачи владения.
     
-    // Removing `move` from closure's signature will cause closure
-    // to borrow _haystack_ variable immutably, hence _haystack_ is still
-    // available and uncommenting above line will not cause an error.
+    //  Удалите `move` у замыкания и _haystack_ будет заимствован по неизменяемой 
+    // ссылке, и удалённый комментарий теперь не вызывает ошибки.
 }
 </code></pre></pre>
 <h3><a class="header" href="#Смотрите-также" id="Смотрите-также">Смотрите также:</a></h3>
-<p><a href="std/box.html"><code>Box</code></a> and <a href="https://doc.rust-lang.org/std/mem/fn.drop.html"><code>std::mem::drop</code></a></p>
+<p><a href="../../std/box.html"><code>Box</code></a> и <a href="https://doc.rust-lang.org/std/mem/fn.drop.html"><code>std::mem::drop</code></a></p>
 
                     </main>
 

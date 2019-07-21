@@ -145,19 +145,21 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#multiple-error-types" id="multiple-error-types">Multiple error types</a></h1>
-<p>The previous examples have always been very convenient; <code>Result</code>s interact
-with other <code>Result</code>s and <code>Option</code>s interact with other <code>Option</code>s.</p>
-<p>Sometimes an <code>Option</code> needs to interact with a <code>Result</code>, or a
-<code>Result&lt;T, Error1&gt;</code> needs to interact with a <code>Result&lt;T, Error2&gt;</code>. In those
-cases, we want to manage our different error types in a way that makes them
-composable and easy to interact with.</p>
-<p>In the following code, two instances of <code>unwrap</code> generate different error
-types. <code>Vec::first</code> returns an <code>Option</code>, while <code>parse::&lt;i32&gt;</code> returns a
+                        <h1><a class="header" href="#Несколько-типов-ошибок" id="Несколько-типов-ошибок">Несколько типов ошибок</a></h1>
+<p>Предыдущие примеры всегда были очень удобны:  <code>Result</code> взаимодействовали с другими <code>Result</code>, а <code>Option</code> - с другими <code>Option</code>.</p>
+<p>Иногда <code>Option</code> необходимо взаимодействовать с 
+<code>Result</code>, или <code>Result&lt;T, Error1&gt;</code> с 
+<code>Result&lt;T, Error2&gt;</code>. В этих случаях, нам нужно 
+управлять этими разными типами ошибок таким образом, чтобы 
+можно было их компоновать и легко взаимодействовать с ними.</p>
+<p>В следующем коде, два варианта <code>unwrap</code> 
+генерируют разные типы ошибок. <code>Vec::first</code> 
+возвращает <code>Option</code>, в то время как 
+<code>parse::&lt;i32&gt;</code> возвращает 
 <code>Result&lt;i32, ParseIntError&gt;</code>:</p>
 <pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">fn double_first(vec: Vec&lt;&amp;str&gt;) -&gt; i32 {
-    let first = vec.first().unwrap(); // Generate error 1
-    2 * first.parse::&lt;i32&gt;().unwrap() // Generate error 2
+    let first = vec.first().unwrap(); // Генерирует ошибку 1
+    2 * first.parse::&lt;i32&gt;().unwrap() // Генерирует ошибку 2
 }
 
 fn main() {
@@ -165,16 +167,16 @@ fn main() {
     let empty = vec![];
     let strings = vec![&quot;tofu&quot;, &quot;93&quot;, &quot;18&quot;];
 
-    println!(&quot;The first doubled is {}&quot;, double_first(numbers));
+    println!(&quot;Первое удвоенное {}&quot;, double_first(numbers));
 
-    println!(&quot;The first doubled is {}&quot;, double_first(empty));
-    // Error 1: the input vector is empty
+    println!(&quot;Первое удвоенное {}&quot;, double_first(empty));
+    // Ошибка 1: входной вектор пустой
 
-    println!(&quot;The first doubled is {}&quot;, double_first(strings));
-    // Error 2: the element doesn't parse to a number
+    println!(&quot;Первое удвоенное {}&quot;, double_first(strings));
+    // Ошибка 2: элемент не может быть преобразован в число
 }
 </code></pre></pre>
-<p>Over the next sections, we'll see several strategies for handling these kind of problems.</p>
+<p>В следующих главах мы рассмотрим различные стратегии обработки этих типов проблем.</p>
 
                     </main>
 

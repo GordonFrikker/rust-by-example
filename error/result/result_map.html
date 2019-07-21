@@ -145,19 +145,20 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#map-for-result" id="map-for-result"><code>map</code> for <code>Result</code></a></h1>
-<p>Panicking in the previous example's <code>multiply</code> does not make for robust code.
-Generally, we want to return the error to the caller so it can decide what is
-the right way to respond to errors.</p>
-<p>We first need to know what kind of error type we are dealing with. To determine
-the <code>Err</code> type, we look to <a href="https://doc.rust-lang.org/std/primitive.str.html#method.parse"><code>parse()</code></a>, which is implemented with the
-<a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code></a> trait for <a href="https://doc.rust-lang.org/std/primitive.i32.html"><code>i32</code></a>. As a result, the <code>Err</code> type is
-specified as <a href="https://doc.rust-lang.org/std/num/struct.ParseIntError.html"><code>ParseIntError</code></a>.</p>
-<p>In the example below, the straightforward <code>match</code> statement leads to code
-that is overall more cumbersome.</p>
+                        <h1><a class="header" href="#map-для-result" id="map-для-result"><code>map</code> для <code>Result</code></a></h1>
+<p>Паника в предыдущем примере делает код ненадёжным.
+Обычно, мы хотим вернуть ошибку вызывающей стороне, чтобы 
+уже она решала, как с ней поступить.</p>
+<p>Первое, что нам нужно знать - это с каким типом ошибки мы 
+работаем. Для определения типа <code>Err</code>, мы посмотрим 
+на <a href="https://doc.rust-lang.org/std/primitive.str.html#method.parse"><code>parse()</code></a>, реализованную с типажом 
+<a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code></a> для <a href="https://doc.rust-lang.org/std/primitive.i32.html"><code>i32</code></a>.
+В результате, тип <code>Err</code> указан как 
+<a href="https://doc.rust-lang.org/std/num/struct.ParseIntError.html"><code>ParseIntError</code></a>.</p>
+<p>В примере ниже, простой <code>match</code> делает код более громоздким.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::num::ParseIntError;
 
-// With the return type rewritten, we use pattern matching without `unwrap()`.
+// Мы используем сопоставление с образцом без `unwrap()` и меняем тип результата.
 fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; Result&lt;i32, ParseIntError&gt; {
     match first_number_str.parse::&lt;i32&gt;() {
         Ok(first_number)  =&gt; {
@@ -174,28 +175,31 @@ fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; Resul
 
 fn print(result: Result&lt;i32, ParseIntError&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;n is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n)  =&gt; println!(&quot;n равно {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 
 fn main() {
-    // This still presents a reasonable answer.
+    // Это даёт разумный ответ.
     let twenty = multiply(&quot;10&quot;, &quot;2&quot;);
     print(twenty);
 
-    // The following now provides a much more helpful error message.
+    // Следующее теперь предоставляет более понятное сообщение об ошибке.
     let tt = multiply(&quot;t&quot;, &quot;2&quot;);
     print(tt);
 }
 </code></pre></pre>
-<p>Luckily, <code>Option</code>'s <code>map</code>, <code>and_then</code>, and many other combinators are also
-implemented for <code>Result</code>. <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> contains a complete listing.</p>
+<p>К счастью, <code>map</code>, <code>and_then</code> многие 
+другие комбинаторы <code>Option</code> также реализованы и 
+для <code>Result</code>. 
+<a href="https://doc.rust-lang.org/std/result/enum.Result.html" data-md-type="link">Документация по <code>Result</code></a> содержит полный 
+их список.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::num::ParseIntError;
 
-// As with `Option`, we can use combinators such as `map()`.
-// This function is otherwise identical to the one above and reads:
-// Modify n if the value is valid, otherwise pass on the error.
+// Как и с `Option`, мы можем использовать комбинаторы, как `map()`.
+// Эта функция в основном идентична предыдущей и читается как:
+// изменяем n при валидном значении, иначе передаём ошибку.
 fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; Result&lt;i32, ParseIntError&gt; {
     first_number_str.parse::&lt;i32&gt;().and_then(|first_number| {
         second_number_str.parse::&lt;i32&gt;().map(|second_number| first_number * second_number)
@@ -204,17 +208,17 @@ fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; Resul
 
 fn print(result: Result&lt;i32, ParseIntError&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;n is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n)  =&gt; println!(&quot;n равно {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 
 fn main() {
-    // This still presents a reasonable answer.
+    // Это даёт разумный ответ.
     let twenty = multiply(&quot;10&quot;, &quot;2&quot;);
     print(twenty);
 
-    // The following now provides a much more helpful error message.
+    // Следующее теперь предоставляет более понятное сообщение об ошибке.
     let tt = multiply(&quot;t&quot;, &quot;2&quot;);
     print(tt);
 }

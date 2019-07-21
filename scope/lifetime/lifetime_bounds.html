@@ -146,15 +146,14 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#Ограничения" id="Ограничения">Ограничения</a></h1>
-<p>Так же как и обобщённые типы, время жизни (обобщённое само по себе) могут быть ограничены.
-Знак <code>:</code> имеет немного другое значение,
-но  знак <code>+</code> такое же. Прочитайте следующую заметку:</p>
+<p>Так же, как и обобщённые типы, времена жизни (обобщённое само по себе) могут быть ограничены.
+Для них знак <code>:</code> имеет немного другое значение,
+но знак <code>+</code> такое же. Прочитайте следующую заметку:</p>
 <ol>
 <li><code>T: 'a</code>: <em>Все</em> ссылки в <code>T</code> должны пережить время жизни <code>'a</code>.</li>
-<li><code>T: Trait + 'a</code>: Тип <code>T</code> должен реализовать типаж <code>Trait</code> и <em>все</em> ссылки
-в <code>T</code> должны пережить <code>'a</code>.</li>
+<li><code>T: Trait + 'a</code>: Тип <code>T</code> должен реализовать типаж <code>Trait</code> и <em>все</em> ссылкив <code>T</code> должны пережить <code>'a</code>.</li>
 </ol>
-<p>Пример ниже демонстрирует синтаксис в действии:</p>
+<p>Пример ниже демонстрирует синтаксис в действии и использует его после ключевого слова <code>where</code>:</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::fmt::Debug; // Типаж с ограничениями.
 
 #[derive(Debug)]
@@ -171,7 +170,7 @@ fn print&lt;T&gt;(t: T) where
 }
 
 // Здесь приводится ссылка на `T`, где `T` реализует
-// `Debug` и все *ссылки* в `T` переживут `'a`.
+// `Debug` и все *ссылки* в `T` переживают `'a`.
 // К тому же, `'a` должен пережить функцию.
 fn print_ref&lt;'a, T&gt;(t: &amp;'a T) where
     T: Debug + 'a {
@@ -187,8 +186,8 @@ fn main() {
 }
 </code></pre></pre>
 <h3><a class="header" href="#Смотрите-также" id="Смотрите-также">Смотрите также:</a></h3>
-<p><a href="generics.html">generics</a>, <a href="generics/bounds.html">bounds in generics</a>, and 
-<a href="generics/multi_bounds.html">multiple bounds in generics</a></p>
+<p><a href="../../generics.html">Обобщения</a>, <a href="../../generics/bounds.html">ограничения в обобщениях</a> и
+<a href="../../generics/multi_bounds.html">множественные ограничения в обобщениях</a></p>
 
                     </main>
 

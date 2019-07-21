@@ -146,19 +146,20 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#Функции-высшего-порядка" id="Функции-высшего-порядка">Функции высшего порядка</a></h1>
-<p>Rust предоставляет Функций Высшего Порядка(ФВП). Это функций которые берут один или
-больше функций и производит более полезные функций.
-ФВП и ленивые итераторы дают языку Rust функциональную особенность.</p>
+<p>Rust предоставляет Функции Высшего Порядка (ФВП). Это функции,
+которые получают на вход одну или больше функций и
+производят более полезные функции.
+ФВП и ленивые итераторы дают языку Rust функциональный вид.</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn is_odd(n: u32) -&gt; bool {
     n % 2 == 1
 }
 
 fn main() {
-    println!(&quot;Найти сумму всех квадратов нечётных числ не больше 1000&quot;);
+    println!(&quot;Найти сумму всех квадратов нечётных чисел не больше 1000&quot;);
     let upper = 1000;
 
     // Императивный подход
-    // Объявляем переменную накопитель
+    // Объявляем переменную-накопитель
     let mut acc = 0;
     // Итерировать: 0, 1, 2, ... до бесконечности
     for n in 0.. {
@@ -173,15 +174,15 @@ fn main() {
             acc += n_squared;
         }
     }
-    println!(&quot;imperative style: {}&quot;, acc);
+    println!(&quot;императивный стиль: {}&quot;, acc);
 
     // Функциональный подход
     let sum_of_squared_odd_numbers: u32 =
-        (0..).map(|n| n * n)             // Все натуральные числа в квадрате
+        (0..).map(|n| n * n)             // Все натуральные числа возводим в квадрат
              .take_while(|&amp;n| n &lt; upper) // Ниже верхнего предела
-             .filter(|n| is_odd(*n))     // Это нечётные
+             .filter(|n| is_odd(*n))     // Выбираем нечётные
              .fold(0, |sum, i| sum + i); // Суммируем
-    println!(&quot;functional style: {}&quot;, sum_of_squared_odd_numbers);
+    println!(&quot;функциональный стиль: {}&quot;, sum_of_squared_odd_numbers);
 }
 </code></pre></pre>
 <p><a href="https://doc.rust-lang.org/core/option/enum.Option.html">Option</a>

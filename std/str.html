@@ -202,10 +202,10 @@ modules</p>
 All result in a similar <code>&amp;str</code> so it's best to use the form that is the most
 convenient to write. Similarly there are multiple ways to write byte string literals,
 which all result in <code>&amp;[u8; N]</code>.</p>
-<p>Generally special characters are escaped with a backslash character: <code></code>.
+<p>Generally special characters are escaped with a backslash character: <code>\</code>.
 This way you can add any character to your string, even unprintable ones
 and ones that you don't know how to type. If you want a literal backslash,
-escape it with another one: <code>\</code></p>
+escape it with another one: <code>\\</code></p>
 <p>String or character literal delimiters occuring within a literal must be escaped: <code>&quot;\&quot;&quot;</code>, <code>'\''</code>.</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     // You can use escapes to write bytes by their hexadecimal values...

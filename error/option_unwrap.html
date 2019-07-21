@@ -145,57 +145,53 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#option--unwrap" id="option--unwrap"><code>Option</code> &amp; <code>unwrap</code></a></h1>
-<p>In the last example, we showed that we can induce program failure at will. 
-We told our program to <code>panic</code> if the princess received an inappropriate 
-gift - a snake. But what if the princess expected a gift and didn't receive 
-one? That case would be just as bad, so it needs to be handled!</p>
-<p>We <em>could</em> test this against the null string (<code>&quot;&quot;</code>) as we do with a snake. 
-Since we're using Rust, let's instead have the compiler point out cases 
-where there's no gift.</p>
-<p>An <code>enum</code> called <code>Option&lt;T&gt;</code> in the <code>std</code> library is used when absence is a 
-possibility. It manifests itself as one of two &quot;options&quot;:</p>
+                        <h1><a class="header" href="#option-и-unwrap" id="option-и-unwrap"><code>Option</code> и <code>unwrap</code></a></h1>
+<p>В последнем примере мы показали, что мы по собственному 
+желанию можем вызвать сбой программы. Мы сказали нашей 
+программе вызвать <code>panic</code>, если принцессе подарят 
+несоответствующий подарок - змею. Но что если принцесса 
+ожидает подарок, но не получает его? Этот случай тоже плохой, так 
+что и он должен быть обработан!</p>
+<p>Мы <em>можем</em> проверить пустую строку (<code>&quot;&quot;</code>) так же, как мы сделали это со змеёй.
+Поскольку мы используем Rust, давайте укажем компилятору случаи, когда подарка нет.</p>
+<p>Перечисление (<code>enum</code>) из стандартной библиотеки (<code>std</code>), называющееся <code>Option&lt;T&gt;</code>, используется, когда значение может отсутствовать. Оно проявляется как одна из двух опций (<code>option</code>s):</p>
 <ul>
-<li><code>Some(T)</code>: An element of type <code>T</code> was found</li>
-<li><code>None</code>: No element was found</li>
+<li><code>Some(T)</code>: элемент типа <code>T</code> найден</li>
+<li><code>None</code>: элемент не найден</li>
 </ul>
-<p>These cases can either be explicitly handled via <code>match</code> or implicitly with 
-<code>unwrap</code>. Implicit handling will either return the inner element or <code>panic</code>.</p>
-<p>Note that it's possible to manually customize <code>panic</code> with <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.expect">expect</a>, 
-but <code>unwrap</code> otherwise leaves us with a less meaningful output than explicit 
-handling. In the following example, explicit handling yields a more 
-controlled result while retaining the option to <code>panic</code> if desired.</p>
-<pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">// The commoner has seen it all, and can handle any gift well.
-// All gifts are handled explicitly using `match`.
+<p>Эти случаи могут быть явно обработаны через  <code>match</code> или неявно с <code>unwrap</code>. Неявная обработка либо вернёт внутренний элемент, либо вызовет <code>panic</code>.</p>
+<p>Обратите внимание, что можно вручную настроить сообщение отображаемое при вызове <code>panic</code> с помощью <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.expect">expect</a>, но <code>unwrap</code> в противном случае оставляет нам менее понятный вывод, чем явная обработка. В следующем примере явная обработка при желании даёт более контролируемый результат, сохраняя при этом возможности <code>panic</code>.</p>
+<pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">// Простолюдин видел всё это, и может справиться с любым подарком хорошо.
+// Все подарки обрабатываются с помощью `match`.
 fn give_commoner(gift: Option&lt;&amp;str&gt;) {
-    // Specify a course of action for each case.
+    // Укажите порядок действий для каждого случая.
     match gift {
-        Some(&quot;snake&quot;) =&gt; println!(&quot;Yuck! I'm throwing that snake in a fire.&quot;),
-        Some(inner)   =&gt; println!(&quot;{}? How nice.&quot;, inner),
-        None          =&gt; println!(&quot;No gift? Oh well.&quot;),
+        Some(&quot;змея&quot;) =&gt; println!(&quot;Фу! Я бросаю змею в огонь.&quot;),
+        Some(inner)   =&gt; println!(&quot;{}? Как хороший.&quot;, inner),
+        None          =&gt; println!(&quot;Нет подарка? Ну что же.&quot;),
     }
 }
 
-// Our sheltered princess will `panic` at the sight of snakes.
-// All gifts are handled implicitly using `unwrap`.
+// Наша защищённая принцесса будет паниковать при виде змей.
+// Все подарки обрабатываются неявно через `unwrap`.
 fn give_princess(gift: Option&lt;&amp;str&gt;) {
-    // `unwrap` returns a `panic` when it receives a `None`.
+    // `unwrap` вызовет `panic` когда получит `None`.
     let inside = gift.unwrap();
-    if inside == &quot;snake&quot; { panic!(&quot;AAAaaaaa!!!!&quot;); }
+    if inside == &quot;змея&quot; { panic!(&quot;AAAaaaaa!!!!&quot;); }
 
-    println!(&quot;I love {}s!!!!!&quot;, inside);
+    println!(&quot;Я люблю {}!!!!!&quot;, inside);
 }
 
 fn main() {
-    let food  = Some(&quot;cabbage&quot;);
-    let snake = Some(&quot;snake&quot;);
+    let food  = Some(&quot;капуста&quot;);
+    let snake = Some(&quot;змея&quot;);
     let void  = None;
 
     give_commoner(food);
     give_commoner(snake);
     give_commoner(void);
 
-    let bird = Some(&quot;robin&quot;);
+    let bird = Some(&quot;Малиновка&quot;);
     let nothing = None;
 
     give_princess(bird);

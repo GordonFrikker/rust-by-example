@@ -378,15 +378,15 @@ Rust предоставляет несколько способов коммен
 <p>В данном примере используется <code>fmt::Display</code>, потому что стандартная библиотека предоставляет
 реализацию для данного типа. Для отображения собственных типов потребуется
 больше дополнительных шагов.</p>
-<p>Реализация типажа <code>fmt::Display</code> автоматически
+<p>Реализация типажа <code>fmt::Display</code> автоматически 
 предоставляет реализацию типажа
-<a href="https://doc.rust-lang.org/std/string/trait.ToString.html"><code>ToString</code></a>,
-который позволяет нам <a href="hello/../conversion/string.html">конвертировать</a> наш тип в
+<a href="https://doc.rust-lang.org/std/string/trait.ToString.html"><code>ToString</code></a>, 
+который позволяет нам <a href="hello/../conversion/string.html">конвертировать</a> наш тип в 
 <a href="hello/../std/str.html"><code>String</code></a>.</p>
 <h3><a class="header" href="#Задания" id="Задания">Задания</a></h3>
 <ul>
-<li>Исправьте две ошибки в коде выше (смотрите <code>ИСПРАВЬТЕ</code>), чтобы код компилировался без ошибок</li>
-<li>Добавьте макрос <code>println!</code>, который выводит: <code>Pi is roughly 3.142</code> c помощью управления количеством знаков после запятой. Для выполнения данного задания создайте переменную, которая будет хранить в себе значение числа Пи: <code>let pi = 3.141592</code>.(Подсказка: вам необходимо ознакомиться с документация по<a href="https://doc.rust-lang.org/std/fmt/"><code>std::fmt</code></a>, чтобы узнать,как отобразить только часть знаков после запятой в консоли.)</li>
+<li>Исправьте две ошибки в коде выше (смотрите ИСПРАВЬТЕ), чтобы код компилировался без ошибок</li>
+<li>Добавьте макрос <code>println!</code>, который выводит: <code>Pi is roughly 3.142</code> с помощью управления количеством знаков после запятой. Для выполнения данного задания создайте переменную, которая будет хранить в себе значение числа Пи: <code>let pi = 3.141592</code>. (Подсказка: вам необходимо ознакомиться с документацией по <a href="https://doc.rust-lang.org/std/fmt/"><code>std::fmt</code></a>, чтобы узнать, как отобразить в консоли только часть знаков после запятой).</li>
 </ul>
 <h3><a class="header" href="#Смотрите-также-1" id="Смотрите-также-1">Смотрите также</a></h3>
 <p><a href="https://doc.rust-lang.org/std/fmt/"><code>std::fmt</code></a>, <a href="hello/../macros.html"><code>макросы</code></a>, <a href="hello/../custom_types/structs.html"><code>структуры</code></a>,
@@ -1302,10 +1302,10 @@ fn main() {
 }
 </code></pre></pre>
 <p>Компилятор будет выводить подробные сообщения об ошибках, связанных с изменяемостью.</p>
-<h1><a class="header" href="#Область-и-Затенение" id="Область-и-Затенение">Область и Затенение</a></h1>
+<h1><a class="header" href="#Область-видимости-и-затенение" id="Область-видимости-и-затенение">Область видимости и затенение</a></h1>
 <p>Связывание переменных имеет локальную область видимости, и живут эти переменные в <em>блоке</em>.
 Блок — набор инструкций, заключённый между фигурными скобками <code>{}</code>.
-Кроме того, допускается <a href="https://en.wikipedia.org/wiki/Variable_shadowing">затенение переменных.</a>.</p>
+Кроме того, допускается <a href="https://en.wikipedia.org/wiki/Variable_shadowing">затенение переменных</a>.</p>
 <pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">fn main() {
     // Эта переменная живёт в функции main
     let long_lived_binding = 1;
@@ -2340,15 +2340,17 @@ fn fizzbuzz_to(n: u32) {
     }
 }
 </code></pre></pre>
-<h1><a class="header" href="#методы" id="методы">методы</a></h1>
-<p>Методы - это функций прикреплённые к объектам. Эти методы имеют допуск к данным объекта и
-его другим методам через ключевое слово <code>self</code>. Методы определяются под блоком <code>impl</code>.</p>
+<h1><a class="header" href="#Методы" id="Методы">Методы</a></h1>
+<p>Методы - это функции, прикреплённые к объектам. Эти методы 
+имеют допуск к данным объекта и другим его методам через 
+ключевое слово <code>self</code>. Методы определяются под 
+блоком <code>impl</code>.</p>
 <pre><pre class="playpen"><code class="language-rust editable">struct Point {
     x: f64,
     y: f64,
 }
 
-// Блок реализаций, все методы `Point` идут сюда
+// Блок реализаций, все методы `Point` расположены здесь
 impl Point {
     // Это статический метод
     // Статические методы не нуждаются в вызове от экземпляра
@@ -2357,7 +2359,7 @@ impl Point {
         Point { x: 0.0, y: 0.0 }
     }
 
-    // Другой статический метод, берет два аргумента
+    // Другой статический метод, берёт два аргумента
     fn new(x: f64, y: f64) -&gt; Point {
         Point { x: x, y: y }
     }
@@ -2370,14 +2372,14 @@ struct Rectangle {
 
 impl Rectangle {
     // Это метод экземпляра
-    // `&amp;self` это сахар для `self: &amp;Self`, где `Self` это тип
+    // `&amp;self` - это сахар для `self: &amp;Self`, где `Self` - это тип
     // вызываемого объекта. В этом месте `Self` = `Rectangle`
     fn area(&amp;self) -&gt; f64 {
         // `self` даёт допуск к полям структуры через оператор точка
         let Point { x: x1, y: y1 } = self.p1;
         let Point { x: x2, y: y2 } = self.p2;
 
-        // `abs` это метод `f64` который возвращает абсолютную величину
+        // `abs` - это метод `f64`, который возвращает абсолютную величину
         // вызываемого
         ((x1 - x2) * (y1 - y2)).abs()
     }
@@ -2390,7 +2392,7 @@ impl Rectangle {
     }
 
     // Этот метод требует чтобы вызываемый объект был изменяемым
-    // `&amp;mut self` сахар для `self: &amp;mut Self`
+    // `&amp;mut self` - сахар для `self: &amp;mut Self`
     fn translate(&amp;mut self, x: f64, y: f64) {
         self.p1.x += x;
         self.p2.x += x;
@@ -2405,7 +2407,7 @@ struct Pair(Box&lt;i32&gt;, Box&lt;i32&gt;);
 
 impl Pair {
     // Этот метод &quot;съедает&quot; ресурсы вызываемого объекта
-    // `self` сахар для `self: Self`
+    // `self` - сахар для `self: Self`
     fn destroy(self) {
         // деструктуризация `self`
         let Pair(first, second) = self;
@@ -2494,7 +2496,7 @@ fn main() {
 </code></pre></pre>
 <h1><a class="header" href="#Захват" id="Захват">Захват</a></h1>
 <p>Замыкания довольно гибкие и делают всё, что требуется для работы с ними без
-дополнительных указаний. Это позволяет захватывать переменные, перемещая их или
+дополнительных указаний. Это позволяет захватывать переменные перемещая их или
 заимствуя, в зависимости от необходимости.
 Замыкания могут захватывать переменные:</p>
 <ul>
@@ -2502,7 +2504,7 @@ fn main() {
 <li>по изменяемой ссылке: <code>&amp;mut T</code></li>
 <li>по значению: <code>T</code></li>
 </ul>
-<p>Они преимущественно захватывают переменные по ссылке, если явно не указан другой
+<p>Преимущественно, они захватывают переменные по ссылке, если явно не указан другой
 способ.</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     use std::mem;
@@ -2510,13 +2512,13 @@ fn main() {
     let color = &quot;green&quot;;
 
     // Замыкание для вывода `color`, которое немедленно заимствует (`&amp;`)
-    // `color` и сохраняет его и замыкание в переменной `print`.
+    // `color` и сохраняет замыкание в переменной `print`.
     // `color` будет оставаться заимствованным до выхода `print` из области
     // видимости. `println!` требует только ссылку, поэтому он не накладывает
     // дополнительных ограничений.
     let print = || println!(&quot;`color`: {}&quot;, color);
 
-    // Вызываем замыкание, используя заимствование.
+    // Вызываем замыкание, использующее заимствование.
     print();
     print();
 
@@ -2540,7 +2542,7 @@ fn main() {
     //let reborrow = &amp;mut count;
     // ^ TODO: попробуйте раскомментировать эту строку.
 
-    // Тип без возможности копирования.
+    // Некопируемый тип.
     let movable = Box::new(3);
 
     // `mem::drop` требует `T`, так что захват производится по значению.
@@ -2552,16 +2554,15 @@ fn main() {
         mem::drop(movable);
     };
 
-    // `consume` поглощает переменную, так что оно может быть вызвано только раз.
+    // `consume` поглощает переменную, так что оно может быть вызвано только один раз.
     consume();
     //consume();
     // ^ TODO: Попробуйте раскомментировать эту строку.
 }
 </code></pre></pre>
-<p>Using <code>move</code> before vertical pipes forces closure
-to take ownership of captured variables:</p>
+<p>Использование <code>move</code> перед вертикальными линиями позваляет получить владение над захваченными переменными:</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
-    // `Vec` has non-copy semantics.
+    // `Vec` не поддерживает копирование.
     let haystack = vec![1, 2, 3];
 
     let contains = move |needle| haystack.contains(needle);
@@ -2569,18 +2570,17 @@ to take ownership of captured variables:</p>
     println!(&quot;{}&quot;, contains(&amp;1));
     println!(&quot;{}&quot;, contains(&amp;4));
 
-    // `println!(&quot;There're {} elements in vec&quot;, haystack.len());`
-    // ^ Uncommenting above line will result in compile-time error
-    // because borrow checker doesn't allow re-using variable after it
-    // has been moved.
+    // `println!(&quot;Количество элементов {} в векторе&quot;, haystack.len());`
+    // ^ уберите комментарий с этой строки и в результате получите ошибку компиляции,
+    // потому что анализатор заимствований не позволяет использовать
+    // переменную после передачи владения.
     
-    // Removing `move` from closure's signature will cause closure
-    // to borrow _haystack_ variable immutably, hence _haystack_ is still
-    // available and uncommenting above line will not cause an error.
+    //  Удалите `move` у замыкания и _haystack_ будет заимствован по неизменяемой 
+    // ссылке, и удалённый комментарий теперь не вызывает ошибки.
 }
 </code></pre></pre>
 <h3><a class="header" href="#Смотрите-также-22" id="Смотрите-также-22">Смотрите также:</a></h3>
-<p><a href="fn/closures/std/box.html"><code>Box</code></a> and <a href="https://doc.rust-lang.org/std/mem/fn.drop.html"><code>std::mem::drop</code></a></p>
+<p><a href="fn/closures/../../std/box.html"><code>Box</code></a> и <a href="https://doc.rust-lang.org/std/mem/fn.drop.html"><code>std::mem::drop</code></a></p>
 <h1><a class="header" href="#Как-входные-параметры" id="Как-входные-параметры">Как входные параметры</a></h1>
 <p>В то время как замыкания Rust выбирают способ захвата переменных на лету, по
 большей части без указания типов, эта двусмысленность недопустима при написании
@@ -2849,19 +2849,20 @@ fn main() {
 <h3><a class="header" href="#Смотрите-также-28" id="Смотрите-также-28">Смотрите также:</a></h3>
 <p><a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.find"><code>std::iter::Iterator::find</code></a></p>
 <h1><a class="header" href="#Функции-высшего-порядка" id="Функции-высшего-порядка">Функции высшего порядка</a></h1>
-<p>Rust предоставляет Функций Высшего Порядка(ФВП). Это функций которые берут один или
-больше функций и производит более полезные функций.
-ФВП и ленивые итераторы дают языку Rust функциональную особенность.</p>
+<p>Rust предоставляет Функции Высшего Порядка (ФВП). Это функции,
+которые получают на вход одну или больше функций и
+производят более полезные функции.
+ФВП и ленивые итераторы дают языку Rust функциональный вид.</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn is_odd(n: u32) -&gt; bool {
     n % 2 == 1
 }
 
 fn main() {
-    println!(&quot;Найти сумму всех квадратов нечётных числ не больше 1000&quot;);
+    println!(&quot;Найти сумму всех квадратов нечётных чисел не больше 1000&quot;);
     let upper = 1000;
 
     // Императивный подход
-    // Объявляем переменную накопитель
+    // Объявляем переменную-накопитель
     let mut acc = 0;
     // Итерировать: 0, 1, 2, ... до бесконечности
     for n in 0.. {
@@ -2876,15 +2877,15 @@ fn main() {
             acc += n_squared;
         }
     }
-    println!(&quot;imperative style: {}&quot;, acc);
+    println!(&quot;императивный стиль: {}&quot;, acc);
 
     // Функциональный подход
     let sum_of_squared_odd_numbers: u32 =
-        (0..).map(|n| n * n)             // Все натуральные числа в квадрате
+        (0..).map(|n| n * n)             // Все натуральные числа возводим в квадрат
              .take_while(|&amp;n| n &lt; upper) // Ниже верхнего предела
-             .filter(|n| is_odd(*n))     // Это нечётные
+             .filter(|n| is_odd(*n))     // Выбираем нечётные
              .fold(0, |sum, i| sum + i); // Суммируем
-    println!(&quot;functional style: {}&quot;, sum_of_squared_odd_numbers);
+    println!(&quot;функциональный стиль: {}&quot;, sum_of_squared_odd_numbers);
 }
 </code></pre></pre>
 <p><a href="https://doc.rust-lang.org/core/option/enum.Option.html">Option</a>
@@ -3817,7 +3818,7 @@ fn main() {
 }
 </code></pre></pre>
 <h3><a class="header" href="#Смотрите-также-34" id="Смотрите-также-34">Смотрите также:</a></h3>
-<p><a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a>, <a href="generics/custom_types/structs.html"><code>Структуры</code></a>, и <a href="generics/trait.html"><code>Типажи</code></a></p>
+<p><a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a>, <a href="generics/../custom_types/structs.html"><code>struct</code></a> и <a href="generics/../trait.html"><code>trait</code></a></p>
 <h1><a class="header" href="#Ограничения" id="Ограничения">Ограничения</a></h1>
 <p>При работе с обобщениями параметры типа часто должны использовать типажи
 в качестве <em>ограничений</em>, чтобы определить какие функциональные возможности
@@ -3881,7 +3882,7 @@ fn main() {
 <p>Утверждения <a href="generics/generics/where.html"><code>where</code></a> также могут использоваться для применения
 ограничений в некоторых случаях, чтобы добавить выразительности.</p>
 <h3><a class="header" href="#Смотрите-также-35" id="Смотрите-также-35">Смотрите также:</a></h3>
-<p><a href="generics/hello/print.html"><code>std::fmt</code></a>, <a href="generics/custom_types/structs.html"><code>структуры</code></a>, и <a href="generics/trait.html"><code>типажи</code></a></p>
+<p><a href="generics/../hello/print.html"><code>std::fmt</code></a><a href="generics/../hello/print.html">, </a><a href="generics/../custom_types/structs.html"><code>struct</code></a> и <a href="generics/../trait.html"><code>trait</code></a></p>
 <h1><a class="header" href="#Пример-пустые-ограничения" id="Пример-пустые-ограничения">Пример: пустые ограничения</a></h1>
 <p>Следствием того, как работают ограничения по типажу, является то,
 что даже если <code>типаж</code> не включает в себя какие-либо функциональные
@@ -3916,7 +3917,7 @@ fn main() {
 }
 </code></pre></pre>
 <h3><a class="header" href="#Смотрите-также-36" id="Смотрите-также-36">Смотрите также:</a></h3>
-<p><a href="https://doc.rust-lang.org/std/cmp/trait.Eq.html"><code>std::cmp::Eq</code></a>, <a href="https://doc.rust-lang.org/std/cmp/trait.Ord.html"><code>std::cmp::Ord</code>s</a>, и <a href="generics/bounds/trait.html"><code>типажи</code></a></p>
+<p><a href="https://doc.rust-lang.org/std/cmp/trait.Eq.html"><code>std::cmp::Eq</code></a>, <a href="https://doc.rust-lang.org/std/cmp/trait.Ord.html"><code>std::cmp::Ord</code></a> и <a href="generics/bounds/../../trait.html"><code>trait</code></a></p>
 <h1><a class="header" href="#Множественные-ограничения" id="Множественные-ограничения">Множественные ограничения</a></h1>
 <p>Множественные ограничения по типажу могут быть применены с помощью <code>+</code>.
 Разные типы разделяются с помощью <code>,</code>.</p>
@@ -3945,7 +3946,7 @@ fn main() {
 }
 </code></pre></pre>
 <h3><a class="header" href="#Смотрите-также-37" id="Смотрите-также-37">Смотрите также:</a></h3>
-<p><a href="generics/hello/print.html"><code>std::fmt</code></a> и <a href="generics/trait.html"><code>типажи</code></a></p>
+<p><a href="generics/../hello/print.html"><code>std::fmt</code></a> и <a href="generics/../trait.html"><code>trait</code></a></p>
 <h1><a class="header" href="#Утверждения-where" id="Утверждения-where">Утверждения where</a></h1>
 <p>Ограничение типажа также может быть выражено с помощью утверждения <code>where</code>
 непосредственно перед открытием <code>{</code>, а не при первом упоминании типа.
@@ -3995,12 +3996,13 @@ fn main() {
 </code></pre></pre>
 <h3><a class="header" href="#Смотрите-также-38" id="Смотрите-также-38">Смотрите также:</a></h3>
 <p><a href="https://github.com/rust-lang/rfcs/blob/master/text/0135-where.md">RFC</a>, <a href="generics/custom_types/structs.html"><code>структуры</code></a>, и <a href="generics/trait.html"><code>типажи</code></a></p>
-<h1><a class="header" href="#new-type-idiom" id="new-type-idiom">New Type Idiom</a></h1>
-<p>The <code>newtype</code> idiom gives compile time guarantees that the right type of value is supplied
-to a program.</p>
-<p>For example, an age verification function that checks age in years, <em>must</em> be given
-a value of type <code>Years</code>.</p>
-<pre><pre class="playpen"><code class="language-rust editable">struct Years(i64);
+<h1><a class="header" href="#new-type-идиома" id="new-type-идиома">New Type идиома</a></h1>
+<p>Идиома <code>newtype</code> гарантирует во время компиляции, 
+что программе передаётся значение правильного типа.</p>
+<p>Например, функция верификации возраста, которая проверяет 
+возраст в годах <em>должна</em> получать значение типа 
+<code>Years</code>.</p>
+<pre><pre class="playpen"><code class="language-rust ">struct Years(i64);
 
 struct Days(i64);
 
@@ -4030,16 +4032,29 @@ fn main() {
     // println!(&quot;Old enough {}&quot;, old_enough(&amp;age_days));
 }
 </code></pre></pre>
-<p>Uncomment the last print statement to observe that the type supplied must be <code>Years</code>.</p>
-<h3><a class="header" href="#see-also" id="see-also">See also:</a></h3>
-<p><a href="generics/custom_types/structs.html"><code>structs</code></a></p>
-<h1><a class="header" href="#associated-items" id="associated-items">Associated items</a></h1>
-<p>&quot;Associated Items&quot; refers to a set of rules pertaining to <a href="https://doc.rust-lang.org/reference/items.html"><code>item</code></a>s
-of various types. It is an extension to <code>trait</code> generics, and allows 
-<code>trait</code>s to internally define new items.</p>
-<p>One such item is called an <em>associated type</em>, providing simpler usage 
-patterns when the <code>trait</code> is generic over its container type.</p>
-<h3><a class="header" href="#see-also-1" id="see-also-1">See also:</a></h3>
+<p>Удалите комментарий с последнего <code>println</code>, чтобы увидеть, что тип 
+должен быть <code>Years</code>.</p>
+<p>Чтобы получить из <code>newtype</code>-переменной значение 
+базового типа, вы можете использовать кортежный синтаксис, 
+как в примере:</p>
+<pre><pre class="playpen"><code class="language-rust ">struct Years(i64);
+
+fn main() {
+    let years = Years(42);
+    let years_as_primitive: i64 = years.0;
+}
+</code></pre></pre>
+<h3><a class="header" href="#Смотрите-также-39" id="Смотрите-также-39">Смотрите также:</a></h3>
+<p><a href="generics/../custom_types/structs.html"><code>struct</code></a></p>
+<h1><a class="header" href="#Ассоциированные-элементы" id="Ассоциированные-элементы">Ассоциированные элементы</a></h1>
+<p>&quot;Ассоциированные элементы&quot; относятся к набору правил, 
+касающихся элементов различных типов. Это расширение для 
+обобщённых типажей, которое позволяет им определить новый 
+элемент внутри себя.</p>
+<p>Каждый такой элемент называется <em>ассоциированным типом</em>
+и предоставляет упрощённый шаблон использования, когда 
+<code>trait</code> является обобщённым для своего контейнера.</p>
+<h3><a class="header" href="#Смотрите-также-40" id="Смотрите-также-40">Смотрите также:</a></h3>
 <p><a href="https://github.com/rust-lang/rfcs/blob/master/text/0195-associated-items.md">RFC</a></p>
 <h1><a class="header" href="#the-problem" id="the-problem">The Problem</a></h1>
 <p>A <code>trait</code> that is generic over its container type has type specification
@@ -4096,7 +4111,7 @@ fn main() {
     println!(&quot;The difference is: {}&quot;, difference(&amp;container));
 }
 </code></pre></pre>
-<h3><a class="header" href="#see-also-2" id="see-also-2">See also:</a></h3>
+<h3><a class="header" href="#see-also" id="see-also">See also:</a></h3>
 <p><a href="generics/assoc_items/custom_types/structs.html"><code>struct</code>s</a>, and <a href="generics/assoc_items/trait.html"><code>trait</code>s</a></p>
 <h1><a class="header" href="#associated-types" id="associated-types">Associated types</a></h1>
 <p>The use of &quot;Associated types&quot; improves the overall readability of code 
@@ -4226,7 +4241,7 @@ fn main() {
     //          _struct1 == _struct2);
 }
 </code></pre></pre>
-<h3><a class="header" href="#see-also-3" id="see-also-3">See also:</a></h3>
+<h3><a class="header" href="#see-also-1" id="see-also-1">See also:</a></h3>
 <p><a href="generics/trait/derive.html">Derive</a>, <a href="generics/custom_types/structs.html">struct</a>, and <a href="generics/custom_types/structs.html">TupleStructs</a></p>
 <h1><a class="header" href="#testcase-unit-clarification" id="testcase-unit-clarification">Testcase: unit clarification</a></h1>
 <p>A useful method of unit conversions can be examined by implementing <code>Add</code>
@@ -4295,7 +4310,7 @@ fn main() {
     //let one_feter = one_foot + one_meter;
 }
 </code></pre></pre>
-<h3><a class="header" href="#see-also-4" id="see-also-4">See also:</a></h3>
+<h3><a class="header" href="#see-also-2" id="see-also-2">See also:</a></h3>
 <p><a href="generics/phantom/scope/borrow.html">Borrowing (<code>&amp;</code>)</a>, <a href="generics/phantom/generics/bounds.html">Bounds (<code>X: Y</code>)</a>, <a href="generics/phantom/custom_types/enum.html">enum</a>, <a href="generics/phantom/fn/methods.html">impl &amp; self</a>,
 <a href="generics/phantom/trait/ops.html">Overloading</a>, <a href="generics/phantom/scope/borrow/ref.html">ref</a>, <a href="generics/phantom/trait.html">Traits (<code>X for Y</code>)</a>, and <a href="generics/phantom/custom_types/structs.html">TupleStructs</a>.</p>
 <h1><a class="header" href="#Правила-области-видимости" id="Правила-области-видимости">Правила области видимости</a></h1>
@@ -4365,7 +4380,7 @@ fn main() {
 Этот типаж не требуется реализовать для каждого типа.
 Реализовать его для вашего типа вам потребуется, только если
 требуется своя логика при удалении экземпляра типа.</p>
-<p>Выполните пример ниже, чтобы увидеть, как работает типаж [<code>Drop']. Когда переменная в функции </code>main` выходит за пределы области действия,
+<p>Выполните пример ниже, чтобы увидеть, как работает типаж <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a>. Когда переменная в функции <code>main</code> выходит за пределы области действия,
 будет вызван пользовательский деструктор.</p>
 <pre><pre class="playpen"><code class="language-rust editable">struct ToDrop;
 
@@ -4380,8 +4395,8 @@ fn main() {
     println!(&quot;Made a ToDrop!&quot;);
 }
 </code></pre></pre>
-<h3><a class="header" href="#Смотрите-также-39" id="Смотрите-также-39">Смотрите также:</a></h3>
-<p><a href="scope/std/box.html">Упаковка</a></p>
+<h3><a class="header" href="#Смотрите-также-41" id="Смотрите-также-41">Смотрите также:</a></h3>
+<p><a href="scope/../std/box.html">Упаковка</a></p>
 <h1><a class="header" href="#Владение-и-перемещение" id="Владение-и-перемещение">Владение и перемещение</a></h1>
 <p>Поскольку переменные ответственны за освобождение своих ресурсов,
 <strong>ресурсы могут иметь лишь одного владельца</strong>.  Это ограничение предотвращает
@@ -4549,7 +4564,7 @@ fn main() {
     // FIXME ^ Comment out this line
 }
 </code></pre></pre>
-<h3><a class="header" href="#see-also-5" id="see-also-5">See also:</a></h3>
+<h3><a class="header" href="#see-also-3" id="see-also-3">See also:</a></h3>
 <p><a href="scope/borrow/scope/lifetime/static_lifetime.html"><code>static</code></a></p>
 <h1><a class="header" href="#Замораживание" id="Замораживание">Замораживание</a></h1>
 <p>Когда данные заимствуются, они заодно и <em>замораживаются</em>. <em>Замороженные</em> данные
@@ -4778,7 +4793,7 @@ fn main() {
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p><a href="scope/lifetime/scope/lifetime/elision.html">elision</a> implicitly annotates lifetimes and so is different.</p>
 </div>
-<h3><a class="header" href="#see-also-6" id="see-also-6">See also:</a></h3>
+<h3><a class="header" href="#see-also-4" id="see-also-4">See also:</a></h3>
 <p><a href="scope/lifetime/generics.html">generics</a> and <a href="scope/lifetime/fn/closures.html">closures</a></p>
 <h1><a class="header" href="#Функции-2" id="Функции-2">Функции</a></h1>
 <p>Сигнатуры функции с указанием времени жизни имеют некоторые ограничения:</p>
@@ -4833,9 +4848,9 @@ fn main() {
     print_one(&amp;t);
 }
 </code></pre></pre>
-<h3><a class="header" href="#Смотрите-также-40" id="Смотрите-также-40">Смотрите также:</a></h3>
+<h3><a class="header" href="#Смотрите-также-42" id="Смотрите-также-42">Смотрите также:</a></h3>
 <p><a href="scope/lifetime/fn.html">функции</a></p>
-<h1><a class="header" href="#Методы" id="Методы">Методы</a></h1>
+<h1><a class="header" href="#Методы-1" id="Методы-1">Методы</a></h1>
 <p>Методы аннотируются аналогично функциям:</p>
 <pre><pre class="playpen"><code class="language-rust editable">struct Owner(i32);
 
@@ -4856,7 +4871,7 @@ fn main() {
     owner.print();
 }
 </code></pre></pre>
-<h3><a class="header" href="#Смотрите-также-41" id="Смотрите-также-41">Смотрите также:</a></h3>
+<h3><a class="header" href="#Смотрите-также-43" id="Смотрите-также-43">Смотрите также:</a></h3>
 <p><a href="scope/lifetime/fn/methods.html"><code>Методы</code></a></p>
 <h1><a class="header" href="#Структуры-2" id="Структуры-2">Структуры</a></h1>
 <p>Аннотирование времени жизни в структурах аналогично функциям:</p>
@@ -4894,7 +4909,7 @@ fn main() {
     println!(&quot;y *не* заимствован в {:?}&quot;, number);
 }
 </code></pre></pre>
-<h3><a class="header" href="#Смотрите-также-42" id="Смотрите-также-42">Смотрите также:</a></h3>
+<h3><a class="header" href="#Смотрите-также-44" id="Смотрите-также-44">Смотрите также:</a></h3>
 <p><a href="scope/lifetime/custom_types/structs.html"><code>Структуры</code></a></p>
 <h1><a class="header" href="#traits" id="traits">Traits</a></h1>
 <p>Annotation of lifetimes in trait methods basically are similar to functions.
@@ -4919,18 +4934,17 @@ fn main() {
     println!(&quot;b is {:?}&quot;, b);
 }
 </code></pre></pre>
-<h3><a class="header" href="#see-also-7" id="see-also-7">See also:</a></h3>
+<h3><a class="header" href="#see-also-5" id="see-also-5">See also:</a></h3>
 <p><a href="scope/lifetime/../../trait.html"><code>trait</code>s</a></p>
 <h1><a class="header" href="#Ограничения-1" id="Ограничения-1">Ограничения</a></h1>
-<p>Так же как и обобщённые типы, время жизни (обобщённое само по себе) могут быть ограничены.
-Знак <code>:</code> имеет немного другое значение,
-но  знак <code>+</code> такое же. Прочитайте следующую заметку:</p>
+<p>Так же, как и обобщённые типы, времена жизни (обобщённое само по себе) могут быть ограничены.
+Для них знак <code>:</code> имеет немного другое значение,
+но знак <code>+</code> такое же. Прочитайте следующую заметку:</p>
 <ol>
 <li><code>T: 'a</code>: <em>Все</em> ссылки в <code>T</code> должны пережить время жизни <code>'a</code>.</li>
-<li><code>T: Trait + 'a</code>: Тип <code>T</code> должен реализовать типаж <code>Trait</code> и <em>все</em> ссылки
-в <code>T</code> должны пережить <code>'a</code>.</li>
+<li><code>T: Trait + 'a</code>: Тип <code>T</code> должен реализовать типаж <code>Trait</code> и <em>все</em> ссылкив <code>T</code> должны пережить <code>'a</code>.</li>
 </ol>
-<p>Пример ниже демонстрирует синтаксис в действии:</p>
+<p>Пример ниже демонстрирует синтаксис в действии и использует его после ключевого слова <code>where</code>:</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::fmt::Debug; // Типаж с ограничениями.
 
 #[derive(Debug)]
@@ -4947,7 +4961,7 @@ fn print&lt;T&gt;(t: T) where
 }
 
 // Здесь приводится ссылка на `T`, где `T` реализует
-// `Debug` и все *ссылки* в `T` переживут `'a`.
+// `Debug` и все *ссылки* в `T` переживают `'a`.
 // К тому же, `'a` должен пережить функцию.
 fn print_ref&lt;'a, T&gt;(t: &amp;'a T) where
     T: Debug + 'a {
@@ -4962,9 +4976,9 @@ fn main() {
     print(ref_x);
 }
 </code></pre></pre>
-<h3><a class="header" href="#Смотрите-также-43" id="Смотрите-также-43">Смотрите также:</a></h3>
-<p><a href="scope/lifetime/generics.html">generics</a>, <a href="scope/lifetime/generics/bounds.html">bounds in generics</a>, and 
-<a href="scope/lifetime/generics/multi_bounds.html">multiple bounds in generics</a></p>
+<h3><a class="header" href="#Смотрите-также-45" id="Смотрите-также-45">Смотрите также:</a></h3>
+<p><a href="scope/lifetime/../../generics.html">Обобщения</a>, <a href="scope/lifetime/../../generics/bounds.html">ограничения в обобщениях</a> и
+<a href="scope/lifetime/../../generics/multi_bounds.html">множественные ограничения в обобщениях</a></p>
 <h1><a class="header" href="#coercion" id="coercion">Coercion</a></h1>
 <p>A longer lifetime can be coerced into a shorter one 
 so that it works inside a scope it normally wouldn't work in.
@@ -5036,7 +5050,7 @@ fn main() {
     println!(&quot;NUM: {} stays accessible!&quot;, NUM);
 }
 </code></pre></pre>
-<h3><a class="header" href="#see-also-8" id="see-also-8">See also:</a></h3>
+<h3><a class="header" href="#see-also-6" id="see-also-6">See also:</a></h3>
 <p><a href="scope/lifetime/custom_types/constants.html"><code>'static</code> constants</a></p>
 <h1><a class="header" href="#elision" id="elision">Elision</a></h1>
 <p>Some lifetime patterns are overwelmingly common and so the borrow checker
@@ -5071,7 +5085,7 @@ fn main() {
     println!(&quot;`annotated_pass`: {}&quot;, annotated_pass(&amp;x));
 }
 </code></pre></pre>
-<h3><a class="header" href="#see-also-9" id="see-also-9">See also:</a></h3>
+<h3><a class="header" href="#see-also-7" id="see-also-7">See also:</a></h3>
 <p><a href="https://doc.rust-lang.org/book/second-edition/ch10-03-lifetime-syntax.html#lifetime-elision">elision</a></p>
 <h1><a class="header" href="#Типажи-1" id="Типажи-1">Типажи</a></h1>
 <p><code>Типаж (trait)</code> - это набор методов, определённых для неизвестного типа:
@@ -5208,7 +5222,7 @@ fn main() {
     println!(&quot;Один фут {} одного метра.&quot;, cmp);
 }
 </code></pre></pre>
-<h3><a class="header" href="#Смотрите-также-44" id="Смотрите-также-44">Смотрите также:</a></h3>
+<h3><a class="header" href="#Смотрите-также-46" id="Смотрите-также-46">Смотрите также:</a></h3>
 <p><a href="https://doc.rust-lang.org/reference/attributes.html#derive"><code>derive</code></a></p>
 <h1><a class="header" href="#Перегрузка-операторов" id="Перегрузка-операторов">Перегрузка операторов</a></h1>
 <p>В Rust, множество операторов могут быть перегружены с помощью типажей. То есть, некоторые
@@ -5262,7 +5276,7 @@ fn main() {
     println!(&quot;Bar + Foo = {:?}&quot;, Bar + Foo);
 }
 </code></pre></pre>
-<h3><a class="header" href="#Смотрите-также-45" id="Смотрите-также-45">Смотрите также:</a></h3>
+<h3><a class="header" href="#Смотрите-также-47" id="Смотрите-также-47">Смотрите также:</a></h3>
 <p><a href="https://doc.rust-lang.org/core/ops/trait.Add.html">Add</a>, <a href="https://doc.rust-lang.org/book/second-edition/appendix-02-operators.html">Syntax Index</a></p>
 <h1><a class="header" href="#Типаж-drop" id="Типаж-drop">Типаж Drop</a></h1>
 <p>Типаж <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a> имеет только один метод: <code>drop</code>, который вызывается автоматически,
@@ -5482,13 +5496,13 @@ fn main() {
 количество аргументов в зависимости от строки формата. (Подробнее об этом позже)</p>
 </li>
 </ol>
-<h1><a class="header" href="#syntax" id="syntax">Syntax</a></h1>
-<p>In following subsections, we will show how to define macros in Rust.
-There are three basic ideas:</p>
+<h1><a class="header" href="#Синтаксис" id="Синтаксис">Синтаксис</a></h1>
+<p>В следующем подразделе мы посмотрим как в Rust объявить 
+макрос. Есть три основные идеи:</p>
 <ul>
-<li><a href="macros/macros/designators.html">Patterns and Designators</a></li>
-<li><a href="macros/macros/overload.html">Overloading</a></li>
-<li><a href="macros/macros/repeat.html">Repetition</a></li>
+<li><a href="macros/designators.html">Шаблоны и указатели</a></li>
+<li><a href="macros/overload.html">Перегрузка</a></li>
+<li><a href="macros/repeat.html">Повторение</a></li>
 </ul>
 <h1><a class="header" href="#Указатели" id="Указатели">Указатели</a></h1>
 <p>Аргументы макроса имеют префикс знака доллара <code>$</code> и тип аннотируется
@@ -5774,73 +5788,68 @@ fn main() {
     give_princess(&quot;змея&quot;);
 }
 </code></pre></pre>
-<h1><a class="header" href="#option--unwrap" id="option--unwrap"><code>Option</code> &amp; <code>unwrap</code></a></h1>
-<p>In the last example, we showed that we can induce program failure at will. 
-We told our program to <code>panic</code> if the princess received an inappropriate 
-gift - a snake. But what if the princess expected a gift and didn't receive 
-one? That case would be just as bad, so it needs to be handled!</p>
-<p>We <em>could</em> test this against the null string (<code>&quot;&quot;</code>) as we do with a snake. 
-Since we're using Rust, let's instead have the compiler point out cases 
-where there's no gift.</p>
-<p>An <code>enum</code> called <code>Option&lt;T&gt;</code> in the <code>std</code> library is used when absence is a 
-possibility. It manifests itself as one of two &quot;options&quot;:</p>
+<h1><a class="header" href="#option-и-unwrap" id="option-и-unwrap"><code>Option</code> и <code>unwrap</code></a></h1>
+<p>В последнем примере мы показали, что мы по собственному 
+желанию можем вызвать сбой программы. Мы сказали нашей 
+программе вызвать <code>panic</code>, если принцессе подарят 
+несоответствующий подарок - змею. Но что если принцесса 
+ожидает подарок, но не получает его? Этот случай тоже плохой, так 
+что и он должен быть обработан!</p>
+<p>Мы <em>можем</em> проверить пустую строку (<code>&quot;&quot;</code>) так же, как мы сделали это со змеёй.
+Поскольку мы используем Rust, давайте укажем компилятору случаи, когда подарка нет.</p>
+<p>Перечисление (<code>enum</code>) из стандартной библиотеки (<code>std</code>), называющееся <code>Option&lt;T&gt;</code>, используется, когда значение может отсутствовать. Оно проявляется как одна из двух опций (<code>option</code>s):</p>
 <ul>
-<li><code>Some(T)</code>: An element of type <code>T</code> was found</li>
-<li><code>None</code>: No element was found</li>
+<li><code>Some(T)</code>: элемент типа <code>T</code> найден</li>
+<li><code>None</code>: элемент не найден</li>
 </ul>
-<p>These cases can either be explicitly handled via <code>match</code> or implicitly with 
-<code>unwrap</code>. Implicit handling will either return the inner element or <code>panic</code>.</p>
-<p>Note that it's possible to manually customize <code>panic</code> with <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.expect">expect</a>, 
-but <code>unwrap</code> otherwise leaves us with a less meaningful output than explicit 
-handling. In the following example, explicit handling yields a more 
-controlled result while retaining the option to <code>panic</code> if desired.</p>
-<pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">// The commoner has seen it all, and can handle any gift well.
-// All gifts are handled explicitly using `match`.
+<p>Эти случаи могут быть явно обработаны через  <code>match</code> или неявно с <code>unwrap</code>. Неявная обработка либо вернёт внутренний элемент, либо вызовет <code>panic</code>.</p>
+<p>Обратите внимание, что можно вручную настроить сообщение отображаемое при вызове <code>panic</code> с помощью <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.expect">expect</a>, но <code>unwrap</code> в противном случае оставляет нам менее понятный вывод, чем явная обработка. В следующем примере явная обработка при желании даёт более контролируемый результат, сохраняя при этом возможности <code>panic</code>.</p>
+<pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">// Простолюдин видел всё это, и может справиться с любым подарком хорошо.
+// Все подарки обрабатываются с помощью `match`.
 fn give_commoner(gift: Option&lt;&amp;str&gt;) {
-    // Specify a course of action for each case.
+    // Укажите порядок действий для каждого случая.
     match gift {
-        Some(&quot;snake&quot;) =&gt; println!(&quot;Yuck! I'm throwing that snake in a fire.&quot;),
-        Some(inner)   =&gt; println!(&quot;{}? How nice.&quot;, inner),
-        None          =&gt; println!(&quot;No gift? Oh well.&quot;),
+        Some(&quot;змея&quot;) =&gt; println!(&quot;Фу! Я бросаю змею в огонь.&quot;),
+        Some(inner)   =&gt; println!(&quot;{}? Как хороший.&quot;, inner),
+        None          =&gt; println!(&quot;Нет подарка? Ну что же.&quot;),
     }
 }
 
-// Our sheltered princess will `panic` at the sight of snakes.
-// All gifts are handled implicitly using `unwrap`.
+// Наша защищённая принцесса будет паниковать при виде змей.
+// Все подарки обрабатываются неявно через `unwrap`.
 fn give_princess(gift: Option&lt;&amp;str&gt;) {
-    // `unwrap` returns a `panic` when it receives a `None`.
+    // `unwrap` вызовет `panic` когда получит `None`.
     let inside = gift.unwrap();
-    if inside == &quot;snake&quot; { panic!(&quot;AAAaaaaa!!!!&quot;); }
+    if inside == &quot;змея&quot; { panic!(&quot;AAAaaaaa!!!!&quot;); }
 
-    println!(&quot;I love {}s!!!!!&quot;, inside);
+    println!(&quot;Я люблю {}!!!!!&quot;, inside);
 }
 
 fn main() {
-    let food  = Some(&quot;cabbage&quot;);
-    let snake = Some(&quot;snake&quot;);
+    let food  = Some(&quot;капуста&quot;);
+    let snake = Some(&quot;змея&quot;);
     let void  = None;
 
     give_commoner(food);
     give_commoner(snake);
     give_commoner(void);
 
-    let bird = Some(&quot;robin&quot;);
+    let bird = Some(&quot;Малиновка&quot;);
     let nothing = None;
 
     give_princess(bird);
     give_princess(nothing);
 }
 </code></pre></pre>
-<h1><a class="header" href="#combinators-map" id="combinators-map">Combinators: <code>map</code></a></h1>
-<p><code>match</code> is a valid method for handling <code>Option</code>s. However, you may 
-eventually find heavy usage tedious, especially with operations only valid 
-with an input. In these cases, <a href="https://doc.rust-lang.org/book/glossary.html#combinators">combinators</a> can be used to 
-manage control flow in a modular fashion.</p>
-<p><code>Option</code> has a built in method called <code>map()</code>, a combinator for the simple 
-mapping of <code>Some -&gt; Some</code> and <code>None -&gt; None</code>. Multiple <code>map()</code> calls can be 
-chained together for even more flexibility.</p>
-<p>In the following example, <code>process()</code> replaces all functions previous
-to it while staying compact.</p>
+<h1><a class="header" href="#Комбинаторы-map" id="Комбинаторы-map">Комбинаторы: <code>map</code></a></h1>
+<p><code>match</code> - возможный метод для работы с <code>Option</code>.
+Однако постоянное его использование может быть утомительным, 
+особенно с операциями, которые получают только проверенные 
+данные.
+В этом случае можно использовать <a href="https://doc.rust-lang.org/book/glossary.html#combinators">комбинаторы</a>, которые 
+позволяют управлять потоком выполнения в модульном режиме.</p>
+<p><code>Option</code> имеет встроенный метод, зовущийся <code>map()</code>, комбинатор для простого преобразования <code>Some -&gt; Some</code> и <code>None -&gt; None</code>. Для большей гибкости, несколько вызовов <code>map()</code> могут быть связаны друг с другом в цепочку.</p>
+<p>В следующем примере, <code>process()</code> заменяет все предшествующие ей функции, оставаясь, при этом, компактной:</p>
 <pre><pre class="playpen"><code class="language-rust editable">#![allow(dead_code)]
 
 #[derive(Debug)] enum Food { Apple, Carrot, Potato }
@@ -5849,8 +5858,8 @@ to it while staying compact.</p>
 #[derive(Debug)] struct Chopped(Food);
 #[derive(Debug)] struct Cooked(Food);
 
-// Peeling food. If there isn't any, then return `None`.
-// Otherwise, return the peeled food.
+// Очистка продуктов. Если продуктов нет, то возвращаем `None`.
+// Иначе вернём очищенные продукты.
 fn peel(food: Option&lt;Food&gt;) -&gt; Option&lt;Peeled&gt; {
     match food {
         Some(food) =&gt; Some(Peeled(food)),
@@ -5858,8 +5867,8 @@ fn peel(food: Option&lt;Food&gt;) -&gt; Option&lt;Peeled&gt; {
     }
 }
 
-// Chopping food. If there isn't any, then return `None`.
-// Otherwise, return the chopped food.
+// Нарезка продуктов. Если продуктов нет, то возвращаем `None`.
+// Иначе вернём нарезанные продукты.
 fn chop(peeled: Option&lt;Peeled&gt;) -&gt; Option&lt;Chopped&gt; {
     match peeled {
         Some(Peeled(food)) =&gt; Some(Chopped(food)),
@@ -5867,24 +5876,25 @@ fn chop(peeled: Option&lt;Peeled&gt;) -&gt; Option&lt;Chopped&gt; {
     }
 }
 
-// Cooking food. Here, we showcase `map()` instead of `match` for case handling.
+// Приготовление еды. Здесь, для обработки вариантов, мы используем 
+// `map()` вместо `match`.
 fn cook(chopped: Option&lt;Chopped&gt;) -&gt; Option&lt;Cooked&gt; {
     chopped.map(|Chopped(food)| Cooked(food))
 }
 
-// A function to peel, chop, and cook food all in sequence.
-// We chain multiple uses of `map()` to simplify the code.
+// Функция для последовательной очистки, нарезке и приготовлении продуктов.
+// Мы объединили в цепочку несколько вызовов `map()` для упрощения кода.
 fn process(food: Option&lt;Food&gt;) -&gt; Option&lt;Cooked&gt; {
     food.map(|f| Peeled(f))
         .map(|Peeled(f)| Chopped(f))
         .map(|Chopped(f)| Cooked(f))
 }
 
-// Check whether there's food or not before trying to eat it!
+// Проверим, есть ли еда, прежде чем её съесть
 fn eat(food: Option&lt;Cooked&gt;) {
     match food {
-        Some(food) =&gt; println!(&quot;Mmm. I love {:?}&quot;, food),
-        None       =&gt; println!(&quot;Oh no! It wasn't edible.&quot;),
+        Some(food) =&gt; println!(&quot;Ммм. Я люблю {:?}&quot;, food),
+        None       =&gt; println!(&quot;О, нет! Это не съедобно.&quot;),
     }
 }
 
@@ -5895,7 +5905,7 @@ fn main() {
 
     let cooked_apple = cook(chop(peel(apple)));
     let cooked_carrot = cook(chop(peel(carrot)));
-    // Let's try the simpler looking `process()` now.
+    // Давайте сейчас попробуем проще выглядящую `process()`.
     let cooked_potato = process(potato);
 
     eat(cooked_apple);
@@ -5903,24 +5913,31 @@ fn main() {
     eat(cooked_potato);
 }
 </code></pre></pre>
-<h3><a class="header" href="#see-also-10" id="see-also-10">See also:</a></h3>
-<p><a href="error/option_unwrap/fn/closures.html">closures</a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.map"><code>Option::map()</code></a></p>
-<h1><a class="header" href="#combinators-and_then" id="combinators-and_then">Combinators: <code>and_then</code></a></h1>
-<p><code>map()</code> was described as a chainable way to simplify <code>match</code> statements. 
-However, using <code>map()</code> on a function that returns an <code>Option&lt;T&gt;</code> results 
-in the nested <code>Option&lt;Option&lt;T&gt;&gt;</code>. Chaining multiple calls together can 
-then become confusing. That's where another combinator called <code>and_then()</code>, 
-known in some languages as flatmap, comes in.</p>
-<p><code>and_then()</code> calls its function input with the wrapped value and returns the result. If the <code>Option</code> is <code>None</code>, then it returns <code>None</code> instead.</p>
-<p>In the following example, <code>cookable_v2()</code> results in an <code>Option&lt;Food&gt;</code>. 
-Using <code>map()</code> instead of <code>and_then()</code> would have given an 
-<code>Option&lt;Option&lt;Food&gt;&gt;</code>, which is an invalid type for <code>eat()</code>.</p>
+<h3><a class="header" href="#Смотрите-также-48" id="Смотрите-также-48">Смотрите также:</a></h3>
+<p><a href="error/option_unwrap/../../fn/closures.html">Замыкания</a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.map"><code>Option::map()</code></a></p>
+<h1><a class="header" href="#Комбинаторы-and_then" id="Комбинаторы-and_then">Комбинаторы: <code>and_then</code></a></h1>
+<p><code>map()</code> описывался как использование цепочек 
+функций для упрощения выражения <code>match</code>.
+Однако использование <code>map()</code> с функцией, которая в 
+качестве результата возвращает <code>Option&lt;T&gt;</code> 
+приводит к вложенности <code>Option&lt;Option&lt;T&gt;&gt;</code>. Такая цепочка из множества вызовов в итоге может 
+запутать. Вот тут и появляется другой комбинатор, зовущийся 
+<code>and_then()</code>, известный в некоторых языках как 
+<code>flatmap</code>.</p>
+<p><code>and_then()</code> запускает функцию, которая на вход получает обёрнутое значение, а возвращает результирующее 
+значение. Если <code>Option</code> равен <code>None</code>, то 
+он вернёт <code>None</code>.</p>
+<p>В следующем примере, <code>cookable_v2()</code> возвращает<br />
+<code>Option&lt;Food&gt;</code>. Используя <code>map()</code> 
+вместо <code>and_then()</code> мы получим 
+<code>Option&lt;Option&lt;Food&gt;&gt;</code>, который является 
+не правильным типом для <code>eat()</code>.</p>
 <pre><pre class="playpen"><code class="language-rust editable">#![allow(dead_code)]
 
 #[derive(Debug)] enum Food { CordonBleu, Steak, Sushi }
 #[derive(Debug)] enum Day { Monday, Tuesday, Wednesday }
 
-// We don't have the ingredients to make Sushi.
+// У нас нет ингридиентов для приготовления Sushi.
 fn have_ingredients(food: Food) -&gt; Option&lt;Food&gt; {
     match food {
         Food::Sushi =&gt; None,
@@ -5928,7 +5945,7 @@ fn have_ingredients(food: Food) -&gt; Option&lt;Food&gt; {
     }
 }
 
-// We have the recipe for everything except Cordon Bleu.
+// У нас есть рецепты для всего, за исключением Cordon Bleu.
 fn have_recipe(food: Food) -&gt; Option&lt;Food&gt; {
     match food {
         Food::CordonBleu =&gt; None,
@@ -5936,27 +5953,27 @@ fn have_recipe(food: Food) -&gt; Option&lt;Food&gt; {
     }
 }
 
-// To make a dish, we need both the ingredients and the recipe.
-// We can represent the logic with a chain of `match`es:
+// Для приготовления блюда нам необходимы и рецепт, и ингредиент.
+// Мы можем представить логику, как цепочку из`match`:
 fn cookable_v1(food: Food) -&gt; Option&lt;Food&gt; {
-    match have_ingredients(food) {
+    match have_recipe(food) {
         None       =&gt; None,
-        Some(food) =&gt; match have_recipe(food) {
+        Some(food) =&gt; match have_ingredients(food) {
             None       =&gt; None,
             Some(food) =&gt; Some(food),
         },
     }
 }
 
-// This can conveniently be rewritten more compactly with `and_then()`:
+// Для удобства это может быть переписано с использованием более компактного `and_then()`:
 fn cookable_v2(food: Food) -&gt; Option&lt;Food&gt; {
-    have_ingredients(food).and_then(have_recipe)
+    have_recipe(food).and_then(have_ingredients)
 }
 
 fn eat(food: Food, day: Day) {
     match cookable_v2(food) {
-        Some(food) =&gt; println!(&quot;Yay! On {:?} we get to eat {:?}.&quot;, day, food),
-        None       =&gt; println!(&quot;Oh no. We don't get to eat on {:?}?&quot;, day),
+        Some(food) =&gt; println!(&quot;Yay! В {:?} мы будем есть {:?}.&quot;, day, food),
+        None       =&gt; println!(&quot;О, нет. Мы не будем есть в {:?}?&quot;, day),
     }
 }
 
@@ -5968,27 +5985,23 @@ fn main() {
     eat(sushi, Day::Wednesday);
 }
 </code></pre></pre>
-<h3><a class="header" href="#see-also-11" id="see-also-11">See also:</a></h3>
-<p><a href="error/option_unwrap/fn/closures.html">closures</a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>, and <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.and_then"><code>Option::and_then()</code></a></p>
+<h3><a class="header" href="#Смотрите-также-49" id="Смотрите-также-49">Смотрите также:</a></h3>
+<p><a href="error/option_unwrap/../../fn/closures.html">Замыкания</a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>, и <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.and_then"><code>Option::and_then()</code></a></p>
 <h1><a class="header" href="#result" id="result"><code>Result</code></a></h1>
-<p><a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> is a richer version of the <a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a> type that
-describes possible <em>error</em> instead of possible <em>absence</em>.</p>
-<p>That is, <code>Result&lt;T, E&gt;</code> could have one of two outcomes:</p>
+<p><a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> является более богатой версией типа <a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>, тип который описывает возможную <em>ошибку</em> вместо возможного её <em>отсутствия</em>.</p>
+<p><code>Result&lt;T, E&gt;</code> имеет два возможных значения:</p>
 <ul>
-<li><code>Ok&lt;T&gt;</code>: An element <code>T</code> was found</li>
-<li><code>Err&lt;E&gt;</code>: An error was found with element <code>E</code></li>
+<li><code>Ok&lt;T&gt;</code>: Значение типа <code>T</code></li>
+<li><code>Err&lt;E&gt;</code>: Ошибка обработки элемента, типа <code>E</code></li>
 </ul>
-<p>By convention, the expected outcome is <code>Ok</code> while the unexpected outcome is <code>Err</code>.</p>
-<p>Like <code>Option</code>, <code>Result</code> has many methods associated with it. <code>unwrap()</code>, for
-example, either yields the element <code>T</code> or <code>panic</code>s. For case handling,
-there are many combinators between <code>Result</code> and <code>Option</code> that overlap.</p>
-<p>In working with Rust, you will likely encounter methods that return the
-<code>Result</code> type, such as the <a href="https://doc.rust-lang.org/std/primitive.str.html#method.parse"><code>parse()</code></a> method. It might not always
-be possible to parse a string into the other type, so <code>parse()</code> returns a
-<code>Result</code> indicating possible failure.</p>
-<p>Let's see what happens when we successfully and unsuccessfully <code>parse()</code> a string:</p>
+<p>По соглашению, ожидаемый результат <code>Ok</code>, тогда как не ожидаемый - <code>Err</code>.</p>
+<p>Подобно <code>Option</code>, <code>Result</code> имеет множество ассоциированных с ним методов. Например, <code>unwrap()</code> или возвращает <code>T</code>, или вызывает <code>panic</code>. 
+Для обработки результата у <code>Result</code> существует множество комбинаторов, которые совпадают с комбинаторами <code>Option</code>.</p>
+<p>При работе с Rust вы, скорее всего, столкнётесь с методами, которые возвращают тип Result, например метод parse(). Не всегда
+можно разобрать строку в другой тип, поэтому parse() возвращает Result, указывающий на возможный сбой.</p>
+<p>Давайте посмотрим, что происходит, когда мы успешно и безуспешно попытаемся преобразовать строку с помощью <code>parse()</code>:</p>
 <pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; i32 {
-    // Let's try using `unwrap()` to get the number out. Will it bite us?
+    // Давайте попробуем использовать `unwrap()` чтобы получить число. Он нас укусит?
     let first_number = first_number_str.parse::&lt;i32&gt;().unwrap();
     let second_number = second_number_str.parse::&lt;i32&gt;().unwrap();
     first_number * second_number
@@ -5996,30 +6009,49 @@ be possible to parse a string into the other type, so <code>parse()</code> retur
 
 fn main() {
     let twenty = multiply(&quot;10&quot;, &quot;2&quot;);
-    println!(&quot;double is {}&quot;, twenty);
+    println!(&quot;удовоенное {}&quot;, twenty);
 
     let tt = multiply(&quot;t&quot;, &quot;2&quot;);
-    println!(&quot;double is {}&quot;, tt);
+    println!(&quot;удвоенное {}&quot;, tt);
 }
 </code></pre></pre>
-<p>In the unsuccessful case, <code>parse()</code> leaves us with an error for <code>unwrap()</code>
-to <code>panic</code> on. Additionally, the <code>panic</code> exits our program and provides an
-unpleasant error message.</p>
-<p>To improve the quality of our error message, we should be more specific
-about the return type and consider explicitly handling the error.</p>
-<h1><a class="header" href="#map-for-result" id="map-for-result"><code>map</code> for <code>Result</code></a></h1>
-<p>Panicking in the previous example's <code>multiply</code> does not make for robust code.
-Generally, we want to return the error to the caller so it can decide what is
-the right way to respond to errors.</p>
-<p>We first need to know what kind of error type we are dealing with. To determine
-the <code>Err</code> type, we look to <a href="https://doc.rust-lang.org/std/primitive.str.html#method.parse"><code>parse()</code></a>, which is implemented with the
-<a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code></a> trait for <a href="https://doc.rust-lang.org/std/primitive.i32.html"><code>i32</code></a>. As a result, the <code>Err</code> type is
-specified as <a href="https://doc.rust-lang.org/std/num/struct.ParseIntError.html"><code>ParseIntError</code></a>.</p>
-<p>In the example below, the straightforward <code>match</code> statement leads to code
-that is overall more cumbersome.</p>
+<p>При неудаче, <code>parse()</code> оставляет на с ошибкой, с 
+которой <code>unwrap()</code> вызывает <code>panic</code>. Дополнительно, <code>panic</code> завершает нашу программу и 
+предоставляет неприятное сообщение об ошибке.</p>
+<p>Для повышения качества наших сообщений об ошибка, мы должны более явно указать возвращаемый тип и рассмотреть возможной явной обработки ошибок.</p>
+<h2><a class="header" href="#Использование-result-в-main" id="Использование-result-в-main">Использование <code>Result</code> в <code>main</code></a></h2>
+<p>Также <code>Result</code> может быть возвращаемым типом функции <code>main</code>, если это указано явно. Обычно функция <code>main</code> имеют следующую форму:</p>
+<pre><pre class="playpen"><code class="language-rust">fn main() {
+    println!(&quot;Hello World!&quot;);
+}
+</code></pre></pre>
+<p>Однако <code>main</code> также может и возвращать тип <code>Result</code>. Если ошибка происходит в пределах функции <code>main</code>, то она возвращает код ошибки и выводит отладочное представление ошибки (используя типаж <a href="https://doc.rust-lang.org/std/fmt/trait.Debug.html"><code>Debug</code></a>). Следующий пример показывает такой сценарий и затрагивает аспекты, описанные в <a href="error/result/early_returns.html">последующем разделе</a>.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::num::ParseIntError;
 
-// With the return type rewritten, we use pattern matching without `unwrap()`.
+fn main() -&gt; Result&lt;(), ParseIntError&gt; {
+    let number_str = &quot;10&quot;;
+    let number = match number_str.parse::&lt;i32&gt;() {
+        Ok(number)  =&gt; number,
+        Err(e) =&gt; return Err(e),
+    };
+    println!(&quot;{}&quot;, number);
+    Ok(())
+}
+</code></pre></pre>
+<h1><a class="header" href="#map-для-result" id="map-для-result"><code>map</code> для <code>Result</code></a></h1>
+<p>Паника в предыдущем примере делает код ненадёжным.
+Обычно, мы хотим вернуть ошибку вызывающей стороне, чтобы 
+уже она решала, как с ней поступить.</p>
+<p>Первое, что нам нужно знать - это с каким типом ошибки мы 
+работаем. Для определения типа <code>Err</code>, мы посмотрим 
+на <a href="https://doc.rust-lang.org/std/primitive.str.html#method.parse"><code>parse()</code></a>, реализованную с типажом 
+<a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code></a> для <a href="https://doc.rust-lang.org/std/primitive.i32.html"><code>i32</code></a>.
+В результате, тип <code>Err</code> указан как 
+<a href="https://doc.rust-lang.org/std/num/struct.ParseIntError.html"><code>ParseIntError</code></a>.</p>
+<p>В примере ниже, простой <code>match</code> делает код более громоздким.</p>
+<pre><pre class="playpen"><code class="language-rust editable">use std::num::ParseIntError;
+
+// Мы используем сопоставление с образцом без `unwrap()` и меняем тип результата.
 fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; Result&lt;i32, ParseIntError&gt; {
     match first_number_str.parse::&lt;i32&gt;() {
         Ok(first_number)  =&gt; {
@@ -6036,28 +6068,31 @@ fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; Resul
 
 fn print(result: Result&lt;i32, ParseIntError&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;n is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n)  =&gt; println!(&quot;n равно {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 
 fn main() {
-    // This still presents a reasonable answer.
+    // Это даёт разумный ответ.
     let twenty = multiply(&quot;10&quot;, &quot;2&quot;);
     print(twenty);
 
-    // The following now provides a much more helpful error message.
+    // Следующее теперь предоставляет более понятное сообщение об ошибке.
     let tt = multiply(&quot;t&quot;, &quot;2&quot;);
     print(tt);
 }
 </code></pre></pre>
-<p>Luckily, <code>Option</code>'s <code>map</code>, <code>and_then</code>, and many other combinators are also
-implemented for <code>Result</code>. <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> contains a complete listing.</p>
+<p>К счастью, <code>map</code>, <code>and_then</code> многие 
+другие комбинаторы <code>Option</code> также реализованы и 
+для <code>Result</code>. 
+<a href="https://doc.rust-lang.org/std/result/enum.Result.html" data-md-type="link">Документация по <code>Result</code></a> содержит полный 
+их список.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::num::ParseIntError;
 
-// As with `Option`, we can use combinators such as `map()`.
-// This function is otherwise identical to the one above and reads:
-// Modify n if the value is valid, otherwise pass on the error.
+// Как и с `Option`, мы можем использовать комбинаторы, как `map()`.
+// Эта функция в основном идентична предыдущей и читается как:
+// изменяем n при валидном значении, иначе передаём ошибку.
 fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; Result&lt;i32, ParseIntError&gt; {
     first_number_str.parse::&lt;i32&gt;().and_then(|first_number| {
         second_number_str.parse::&lt;i32&gt;().map(|second_number| first_number * second_number)
@@ -6066,17 +6101,17 @@ fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; Resul
 
 fn print(result: Result&lt;i32, ParseIntError&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;n is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n)  =&gt; println!(&quot;n равно {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 
 fn main() {
-    // This still presents a reasonable answer.
+    // Это даёт разумный ответ.
     let twenty = multiply(&quot;10&quot;, &quot;2&quot;);
     print(twenty);
 
-    // The following now provides a much more helpful error message.
+    // Следующее теперь предоставляет более понятное сообщение об ошибке.
     let tt = multiply(&quot;t&quot;, &quot;2&quot;);
     print(tt);
 }
@@ -6116,15 +6151,16 @@ fn main() {
     print(multiply(&quot;t&quot;, &quot;2&quot;));
 }
 </code></pre></pre>
-<h3><a class="header" href="#Смотрите-также-46" id="Смотрите-также-46">Смотрите также:</a></h3>
+<h3><a class="header" href="#Смотрите-также-50" id="Смотрите-также-50">Смотрите также:</a></h3>
 <p><a href="https://doc.rust-lang.org/std/io/type.Result.html"><code>io::Result</code></a></p>
-<h1><a class="header" href="#early-returns" id="early-returns">Early returns</a></h1>
-<p>In the previous example, we explicitly handled the errors using combinators.
-Another way to deal with this case analysis is to use a combination of
-<code>match</code> statements and <em>early returns</em>.</p>
-<p>That is, we can simply stop executing the function and return the error if
-one occurs. For some, this form of code can be easier to both read and
-write. Consider this version of the previous example, rewritten using early returns:</p>
+<h1><a class="header" href="#Ранний-выход" id="Ранний-выход">Ранний выход</a></h1>
+<p>В предыдущем примере мы явно обработали ошибки при помощи комбинаторов.
+Другой способ сделать это - использовать комбинацию выражения 
+<code>match</code> и <em>раннего выхода</em>.</p>
+<p>Таким образом мы просто можем остановить работу функции и 
+вернуть ошибку, если она произошла. Для некоторых, такой код 
+будет легче в чтении и написании. Посмотрите код из предыдущего 
+примера, переписанный с использованием раннего выхода:</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::num::ParseIntError;
 
 fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; Result&lt;i32, ParseIntError&gt; {
@@ -6143,8 +6179,8 @@ fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; Resul
 
 fn print(result: Result&lt;i32, ParseIntError&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;n is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n)  =&gt; println!(&quot;n равно {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 
@@ -6153,23 +6189,28 @@ fn main() {
     print(multiply(&quot;t&quot;, &quot;2&quot;));
 }
 </code></pre></pre>
-<p>At this point, we've learned to explicitly handle errors using combinators
-and early returns. While we generally want to avoid panicking, explicitly
-handling all of our errors is cumbersome.</p>
-<p>In the next section, we'll introduce <code>?</code> for the cases where we simply
-need to <code>unwrap</code> without possibly inducing <code>panic</code>.</p>
-<h1><a class="header" href="#introducing-" id="introducing-">Introducing <code>?</code></a></h1>
-<p>Sometimes we just want the simplicity of <code>unwrap</code> without the possibility of
-a <code>panic</code>. Until now, <code>unwrap</code> has forced us to nest deeper and deeper when
-what we really wanted was to get the variable <em>out</em>. This is exactly the purpose of <code>?</code>.</p>
-<p>Upon finding an <code>Err</code>, there are two valid actions to take:</p>
+<p>На данный момент, мы изучили обработку ошибок при помощи 
+комбинаторов и раннего выхода. Мы хотим избежать паники, но 
+явная обработка всех ошибок достаточно громоздка.</p>
+<p>В следующем разделе, мы познакомимся с <code>?</code> для 
+случаев, где нам просто хотим сделать <code>unwrap</code> без 
+возможности вызова <code>panic</code>.</p>
+<h1><a class="header" href="#Представляем-" id="Представляем-">Представляем: <code>?</code></a></h1>
+<p>Иногда мы хотим получить простоту <code>unwrap</code>, но без 
+<code>panic</code>. До текущего момента <code>unwrap</code> 
+заставлял нас делать всё больше и больше, в то время как мы 
+хотели только <em>извлечь</em> переменную. Для этих целей был 
+введён <code>?</code>.</p>
+<p>При обнаружении <code>Err</code>, можно выполнить два действия:</p>
 <ol>
-<li><code>panic!</code> which we already decided to try to avoid if possible</li>
-<li><code>return</code> because an <code>Err</code> means it cannot be handled</li>
+<li><code>panic!</code>, который мы решили по возможности избегать </li>
+<li><code>return</code> так как возврат <code>Err</code> говорит о том, что мы её не обрабатывали</li>
 </ol>
-<p><code>?</code> is <em>almost</em><sup class="footnote-reference"><a href="#†">1</a></sup> exactly equivalent to an <code>unwrap</code> which <code>return</code>s
-instead of <code>panic</code>s on <code>Err</code>s. Let's see how we can simplify the earlier
-example that used combinators:</p>
+<p><code>?</code> <em>почти</em><sup class="footnote-reference"><a href="#†">1</a></sup> эквивалентен
+<code>unwrap</code>, который при <code>Err</code> делает 
+<code>return</code> вместо <code>panic</code>. Давайте 
+посмотрим как мы можем упростить наш пример, использующий 
+комбинаторы:</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::num::ParseIntError;
 
 fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; Result&lt;i32, ParseIntError&gt; {
@@ -6181,8 +6222,8 @@ fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; Resul
 
 fn print(result: Result&lt;i32, ParseIntError&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;n is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n)  =&gt; println!(&quot;n равно {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 
@@ -6191,12 +6232,19 @@ fn main() {
     print(multiply(&quot;t&quot;, &quot;2&quot;));
 }
 </code></pre></pre>
-<h2><a class="header" href="#the-try-macro" id="the-try-macro">The <code>try!</code> macro</a></h2>
-<p>Before there was <code>?</code>, the same functionality was achieved with the <code>try!</code> macro.
-The <code>?</code> operator is now recommended, but you may still find <code>try!</code> when looking
-at older code. The same <code>multiply</code> function from the previous example
-would look like this using <code>try!</code>:</p>
-<pre><pre class="playpen"><code class="language-rust editable">use std::num::ParseIntError;
+<h2><a class="header" href="#Макрос-try" id="Макрос-try">Макрос <code>try!</code></a></h2>
+<p>До появления <code>?</code>, аналогичная функциональность 
+была доступна через макрос <code>try!</code>.
+Сейчас рекомендуется использовать оператор <code>?</code>, но 
+вы до сих пор можете найти <code>try!</code>, когда 
+просматриваете старый код. Функция <code>multiply</code> из 
+предыдущего примера с использованием <code>try!</code> будет 
+выглядеть следующим образом:</p>
+<pre><pre class="playpen"><code class="language-rust editable">// Для компиляции и запуска с помощью Cargo этого примера без ошибок
+// поменяйте в `Cargo.toml` значение поля `edition` секции 
+// `[package]` на &quot;2015&quot;.
+
+use std::num::ParseIntError;
 
 fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; Result&lt;i32, ParseIntError&gt; {
     let first_number = try!(first_number_str.parse::&lt;i32&gt;());
@@ -6207,8 +6255,8 @@ fn multiply(first_number_str: &amp;str, second_number_str: &amp;str) -&gt; Resul
 
 fn print(result: Result&lt;i32, ParseIntError&gt;) {
     match result {
-        Ok(n)  =&gt; println!(&quot;n is {}&quot;, n),
-        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+        Ok(n)  =&gt; println!(&quot;n равно {}&quot;, n),
+        Err(e) =&gt; println!(&quot;Ошибка: {}&quot;, e),
     }
 }
 
@@ -6218,21 +6266,23 @@ fn main() {
 }
 </code></pre></pre>
 <div class="footnote-definition" id="†"><sup class="footnote-definition-label">1</sup>
-<p>See <a href="error/result/error/multiple_error_types/reenter_question_mark.html">re-enter ?</a> for more details.</p>
+<p>Посмотрите главу <a href="error/result/../multiple_error_types/reenter_question_mark.html">&quot;Другие способы использования <code>?</code>&quot;</a> для большей информации.</p>
 </div>
-<h1><a class="header" href="#multiple-error-types" id="multiple-error-types">Multiple error types</a></h1>
-<p>The previous examples have always been very convenient; <code>Result</code>s interact
-with other <code>Result</code>s and <code>Option</code>s interact with other <code>Option</code>s.</p>
-<p>Sometimes an <code>Option</code> needs to interact with a <code>Result</code>, or a
-<code>Result&lt;T, Error1&gt;</code> needs to interact with a <code>Result&lt;T, Error2&gt;</code>. In those
-cases, we want to manage our different error types in a way that makes them
-composable and easy to interact with.</p>
-<p>In the following code, two instances of <code>unwrap</code> generate different error
-types. <code>Vec::first</code> returns an <code>Option</code>, while <code>parse::&lt;i32&gt;</code> returns a
+<h1><a class="header" href="#Несколько-типов-ошибок" id="Несколько-типов-ошибок">Несколько типов ошибок</a></h1>
+<p>Предыдущие примеры всегда были очень удобны:  <code>Result</code> взаимодействовали с другими <code>Result</code>, а <code>Option</code> - с другими <code>Option</code>.</p>
+<p>Иногда <code>Option</code> необходимо взаимодействовать с 
+<code>Result</code>, или <code>Result&lt;T, Error1&gt;</code> с 
+<code>Result&lt;T, Error2&gt;</code>. В этих случаях, нам нужно 
+управлять этими разными типами ошибок таким образом, чтобы 
+можно было их компоновать и легко взаимодействовать с ними.</p>
+<p>В следующем коде, два варианта <code>unwrap</code> 
+генерируют разные типы ошибок. <code>Vec::first</code> 
+возвращает <code>Option</code>, в то время как 
+<code>parse::&lt;i32&gt;</code> возвращает 
 <code>Result&lt;i32, ParseIntError&gt;</code>:</p>
 <pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">fn double_first(vec: Vec&lt;&amp;str&gt;) -&gt; i32 {
-    let first = vec.first().unwrap(); // Generate error 1
-    2 * first.parse::&lt;i32&gt;().unwrap() // Generate error 2
+    let first = vec.first().unwrap(); // Генерирует ошибку 1
+    2 * first.parse::&lt;i32&gt;().unwrap() // Генерирует ошибку 2
 }
 
 fn main() {
@@ -6240,16 +6290,16 @@ fn main() {
     let empty = vec![];
     let strings = vec![&quot;tofu&quot;, &quot;93&quot;, &quot;18&quot;];
 
-    println!(&quot;The first doubled is {}&quot;, double_first(numbers));
+    println!(&quot;Первое удвоенное {}&quot;, double_first(numbers));
 
-    println!(&quot;The first doubled is {}&quot;, double_first(empty));
-    // Error 1: the input vector is empty
+    println!(&quot;Первое удвоенное {}&quot;, double_first(empty));
+    // Ошибка 1: входной вектор пустой
 
-    println!(&quot;The first doubled is {}&quot;, double_first(strings));
-    // Error 2: the element doesn't parse to a number
+    println!(&quot;Первое удвоенное {}&quot;, double_first(strings));
+    // Ошибка 2: элемент не может быть преобразован в число
 }
 </code></pre></pre>
-<p>Over the next sections, we'll see several strategies for handling these kind of problems.</p>
+<p>В следующих главах мы рассмотрим различные стратегии обработки этих типов проблем.</p>
 <h1><a class="header" href="#Извлечение-result-из-option" id="Извлечение-result-из-option">Извлечение <code>Result</code> из <code>Option</code></a></h1>
 <p>Наиболее простой способ обработки ошибок разных типов - это встраивание их друг в друга.</p>
 <pre><pre class="playpen"><code class="language-rust editable">use std::num::ParseIntError;
@@ -6445,7 +6495,7 @@ fn main() {
     print(double_first(strings));
 }
 </code></pre></pre>
-<h3><a class="header" href="#Смотрите-также-47" id="Смотрите-также-47">Смотрите также:</a></h3>
+<h3><a class="header" href="#Смотрите-также-51" id="Смотрите-также-51">Смотрите также:</a></h3>
 <p><a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">Динамическая диспетчеризация</a> и <a href="https://doc.rust-lang.org/std/error/trait.Error.html">типаж <code>Error</code></a></p>
 <h1><a class="header" href="#Другие-способы-использования-" id="Другие-способы-использования-">Другие способы использования <code>?</code></a></h1>
 <p>Вы обратили внимание, что сразу же после вызова 
@@ -6465,7 +6515,7 @@ fn main() {
 <code>From::from</code> используется для преобразования между 
 разными типами, применение <code>?</code> к ошибке 
 автоматически преобразует её в возвращаемый тип (при условии, 
-что исходная ошибка может быть в него сконвертирована).</p>
+что исходная ошибка может быть в него преобразована).</p>
 <p>Теперь мы перепишем наш предыдущий пример с использованием 
 <code>?</code>. В результате у нас пропал <code>map_err</code>, 
 так как для нашего типа реализован <code>From::from</code>:</p>
@@ -6526,7 +6576,7 @@ fn main() {
 <code>unwrap</code> на <code>?</code> за исключением того, что 
 возвращаемый тип будет <code>Result</code>. В результате, он 
 может быть обработан уровнем выше.</p>
-<h3><a class="header" href="#Смотрите-также-48" id="Смотрите-также-48">Смотрите также:</a></h3>
+<h3><a class="header" href="#Смотрите-также-52" id="Смотрите-также-52">Смотрите также:</a></h3>
 <p><a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From::from</code></a> и <a href="https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-question-mark-operator"><code>?</code></a></p>
 <h1><a class="header" href="#Оборачивание-ошибок" id="Оборачивание-ошибок">Оборачивание ошибок</a></h1>
 <p>Альтернативой упаковке ошибок является оборачивание их в ваш собственный тип.</p>
@@ -6603,22 +6653,22 @@ fn main() {
 <p>Это добавляет чуть больше шаблонного кода для обработки ошибок 
 и может быть не нужно всем приложениям. Есть библиотеки, 
 которые могут избавить вас от написания этого шаблонного кода.</p>
-<h3><a class="header" href="#Смотрите-также-49" id="Смотрите-также-49">Смотрите также:</a></h3>
+<h3><a class="header" href="#Смотрите-также-53" id="Смотрите-также-53">Смотрите также:</a></h3>
 <p><a href="https://doc.rust-lang.org/std/convert/trait.From.html"><code>From::from</code></a> и <a href="error/multiple_error_types/../../custom_types/enum.html"><code>Enums</code></a></p>
-<h1><a class="header" href="#iterating-over-results" id="iterating-over-results">Iterating over <code>Result</code>s</a></h1>
-<p>An <code>Iter::map</code> operation might fail, for example:</p>
+<h1><a class="header" href="#Итерирование-по-result" id="Итерирование-по-result">Итерирование по <code>Result</code></a></h1>
+<p>При работе метода <code>Iter::map</code> может случиться ошибка, например:</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     let strings = vec![&quot;tofu&quot;, &quot;93&quot;, &quot;18&quot;];
-    let possible_numbers: Vec&lt;_&gt; = strings
+    let numbers: Vec&lt;_&gt; = strings
         .into_iter()
         .map(|s| s.parse::&lt;i32&gt;())
         .collect();
-    println!(&quot;Results: {:?}&quot;, possible_numbers);
+    println!(&quot;Результаты: {:?}&quot;, numbers);
 }
 </code></pre></pre>
-<p>Let's step through strategies for handling this.</p>
-<h2><a class="header" href="#ignore-the-failed-items-with-filter_map" id="ignore-the-failed-items-with-filter_map">Ignore the failed items with <code>filter_map()</code></a></h2>
-<p><code>filter_map</code> calls a function and filters out the results that are <code>None</code>.</p>
+<p>Давайте рассмотрим стратегии обработки этого.</p>
+<h2><a class="header" href="#Игнорирование-неудачных-элементов-с-filter_map" id="Игнорирование-неудачных-элементов-с-filter_map">Игнорирование неудачных элементов с <code>filter_map()</code></a></h2>
+<p><code>filter_map</code> вызывает функцию и отфильтровывает результаты, вернувшие <code>None</code>.</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     let strings = vec![&quot;tofu&quot;, &quot;93&quot;, &quot;18&quot;];
     let numbers: Vec&lt;_&gt; = strings
@@ -6626,36 +6676,34 @@ fn main() {
         .map(|s| s.parse::&lt;i32&gt;())
         .filter_map(Result::ok)
         .collect();
-    println!(&quot;Results: {:?}&quot;, numbers);
+    println!(&quot;Результаты: {:?}&quot;, numbers);
 }
 </code></pre></pre>
-<h2><a class="header" href="#fail-the-entire-operation-with-collect" id="fail-the-entire-operation-with-collect">Fail the entire operation with <code>collect()</code></a></h2>
-<p><code>Result</code> implements <code>FromIter</code> so that a vector of results (<code>Vec&lt;Result&lt;T, E&gt;&gt;</code>)
-can be turned into a result with a vector (<code>Result&lt;Vec&lt;T&gt;, E&gt;</code>). Once an
-<code>Result::Err</code> is found, the iteration will terminate.</p>
+<h2><a class="header" href="#Сбой-всей-операции-с-collect" id="Сбой-всей-операции-с-collect">Сбой всей операции с <code>collect()</code></a></h2>
+<p><code>Result</code> реализует <code>FromIter</code> так что вектор из результатов (<code>Vec&lt;Result&lt;T, E&gt;&gt;</code>)
+может быть преобразован в результат с вектором (<code>Result&lt;Vec&lt;T&gt;, E&gt;</code>). Если будет найдена хотя бы одна <code>Result::Err</code>, итерирование завершится.</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     let strings = vec![&quot;tofu&quot;, &quot;93&quot;, &quot;18&quot;];
     let numbers: Result&lt;Vec&lt;_&gt;, _&gt; = strings
         .into_iter()
         .map(|s| s.parse::&lt;i32&gt;())
         .collect();
-    println!(&quot;Results: {:?}&quot;, numbers);
+    println!(&quot;Результаты: {:?}&quot;, numbers);
 }
 </code></pre></pre>
-<p>This same technique can be used with <code>Option</code>.</p>
-<h2><a class="header" href="#collect-all-valid-values-and-failures-with-partition" id="collect-all-valid-values-and-failures-with-partition">Collect all valid values and failures with <code>partition()</code></a></h2>
+<p>Та же самая техника может использоваться с <code>Option</code>.</p>
+<h2><a class="header" href="#Сбор-всех-корректных-значений-и-ошибок-с-помощью-partition" id="Сбор-всех-корректных-значений-и-ошибок-с-помощью-partition">Сбор всех корректных значений и ошибок с помощью <code>partition()</code></a></h2>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     let strings = vec![&quot;tofu&quot;, &quot;93&quot;, &quot;18&quot;];
     let (numbers, errors): (Vec&lt;_&gt;, Vec&lt;_&gt;) = strings
         .into_iter()
         .map(|s| s.parse::&lt;i32&gt;())
         .partition(Result::is_ok);
-    println!(&quot;Numbers: {:?}&quot;, numbers);
-    println!(&quot;Errors: {:?}&quot;, errors);
+    println!(&quot;Числа: {:?}&quot;, numbers);
+    println!(&quot;Ошибки: {:?}&quot;, errors);
 }
 </code></pre></pre>
-<p>When you look at the results, you'll note that everything is still wrapped in
-<code>Result</code>.  A little more boilerplate is needed for this.</p>
+<p>Если вы посмотрите на результаты работы, вы заметите, что они всё ещё обёрнуты в <code>Result</code>. Потребуется немного больше шаблонного кода, чтобы получить нужный результат.</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     let strings = vec![&quot;tofu&quot;, &quot;93&quot;, &quot;18&quot;];
     let (numbers, errors): (Vec&lt;_&gt;, Vec&lt;_&gt;) = strings
@@ -6664,8 +6712,8 @@ can be turned into a result with a vector (<code>Result&lt;Vec&lt;T&gt;, E&gt;</
         .partition(Result::is_ok);
     let numbers: Vec&lt;_&gt; = numbers.into_iter().map(Result::unwrap).collect();
     let errors: Vec&lt;_&gt; = errors.into_iter().map(Result::unwrap_err).collect();
-    println!(&quot;Numbers: {:?}&quot;, numbers);
-    println!(&quot;Errors: {:?}&quot;, errors);
+    println!(&quot;Числа: {:?}&quot;, numbers);
+    println!(&quot;Ошибки: {:?}&quot;, errors);
 }
 </code></pre></pre>
 <h1><a class="header" href="#Типы-стандартной-библиотеки" id="Типы-стандартной-библиотеки">Типы стандартной библиотеки</a></h1>
@@ -6678,7 +6726,7 @@ can be turned into a result with a vector (<code>Result&lt;Vec&lt;T&gt;, E&gt;</
 <li>типы для обработки ошибок: <code>Result&lt;i32, i32&gt;</code></li>
 <li>указатели на объекты в куче: <code>Box&lt;i32&gt;</code></li>
 </ul>
-<h3><a class="header" href="#Смотрите-также-50" id="Смотрите-также-50">Смотрите также:</a></h3>
+<h3><a class="header" href="#Смотрите-также-54" id="Смотрите-также-54">Смотрите также:</a></h3>
 <p><a href="primitives.html">Примитивы</a> и <a href="https://doc.rust-lang.org/std/"><code>std</code></a></p>
 <h1><a class="header" href="#box-стек-и-куча" id="box-стек-и-куча"><code>Box</code>, стек и куча</a></h1>
 <p>Все значения в Rust по умолчанию аллоцируются на стеке. Значения могут быть <em>упакованы</em>
@@ -6867,10 +6915,10 @@ modules</p>
 All result in a similar <code>&amp;str</code> so it's best to use the form that is the most
 convenient to write. Similarly there are multiple ways to write byte string literals,
 which all result in <code>&amp;[u8; N]</code>.</p>
-<p>Generally special characters are escaped with a backslash character: <code></code>.
+<p>Generally special characters are escaped with a backslash character: <code>\</code>.
 This way you can add any character to your string, even unprintable ones
 and ones that you don't know how to type. If you want a literal backslash,
-escape it with another one: <code>\</code></p>
+escape it with another one: <code>\\</code></p>
 <p>String or character literal delimiters occuring within a literal must be escaped: <code>&quot;\&quot;&quot;</code>, <code>'\''</code>.</p>
 <pre><pre class="playpen"><code class="language-rust editable">fn main() {
     // You can use escapes to write bytes by their hexadecimal values...
@@ -7403,7 +7451,7 @@ fn main() {
 <li>Операции файлового ввода/вывода</li>
 </ul>
 <p>Они расширяют возможности, которые предоставляют <a href="primitives.html">примитивы</a>.</p>
-<h3><a class="header" href="#Смотрите-также-51" id="Смотрите-также-51">Смотрите также:</a></h3>
+<h3><a class="header" href="#Смотрите-также-55" id="Смотрите-также-55">Смотрите также:</a></h3>
 <p><a href="primitives.html">примитивы</a> и <a href="https://doc.rust-lang.org/std/">стандартная библиотека</a></p>
 <h1><a class="header" href="#Потоки" id="Потоки">Потоки</a></h1>
 <p>Rust предоставляет механизм для создания собственных потоков операционной системы через функцию <code>spawn</code>. Аргументом этой функции является замыкание, которое принимает владение захваченным ею окружением.</p>
@@ -7554,7 +7602,7 @@ fn main() {
 What if the user decides to insert a lot of spaces? Do we <em>really</em> want to spawn 2,000 threads?
 Modify the program so that the data is always chunked into a limited number of chunks,
 defined by a static constant at the beginning of the program.</p>
-<h3><a class="header" href="#see-also-12" id="see-also-12">See also:</a></h3>
+<h3><a class="header" href="#see-also-8" id="see-also-8">See also:</a></h3>
 <ul>
 <li><a href="std_misc/threads/std_misc/threads.html">Threads</a></li>
 <li><a href="std_misc/threads/std/vec.html">vectors</a> and <a href="std_misc/threads/trait/iter.html">iterators</a></li>
@@ -7641,7 +7689,7 @@ fn main() {
 </code></pre></pre>
 <p>Be sure to check at other <code>Path</code> methods (<code>posix::Path</code> or <code>windows::Path</code>) and
 the <code>Metadata</code> struct.</p>
-<h3><a class="header" href="#see-also-13" id="see-also-13">See also</a></h3>
+<h3><a class="header" href="#see-also-9" id="see-also-9">See also</a></h3>
 <p><a href="https://doc.rust-lang.org/std/ffi/struct.OsStr.html">OsStr</a> and <a href="https://doc.rust-lang.org/std/fs/struct.Metadata.html">Metadata</a>.</p>
 <h1><a class="header" href="#file-io" id="file-io">File I/O</a></h1>
 <p>The <code>File</code> struct represents a file that has been opened (it wraps a file
@@ -8002,7 +8050,7 @@ a
     Ok(s)
 }
 </code></pre>
-<h3><a class="header" href="#see-also-14" id="see-also-14">See also:</a></h3>
+<h3><a class="header" href="#see-also-10" id="see-also-10">See also:</a></h3>
 <p><a href="std_misc/attribute/cfg.html"><code>cfg!</code></a></p>
 <h1><a class="header" href="#program-arguments" id="program-arguments">Program arguments</a></h1>
 <h2><a class="header" href="#standard-library" id="standard-library">Standard Library</a></h2>
@@ -8186,7 +8234,7 @@ impl fmt::Debug for Complex {
 <ul>
 <li><a href="testing/dev_dependencies.html">Dev-dependencies</a></li>
 </ul>
-<h2><a class="header" href="#Смотрите-также-52" id="Смотрите-также-52">Смотрите также:</a></h2>
+<h2><a class="header" href="#Смотрите-также-56" id="Смотрите-также-56">Смотрите также:</a></h2>
 <ul>
 <li><a href="https://doc.rust-lang.org/book/ch11-00-testing.html">Глава о тестировании</a> в &quot;The Rust Programming Language&quot;</li>
 <li><a href="https://rust-lang-nursery.github.io/api-guidelines/documentation.html">Описание API</a> для тестирования примеров из документации.</li>
@@ -8481,7 +8529,7 @@ pub fn try_div(a: i32, b: i32) -&gt; Result&lt;i32, String&gt; {
     }
 }
 </code></pre>
-<h2><a class="header" href="#see-also-15" id="see-also-15">See Also</a></h2>
+<h2><a class="header" href="#see-also-11" id="see-also-11">See Also</a></h2>
 <ul>
 <li><a href="https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md">RFC505</a> on documentation style</li>
 <li><a href="https://rust-lang-nursery.github.io/api-guidelines/documentation.html">API Guidelines</a> on documentation guidelines</li>
@@ -8580,7 +8628,7 @@ mod tests {
     }
 }
 </code></pre>
-<h2><a class="header" href="#Смотрите-также-53" id="Смотрите-также-53">Смотрите также:</a></h2>
+<h2><a class="header" href="#Смотрите-также-57" id="Смотрите-также-57">Смотрите также:</a></h2>
 <p>Документация <a href="http://doc.crates.io/specifying-dependencies.html">Cargo</a> по указанию зависимостей.</p>
 <h1><a class="header" href="#Небезопасные-операции" id="Небезопасные-операции">Небезопасные операции</a></h1>
 <p>В качестве введения в этот раздел процитируем <a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html">официальную документацию</a>,

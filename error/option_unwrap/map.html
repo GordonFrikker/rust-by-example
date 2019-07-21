@@ -145,16 +145,15 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#combinators-map" id="combinators-map">Combinators: <code>map</code></a></h1>
-<p><code>match</code> is a valid method for handling <code>Option</code>s. However, you may 
-eventually find heavy usage tedious, especially with operations only valid 
-with an input. In these cases, <a href="https://doc.rust-lang.org/book/glossary.html#combinators">combinators</a> can be used to 
-manage control flow in a modular fashion.</p>
-<p><code>Option</code> has a built in method called <code>map()</code>, a combinator for the simple 
-mapping of <code>Some -&gt; Some</code> and <code>None -&gt; None</code>. Multiple <code>map()</code> calls can be 
-chained together for even more flexibility.</p>
-<p>In the following example, <code>process()</code> replaces all functions previous
-to it while staying compact.</p>
+                        <h1><a class="header" href="#Комбинаторы-map" id="Комбинаторы-map">Комбинаторы: <code>map</code></a></h1>
+<p><code>match</code> - возможный метод для работы с <code>Option</code>.
+Однако постоянное его использование может быть утомительным, 
+особенно с операциями, которые получают только проверенные 
+данные.
+В этом случае можно использовать <a href="https://doc.rust-lang.org/book/glossary.html#combinators">комбинаторы</a>, которые 
+позволяют управлять потоком выполнения в модульном режиме.</p>
+<p><code>Option</code> имеет встроенный метод, зовущийся <code>map()</code>, комбинатор для простого преобразования <code>Some -&gt; Some</code> и <code>None -&gt; None</code>. Для большей гибкости, несколько вызовов <code>map()</code> могут быть связаны друг с другом в цепочку.</p>
+<p>В следующем примере, <code>process()</code> заменяет все предшествующие ей функции, оставаясь, при этом, компактной:</p>
 <pre><pre class="playpen"><code class="language-rust editable">#![allow(dead_code)]
 
 #[derive(Debug)] enum Food { Apple, Carrot, Potato }
@@ -163,8 +162,8 @@ to it while staying compact.</p>
 #[derive(Debug)] struct Chopped(Food);
 #[derive(Debug)] struct Cooked(Food);
 
-// Peeling food. If there isn't any, then return `None`.
-// Otherwise, return the peeled food.
+// Очистка продуктов. Если продуктов нет, то возвращаем `None`.
+// Иначе вернём очищенные продукты.
 fn peel(food: Option&lt;Food&gt;) -&gt; Option&lt;Peeled&gt; {
     match food {
         Some(food) =&gt; Some(Peeled(food)),
@@ -172,8 +171,8 @@ fn peel(food: Option&lt;Food&gt;) -&gt; Option&lt;Peeled&gt; {
     }
 }
 
-// Chopping food. If there isn't any, then return `None`.
-// Otherwise, return the chopped food.
+// Нарезка продуктов. Если продуктов нет, то возвращаем `None`.
+// Иначе вернём нарезанные продукты.
 fn chop(peeled: Option&lt;Peeled&gt;) -&gt; Option&lt;Chopped&gt; {
     match peeled {
         Some(Peeled(food)) =&gt; Some(Chopped(food)),
@@ -181,24 +180,25 @@ fn chop(peeled: Option&lt;Peeled&gt;) -&gt; Option&lt;Chopped&gt; {
     }
 }
 
-// Cooking food. Here, we showcase `map()` instead of `match` for case handling.
+// Приготовление еды. Здесь, для обработки вариантов, мы используем 
+// `map()` вместо `match`.
 fn cook(chopped: Option&lt;Chopped&gt;) -&gt; Option&lt;Cooked&gt; {
     chopped.map(|Chopped(food)| Cooked(food))
 }
 
-// A function to peel, chop, and cook food all in sequence.
-// We chain multiple uses of `map()` to simplify the code.
+// Функция для последовательной очистки, нарезке и приготовлении продуктов.
+// Мы объединили в цепочку несколько вызовов `map()` для упрощения кода.
 fn process(food: Option&lt;Food&gt;) -&gt; Option&lt;Cooked&gt; {
     food.map(|f| Peeled(f))
         .map(|Peeled(f)| Chopped(f))
         .map(|Chopped(f)| Cooked(f))
 }
 
-// Check whether there's food or not before trying to eat it!
+// Проверим, есть ли еда, прежде чем её съесть
 fn eat(food: Option&lt;Cooked&gt;) {
     match food {
-        Some(food) =&gt; println!(&quot;Mmm. I love {:?}&quot;, food),
-        None       =&gt; println!(&quot;Oh no! It wasn't edible.&quot;),
+        Some(food) =&gt; println!(&quot;Ммм. Я люблю {:?}&quot;, food),
+        None       =&gt; println!(&quot;О, нет! Это не съедобно.&quot;),
     }
 }
 
@@ -209,7 +209,7 @@ fn main() {
 
     let cooked_apple = cook(chop(peel(apple)));
     let cooked_carrot = cook(chop(peel(carrot)));
-    // Let's try the simpler looking `process()` now.
+    // Давайте сейчас попробуем проще выглядящую `process()`.
     let cooked_potato = process(potato);
 
     eat(cooked_apple);
@@ -217,8 +217,8 @@ fn main() {
     eat(cooked_potato);
 }
 </code></pre></pre>
-<h3><a class="header" href="#see-also" id="see-also">See also:</a></h3>
-<p><a href="fn/closures.html">closures</a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.map"><code>Option::map()</code></a></p>
+<h3><a class="header" href="#Смотрите-также" id="Смотрите-также">Смотрите также:</a></h3>
+<p><a href="../../fn/closures.html">Замыкания</a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html"><code>Option</code></a>, <a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.map"><code>Option::map()</code></a></p>
 
                     </main>
 

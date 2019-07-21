@@ -145,12 +145,13 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#new-type-idiom" id="new-type-idiom">New Type Idiom</a></h1>
-<p>The <code>newtype</code> idiom gives compile time guarantees that the right type of value is supplied
-to a program.</p>
-<p>For example, an age verification function that checks age in years, <em>must</em> be given
-a value of type <code>Years</code>.</p>
-<pre><pre class="playpen"><code class="language-rust editable">struct Years(i64);
+                        <h1><a class="header" href="#new-type-идиома" id="new-type-идиома">New Type идиома</a></h1>
+<p>Идиома <code>newtype</code> гарантирует во время компиляции, 
+что программе передаётся значение правильного типа.</p>
+<p>Например, функция верификации возраста, которая проверяет 
+возраст в годах <em>должна</em> получать значение типа 
+<code>Years</code>.</p>
+<pre><pre class="playpen"><code class="language-rust ">struct Years(i64);
 
 struct Days(i64);
 
@@ -180,9 +181,20 @@ fn main() {
     // println!(&quot;Old enough {}&quot;, old_enough(&amp;age_days));
 }
 </code></pre></pre>
-<p>Uncomment the last print statement to observe that the type supplied must be <code>Years</code>.</p>
-<h3><a class="header" href="#see-also" id="see-also">See also:</a></h3>
-<p><a href="custom_types/structs.html"><code>structs</code></a></p>
+<p>Удалите комментарий с последнего <code>println</code>, чтобы увидеть, что тип 
+должен быть <code>Years</code>.</p>
+<p>Чтобы получить из <code>newtype</code>-переменной значение 
+базового типа, вы можете использовать кортежный синтаксис, 
+как в примере:</p>
+<pre><pre class="playpen"><code class="language-rust ">struct Years(i64);
+
+fn main() {
+    let years = Years(42);
+    let years_as_primitive: i64 = years.0;
+}
+</code></pre></pre>
+<h3><a class="header" href="#Смотрите-также" id="Смотрите-также">Смотрите также:</a></h3>
+<p><a href="../custom_types/structs.html"><code>struct</code></a></p>
 
                     </main>
 
