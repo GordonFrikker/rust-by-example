@@ -1,15 +1,14 @@
-# Associated items
+# Ассоциированные элементы
 
-"Associated Items" refers to a set of rules pertaining to [`item`][items]s
-of various types. It is an extension to `trait` generics, and allows 
-`trait`s to internally define new items.
+"Ассоциированные элементы" относятся к набору правил, 
+касающихся элементов различных типов. Это расширение для 
+обобщённых типажей, которое позволяет им определить новый 
+элемент внутри себя.
 
-One such item is called an *associated type*, providing simpler usage 
-patterns when the `trait` is generic over its container type.
+Каждый такой элемент называется *ассоциированным типом*
+и предоставляет упрощённый шаблон использования, когда 
+`trait` является обобщённым для своего контейнера.
 
-### See also:
+### Смотрите также:
 
-[RFC][RFC]
-
-[items]: https://doc.rust-lang.org/reference/items.html
-[RFC]: https://github.com/rust-lang/rfcs/blob/master/text/0195-associated-items.md
+[RFC](https://github.com/rust-lang/rfcs/blob/master/text/0195-associated-items.md)

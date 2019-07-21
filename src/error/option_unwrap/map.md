@@ -1,16 +1,15 @@
-# Combinators: `map`
+# Комбинаторы: `map`
 
-`match` is a valid method for handling `Option`s. However, you may 
-eventually find heavy usage tedious, especially with operations only valid 
-with an input. In these cases, [combinators][combinators] can be used to 
-manage control flow in a modular fashion.
+`match` - возможный метод для работы с `Option`.
+Однако постоянное его использование может быть утомительным, 
+особенно с операциями, которые получают только проверенные 
+данные.
+В этом случае можно использовать [комбинаторы](https://doc.rust-lang.org/book/glossary.html#combinators), которые 
+позволяют управлять потоком выполнения в модульном режиме.
 
-`Option` has a built in method called `map()`, a combinator for the simple 
-mapping of `Some -> Some` and `None -> None`. Multiple `map()` calls can be 
-chained together for even more flexibility.
+`Option` имеет встроенный метод, зовущийся `map()`, комбинатор для простого преобразования `Some -> Some` и `None -> None`. Для большей гибкости, несколько вызовов `map()` могут быть связаны друг с другом в цепочку.
 
-In the following example, `process()` replaces all functions previous
-to it while staying compact.
+В следующем примере, `process()` заменяет все предшествующие ей функции, оставаясь, при этом, компактной:
 
 ```rust,editable
 #![allow(dead_code)]
@@ -21,8 +20,8 @@ to it while staying compact.
 #[derive(Debug)] struct Chopped(Food);
 #[derive(Debug)] struct Cooked(Food);
 
-// Peeling food. If there isn't any, then return `None`.
-// Otherwise, return the peeled food.
+// Очистка продуктов. Если продуктов нет, то возвращаем `None`.
+// Иначе вернём очищенные продукты.
 fn peel(food: Option<Food>) -> Option<Peeled> {
     match food {
         Some(food) => Some(Peeled(food)),
@@ -30,8 +29,8 @@ fn peel(food: Option<Food>) -> Option<Peeled> {
     }
 }
 
-// Chopping food. If there isn't any, then return `None`.
-// Otherwise, return the chopped food.
+// Нарезка продуктов. Если продуктов нет, то возвращаем `None`.
+// Иначе вернём нарезанные продукты.
 fn chop(peeled: Option<Peeled>) -> Option<Chopped> {
     match peeled {
         Some(Peeled(food)) => Some(Chopped(food)),
@@ -39,24 +38,25 @@ fn chop(peeled: Option<Peeled>) -> Option<Chopped> {
     }
 }
 
-// Cooking food. Here, we showcase `map()` instead of `match` for case handling.
+// Приготовление еды. Здесь, для обработки вариантов, мы используем 
+// `map()` вместо `match`.
 fn cook(chopped: Option<Chopped>) -> Option<Cooked> {
     chopped.map(|Chopped(food)| Cooked(food))
 }
 
-// A function to peel, chop, and cook food all in sequence.
-// We chain multiple uses of `map()` to simplify the code.
+// Функция для последовательной очистки, нарезке и приготовлении продуктов.
+// Мы объединили в цепочку несколько вызовов `map()` для упрощения кода.
 fn process(food: Option<Food>) -> Option<Cooked> {
     food.map(|f| Peeled(f))
         .map(|Peeled(f)| Chopped(f))
         .map(|Chopped(f)| Cooked(f))
 }
 
-// Check whether there's food or not before trying to eat it!
+// Проверим, есть ли еда, прежде чем её съесть
 fn eat(food: Option<Cooked>) {
     match food {
-        Some(food) => println!("Mmm. I love {:?}", food),
-        None       => println!("Oh no! It wasn't edible."),
+        Some(food) => println!("Ммм. Я люблю {:?}", food),
+        None       => println!("О, нет! Это не съедобно."),
     }
 }
 
@@ -67,7 +67,7 @@ fn main() {
 
     let cooked_apple = cook(chop(peel(apple)));
     let cooked_carrot = cook(chop(peel(carrot)));
-    // Let's try the simpler looking `process()` now.
+    // Давайте сейчас попробуем проще выглядящую `process()`.
     let cooked_potato = process(potato);
 
     eat(cooked_apple);
@@ -76,11 +76,6 @@ fn main() {
 }
 ```
 
-### See also:
+### Смотрите также:
 
-[closures][closures], [`Option`][option], [`Option::map()`][map]
-
-[combinators]: https://doc.rust-lang.org/book/glossary.html#combinators
-[closures]: fn/closures.html
-[option]: https://doc.rust-lang.org/std/option/enum.Option.html
-[map]: https://doc.rust-lang.org/std/option/enum.Option.html#method.map
+[Замыкания](../../fn/closures.md), [`Option`](https://doc.rust-lang.org/std/option/enum.Option.html), [`Option::map()`](https://doc.rust-lang.org/std/option/enum.Option.html#method.map)

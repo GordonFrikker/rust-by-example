@@ -1,23 +1,23 @@
-# Iterating over `Result`s
+# Итерирование по `Result`
 
-An `Iter::map` operation might fail, for example:
+При работе метода `Iter::map` может случиться ошибка, например:
 
 ```rust,editable
 fn main() {
     let strings = vec!["tofu", "93", "18"];
-    let possible_numbers: Vec<_> = strings
+    let numbers: Vec<_> = strings
         .into_iter()
         .map(|s| s.parse::<i32>())
         .collect();
-    println!("Results: {:?}", possible_numbers);
+    println!("Результаты: {:?}", numbers);
 }
 ```
 
-Let's step through strategies for handling this.
+Давайте рассмотрим стратегии обработки этого.
 
-## Ignore the failed items with `filter_map()`
+## Игнорирование неудачных элементов с `filter_map()`
 
-`filter_map` calls a function and filters out the results that are `None`.
+`filter_map` вызывает функцию и отфильтровывает результаты, вернувшие `None`.
 
 ```rust,editable
 fn main() {
@@ -27,15 +27,14 @@ fn main() {
         .map(|s| s.parse::<i32>())
         .filter_map(Result::ok)
         .collect();
-    println!("Results: {:?}", numbers);
+    println!("Результаты: {:?}", numbers);
 }
 ```
 
-## Fail the entire operation with `collect()`
+## Сбой всей операции с `collect()`
 
-`Result` implements `FromIter` so that a vector of results (`Vec<Result<T, E>>`)
-can be turned into a result with a vector (`Result<Vec<T>, E>`). Once an
-`Result::Err` is found, the iteration will terminate.
+`Result` реализует `FromIter` так что вектор из результатов (`Vec<Result<T, E>>`)
+может быть преобразован в результат с вектором (`Result<Vec<T>, E>`). Если будет найдена хотя бы одна `Result::Err`, итерирование завершится.
 
 ```rust,editable
 fn main() {
@@ -44,13 +43,13 @@ fn main() {
         .into_iter()
         .map(|s| s.parse::<i32>())
         .collect();
-    println!("Results: {:?}", numbers);
+    println!("Результаты: {:?}", numbers);
 }
 ```
 
-This same technique can be used with `Option`.
+Та же самая техника может использоваться с `Option`.
 
-## Collect all valid values and failures with `partition()`
+## Сбор всех корректных значений и ошибок с помощью `partition()`
 
 ```rust,editable
 fn main() {
@@ -59,13 +58,12 @@ fn main() {
         .into_iter()
         .map(|s| s.parse::<i32>())
         .partition(Result::is_ok);
-    println!("Numbers: {:?}", numbers);
-    println!("Errors: {:?}", errors);
+    println!("Числа: {:?}", numbers);
+    println!("Ошибки: {:?}", errors);
 }
 ```
 
-When you look at the results, you'll note that everything is still wrapped in
-`Result`.  A little more boilerplate is needed for this.
+Если вы посмотрите на результаты работы, вы заметите, что они всё ещё обёрнуты в `Result`. Потребуется немного больше шаблонного кода, чтобы получить нужный результат.
 
 ```rust,editable
 fn main() {
@@ -76,7 +74,7 @@ fn main() {
         .partition(Result::is_ok);
     let numbers: Vec<_> = numbers.into_iter().map(Result::unwrap).collect();
     let errors: Vec<_> = errors.into_iter().map(Result::unwrap_err).collect();
-    println!("Numbers: {:?}", numbers);
-    println!("Errors: {:?}", errors);
+    println!("Числа: {:?}", numbers);
+    println!("Ошибки: {:?}", errors);
 }
 ```

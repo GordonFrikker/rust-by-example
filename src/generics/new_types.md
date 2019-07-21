@@ -1,12 +1,13 @@
-# New Type Idiom
+# New Type идиома
 
-The `newtype` idiom gives compile time guarantees that the right type of value is supplied
-to a program.
+Идиома `newtype` гарантирует во время компиляции, 
+что программе передаётся значение правильного типа.
 
-For example, an age verification function that checks age in years, *must* be given
-a value of type `Years`.
+Например, функция верификации возраста, которая проверяет 
+возраст в годах *должна* получать значение типа 
+`Years`.
 
-```rust, editable
+```rust,
 struct Years(i64);
 
 struct Days(i64);
@@ -38,11 +39,22 @@ fn main() {
 }
 ```
 
-Uncomment the last print statement to observe that the type supplied must be `Years`.
+Удалите комментарий с последнего `println`, чтобы увидеть, что тип 
+должен быть `Years`.
 
-### See also:
+Чтобы получить из `newtype`-переменной значение 
+базового типа, вы можете использовать кортежный синтаксис, 
+как в примере:
 
-[`structs`][struct]
+```rust,
+struct Years(i64);
 
-[struct]: custom_types/structs.html
+fn main() {
+    let years = Years(42);
+    let years_as_primitive: i64 = years.0;
+}
+```
 
+### Смотрите также:
+
+[`struct`](../custom_types/structs.md)

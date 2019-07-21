@@ -1,12 +1,13 @@
-# Early returns
+# Ранний выход
 
-In the previous example, we explicitly handled the errors using combinators.
-Another way to deal with this case analysis is to use a combination of
-`match` statements and *early returns*.
+В предыдущем примере мы явно обработали ошибки при помощи комбинаторов.
+Другой способ сделать это - использовать комбинацию выражения 
+`match` и *раннего выхода*.
 
-That is, we can simply stop executing the function and return the error if
-one occurs. For some, this form of code can be easier to both read and
-write. Consider this version of the previous example, rewritten using early returns:
+Таким образом мы просто можем остановить работу функции и 
+вернуть ошибку, если она произошла. Для некоторых, такой код 
+будет легче в чтении и написании. Посмотрите код из предыдущего 
+примера, переписанный с использованием раннего выхода:
 
 ```rust,editable
 use std::num::ParseIntError;
@@ -27,8 +28,8 @@ fn multiply(first_number_str: &str, second_number_str: &str) -> Result<i32, Pars
 
 fn print(result: Result<i32, ParseIntError>) {
     match result {
-        Ok(n)  => println!("n is {}", n),
-        Err(e) => println!("Error: {}", e),
+        Ok(n)  => println!("n равно {}", n),
+        Err(e) => println!("Ошибка: {}", e),
     }
 }
 
@@ -38,9 +39,10 @@ fn main() {
 }
 ```
 
-At this point, we've learned to explicitly handle errors using combinators
-and early returns. While we generally want to avoid panicking, explicitly
-handling all of our errors is cumbersome.
+На данный момент, мы изучили обработку ошибок при помощи 
+комбинаторов и раннего выхода. Мы хотим избежать паники, но 
+явная обработка всех ошибок достаточно громоздка.
 
-In the next section, we'll introduce `?` for the cases where we simply
-need to `unwrap` without possibly inducing `panic`.
+В следующем разделе, мы познакомимся с `?` для 
+случаев, где нам просто хотим сделать `unwrap` без 
+возможности вызова `panic`.
