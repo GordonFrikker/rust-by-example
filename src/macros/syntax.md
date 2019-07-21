@@ -1,12 +1,8 @@
-# Syntax
+# Синтаксис
 
-In following subsections, we will show how to define macros in Rust.
-There are three basic ideas:
+В следующем подразделе мы посмотрим как в Rust объявить 
+макрос. Есть три основные идеи:
 
-- [Patterns and Designators][designators]
-- [Overloading][overloading]
-- [Repetition][repetition]
-
-[designators]: macros/designators.html
-[overloading]: macros/overload.html
-[repetition]: macros/repeat.html
+- [Шаблоны и указатели](designators.md)
+- [Перегрузка](overload.md)
+- [Повторение](repeat.md)

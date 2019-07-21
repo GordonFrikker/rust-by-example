@@ -1,21 +1,23 @@
-# Multiple error types
+# Несколько типов ошибок
 
-The previous examples have always been very convenient; `Result`s interact
-with other `Result`s and `Option`s interact with other `Option`s.
+Предыдущие примеры всегда были очень удобны:  `Result` взаимодействовали с другими `Result`, а `Option` - с другими `Option`.
 
-Sometimes an `Option` needs to interact with a `Result`, or a
-`Result<T, Error1>` needs to interact with a `Result<T, Error2>`. In those
-cases, we want to manage our different error types in a way that makes them
-composable and easy to interact with.
+Иногда `Option` необходимо взаимодействовать с 
+`Result`, или `Result<T, Error1>` с 
+`Result<T, Error2>`. В этих случаях, нам нужно 
+управлять этими разными типами ошибок таким образом, чтобы 
+можно было их компоновать и легко взаимодействовать с ними.
 
-In the following code, two instances of `unwrap` generate different error
-types. `Vec::first` returns an `Option`, while `parse::<i32>` returns a
+В следующем коде, два варианта `unwrap` 
+генерируют разные типы ошибок. `Vec::first` 
+возвращает `Option`, в то время как 
+`parse::<i32>` возвращает 
 `Result<i32, ParseIntError>`:
 
 ```rust,editable,ignore,mdbook-runnable
 fn double_first(vec: Vec<&str>) -> i32 {
-    let first = vec.first().unwrap(); // Generate error 1
-    2 * first.parse::<i32>().unwrap() // Generate error 2
+    let first = vec.first().unwrap(); // Генерирует ошибку 1
+    2 * first.parse::<i32>().unwrap() // Генерирует ошибку 2
 }
 
 fn main() {
@@ -23,14 +25,14 @@ fn main() {
     let empty = vec![];
     let strings = vec!["tofu", "93", "18"];
 
-    println!("The first doubled is {}", double_first(numbers));
+    println!("Первое удвоенное {}", double_first(numbers));
 
-    println!("The first doubled is {}", double_first(empty));
-    // Error 1: the input vector is empty
+    println!("Первое удвоенное {}", double_first(empty));
+    // Ошибка 1: входной вектор пустой
 
-    println!("The first doubled is {}", double_first(strings));
-    // Error 2: the element doesn't parse to a number
+    println!("Первое удвоенное {}", double_first(strings));
+    // Ошибка 2: элемент не может быть преобразован в число
 }
 ```
 
-Over the next sections, we'll see several strategies for handling these kind of problems.
+В следующих главах мы рассмотрим различные стратегии обработки этих типов проблем.

@@ -1,29 +1,25 @@
 # `Result`
 
-[`Result`][result] is a richer version of the [`Option`][option] type that
-describes possible *error* instead of possible *absence*.
+[`Result`](https://doc.rust-lang.org/std/result/enum.Result.html) является более богатой версией типа [`Option`](https://doc.rust-lang.org/std/option/enum.Option.html), тип который описывает возможную *ошибку* вместо возможного её *отсутствия*.
 
-That is, `Result<T, E>` could have one of two outcomes:
+`Result<T, E>` имеет два возможных значения:
 
-* `Ok<T>`: An element `T` was found
-* `Err<E>`: An error was found with element `E`
+- `Ok<T>`: Значение типа `T`
+- `Err<E>`: Ошибка обработки элемента, типа `E`
 
-By convention, the expected outcome is `Ok` while the unexpected outcome is `Err`.
+По соглашению, ожидаемый результат `Ok`, тогда как не ожидаемый - `Err`.
 
-Like `Option`, `Result` has many methods associated with it. `unwrap()`, for
-example, either yields the element `T` or `panic`s. For case handling,
-there are many combinators between `Result` and `Option` that overlap.
+Подобно `Option`, `Result` имеет множество ассоциированных с ним методов. Например, `unwrap()` или возвращает `T`, или вызывает `panic`. 
+Для обработки результата у `Result` существует множество комбинаторов, которые совпадают с комбинаторами `Option`.
 
-In working with Rust, you will likely encounter methods that return the
-`Result` type, such as the [`parse()`][parse] method. It might not always
-be possible to parse a string into the other type, so `parse()` returns a
-`Result` indicating possible failure.
+При работе с Rust вы, скорее всего, столкнётесь с методами, которые возвращают тип Result, например метод parse(). Не всегда
+можно разобрать строку в другой тип, поэтому parse() возвращает Result, указывающий на возможный сбой.
 
-Let's see what happens when we successfully and unsuccessfully `parse()` a string:
+Давайте посмотрим, что происходит, когда мы успешно и безуспешно попытаемся преобразовать строку с помощью `parse()`:
 
 ```rust,editable,ignore,mdbook-runnable
 fn multiply(first_number_str: &str, second_number_str: &str) -> i32 {
-    // Let's try using `unwrap()` to get the number out. Will it bite us?
+    // Давайте попробуем использовать `unwrap()` чтобы получить число. Он нас укусит?
     let first_number = first_number_str.parse::<i32>().unwrap();
     let second_number = second_number_str.parse::<i32>().unwrap();
     first_number * second_number
@@ -31,20 +27,41 @@ fn multiply(first_number_str: &str, second_number_str: &str) -> i32 {
 
 fn main() {
     let twenty = multiply("10", "2");
-    println!("double is {}", twenty);
+    println!("удовоенное {}", twenty);
 
     let tt = multiply("t", "2");
-    println!("double is {}", tt);
+    println!("удвоенное {}", tt);
 }
 ```
 
-In the unsuccessful case, `parse()` leaves us with an error for `unwrap()`
-to `panic` on. Additionally, the `panic` exits our program and provides an
-unpleasant error message.
+При неудаче, `parse()` оставляет на с ошибкой, с 
+которой `unwrap()` вызывает `panic`. Дополнительно, `panic` завершает нашу программу и 
+предоставляет неприятное сообщение об ошибке.
 
-To improve the quality of our error message, we should be more specific
-about the return type and consider explicitly handling the error.
+Для повышения качества наших сообщений об ошибка, мы должны более явно указать возвращаемый тип и рассмотреть возможной явной обработки ошибок.
 
-[option]: https://doc.rust-lang.org/std/option/enum.Option.html
-[result]: https://doc.rust-lang.org/std/result/enum.Result.html
-[parse]: https://doc.rust-lang.org/std/primitive.str.html#method.parse
+## Использование `Result` в `main`
+
+Также `Result` может быть возвращаемым типом функции `main`, если это указано явно. Обычно функция `main` имеют следующую форму:
+
+```rust
+fn main() {
+    println!("Hello World!");
+}
+```
+
+Однако `main` также может и возвращать тип `Result`. Если ошибка происходит в пределах функции `main`, то она возвращает код ошибки и выводит отладочное представление ошибки (используя типаж [`Debug`](https://doc.rust-lang.org/std/fmt/trait.Debug.html)). Следующий пример показывает такой сценарий и затрагивает аспекты, описанные в [последующем разделе](result/early_returns.md).
+
+```rust,editable
+use std::num::ParseIntError;
+
+fn main() -> Result<(), ParseIntError> {
+    let number_str = "10";
+    let number = match number_str.parse::<i32>() {
+        Ok(number)  => number,
+        Err(e) => return Err(e),
+    };
+    println!("{}", number);
+    Ok(())
+}
+```

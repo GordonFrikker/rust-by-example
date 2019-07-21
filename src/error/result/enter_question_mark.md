@@ -1,17 +1,21 @@
-# Introducing `?`
+# Представляем: `?`
 
-Sometimes we just want the simplicity of `unwrap` without the possibility of
-a `panic`. Until now, `unwrap` has forced us to nest deeper and deeper when
-what we really wanted was to get the variable *out*. This is exactly the purpose of `?`.
+Иногда мы хотим получить простоту `unwrap`, но без 
+`panic`. До текущего момента `unwrap` 
+заставлял нас делать всё больше и больше, в то время как мы 
+хотели только *извлечь* переменную. Для этих целей был 
+введён `?`.
 
-Upon finding an `Err`, there are two valid actions to take:
+При обнаружении `Err`, можно выполнить два действия:
 
-1. `panic!` which we already decided to try to avoid if possible
-2. `return` because an `Err` means it cannot be handled
+1. `panic!`, который мы решили по возможности избегать 
+2. `return` так как возврат `Err` говорит о том, что мы её не обрабатывали
 
-`?` is *almost*[^†] exactly equivalent to an `unwrap` which `return`s
-instead of `panic`s on `Err`s. Let's see how we can simplify the earlier
-example that used combinators:
+`?` *почти*[^†] эквивалентен
+`unwrap`, который при `Err` делает 
+`return` вместо `panic`. Давайте 
+посмотрим как мы можем упростить наш пример, использующий 
+комбинаторы:
 
 ```rust,editable
 use std::num::ParseIntError;
@@ -25,8 +29,8 @@ fn multiply(first_number_str: &str, second_number_str: &str) -> Result<i32, Pars
 
 fn print(result: Result<i32, ParseIntError>) {
     match result {
-        Ok(n)  => println!("n is {}", n),
-        Err(e) => println!("Error: {}", e),
+        Ok(n)  => println!("n равно {}", n),
+        Err(e) => println!("Ошибка: {}", e),
     }
 }
 
@@ -36,14 +40,21 @@ fn main() {
 }
 ```
 
-## The `try!` macro
+## Макрос `try!`
 
-Before there was `?`, the same functionality was achieved with the `try!` macro.
-The `?` operator is now recommended, but you may still find `try!` when looking
-at older code. The same `multiply` function from the previous example
-would look like this using `try!`:
+До появления `?`, аналогичная функциональность 
+была доступна через макрос `try!`.
+Сейчас рекомендуется использовать оператор `?`, но 
+вы до сих пор можете найти `try!`, когда 
+просматриваете старый код. Функция `multiply` из 
+предыдущего примера с использованием `try!` будет 
+выглядеть следующим образом:
 
 ```rust,editable
+// Для компиляции и запуска с помощью Cargo этого примера без ошибок
+// поменяйте в `Cargo.toml` значение поля `edition` секции 
+// `[package]` на "2015".
+
 use std::num::ParseIntError;
 
 fn multiply(first_number_str: &str, second_number_str: &str) -> Result<i32, ParseIntError> {
@@ -55,8 +66,8 @@ fn multiply(first_number_str: &str, second_number_str: &str) -> Result<i32, Pars
 
 fn print(result: Result<i32, ParseIntError>) {
     match result {
-        Ok(n)  => println!("n is {}", n),
-        Err(e) => println!("Error: {}", e),
+        Ok(n)  => println!("n равно {}", n),
+        Err(e) => println!("Ошибка: {}", e),
     }
 }
 
@@ -66,7 +77,4 @@ fn main() {
 }
 ```
 
-
-[^†]: See [re-enter ?][re_enter_?] for more details.
-
-[re_enter_?]: error/multiple_error_types/reenter_question_mark.html
+[^†]: Посмотрите главу ["Другие способы использования `?`"](../multiple_error_types/reenter_question_mark.md) для большей информации.
