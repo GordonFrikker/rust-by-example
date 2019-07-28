@@ -34,7 +34,8 @@
     - [Вывод типов](types/inference.md)
     - [Псевдонимы](types/alias.md)
 
-- [Conversion](conversion.md)
+- [Преобразования](conversion.md)
+
     - [`From` и `Into`](conversion/from_into.md)
     - [В и из `String`](conversion/string.md)
 
@@ -80,21 +81,26 @@
     - [Иерархия файлов](mod/split.md)
 
 - [Контейнеры](crates.md)
+
     - [Библиотеки](crates/lib.md)
     - [`extern crate`](crates/link.md)
 
 - [Cargo](cargo.md)
+
     - [Зависимости](cargo/deps.md)
     - [Соглашения](cargo/conventions.md)
     - [Тестирование](cargo/test.md)
+    - [Скрипты сборки](cargo/build_scripts.md)
 
 - [Атрибуты](attribute.md)
-    - [`dead_code` (мёртвый код)](attribute/unused.md)
+
+    - [`dead_code`](attribute/unused.md)
     - [Контейнеры](attribute/crate.md)
-    - [`cfg` (условные атрибуты)](attribute/cfg.md)
+    - [`cfg`](attribute/cfg.md)
         - [Собственные условия](attribute/cfg/custom.md)
 
 - [Обобщения](generics.md)
+
     - [Функции](generics/gen_fn.md)
     - [Реализация](generics/impl.md)
     - [Типажи](generics/gen_trait.md)
@@ -123,13 +129,14 @@
         - [Функции](scope/lifetime/fn.md)
         - [Методы](scope/lifetime/methods.md)
         - [Структуры](scope/lifetime/struct.md)
-        - [Трейты](scope/lifetime/trait.md)
+        - [Типажи](scope/lifetime/trait.md)
         - [Ограничения](scope/lifetime/lifetime_bounds.md)
         - [Приведение (coercion)](scope/lifetime/lifetime_coercion.md)
         - [Static](scope/lifetime/static_lifetime.md)
         - [Сокрытие](scope/lifetime/elision.md)
 
 - [Типажи](trait.md)
+
     - [Атрибут `Derive`](trait/derive.md)
     - [Перегрузка операторов](trait/ops.md)
     - [Типаж `Drop`](trait/drop.md)
@@ -172,10 +179,12 @@
         - [`?`](std/result/question_mark.md)
     - [`panic!`](std/panic.md)
     - [HashMap](std/hash.md)
-        - [Альтернытивные/пользовательские типы ключей](std/hash/alt_key_types.md)
+        - [Альтернативные/пользовательские типы ключей](std/hash/alt_key_types.md)
         - [HashSet](std/hash/hashset.md)
+    - [`Rc`](std/rc.md)
 
 - [Разное в стандартной библиотеке](std_misc.md)
+
     - [Потоки](std_misc/threads.md)
         - [Пример: map-reduce](std_misc/threads/testcase_mapreduce.md)
     - [Каналы](std_misc/channels.md)

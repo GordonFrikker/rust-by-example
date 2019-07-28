@@ -1,88 +1,80 @@
-# Testcase: unit clarification
+# Пример: unit clarification
 
-A useful method of unit conversions can be examined by implementing `Add`
-with a phantom type parameter. The `Add` `trait` is examined below:
+Полезный метод преобразования единиц измерения может быть 
+получен путём реализации типажа `Add` с 
+параметром фантомного типа. 
+`trait``Add` рассмотрен ниже:
 
 ```rust,ignore
-// This construction would impose: `Self + RHS = Output`
-// where RHS defaults to Self if not specified in the implementation.
+// Эта конструкция будет навязывать: `Self + RHS = Output`
+// где RHS по умолчанию Self, если иное не указано в реализации.
 pub trait Add<RHS = Self> {
     type Output;
 
     fn add(self, rhs: RHS) -> Self::Output;
 }
 
-// `Output` must be `T<U>` so that `T<U> + T<U> = T<U>`.
+// `Output` должен быть `T<U>` так что `T<U> + T<U> = T<U>`.
 impl<U> Add for T<U> {
     type Output = T<U>;
     ...
 }
 ```
 
-The whole implementation:
+Вся реализация:
 
 ```rust,editable
 use std::ops::Add;
 use std::marker::PhantomData;
 
-/// Create void enumerations to define unit types.
+/// Создаём пустые перечисления для определения типов единиц измерения.
 #[derive(Debug, Clone, Copy)]
 enum Inch {}
 #[derive(Debug, Clone, Copy)]
 enum Mm {}
 
-/// `Length` is a type with phantom type parameter `Unit`,
-/// and is not generic over the length type (that is `f64`).
+/// `Length` - тип с параметром фантомного типа `Unit`,
+/// и не обобщён для типа длины (который `f64`).
 ///
-/// `f64` already implements the `Clone` and `Copy` traits.
+/// Для `f64` уже реализованы типажи `Clone` и `Copy`.
 #[derive(Debug, Clone, Copy)]
 struct Length<Unit>(f64, PhantomData<Unit>);
 
-/// The `Add` trait defines the behavior of the `+` operator.
+/// Типаж `Add` объявляет поведение оператора `+`.
 impl<Unit> Add for Length<Unit> {
      type Output = Length<Unit>;
 
-    // add() returns a new `Length` struct containing the sum.
+    // add() возвращает новую структуру `Length`, содержащую сумму.
     fn add(self, rhs: Length<Unit>) -> Length<Unit> {
-        // `+` calls the `Add` implementation for `f64`.
+        // `+` вызывает реализацию `Add` для `f64`.
         Length(self.0 + rhs.0, PhantomData)
     }
 }
 
 fn main() {
-    // Specifies `one_foot` to have phantom type parameter `Inch`.
+    // Объявим, что `one_foot` имеет парамет фантомного типа `Inch`.
     let one_foot:  Length<Inch> = Length(12.0, PhantomData);
-    // `one_meter` has phantom type parameter `Mm`.
+    // `one_meter` имеет параметр фантомного типа `Mm`.
     let one_meter: Length<Mm>   = Length(1000.0, PhantomData);
 
-    // `+` calls the `add()` method we implemented for `Length<Unit>`.
+    // `+` вызывает метод `add()`, который мы реализовали для `Length<Unit>`.
     //
-    // Since `Length` implements `Copy`, `add()` does not consume
-    // `one_foot` and `one_meter` but copies them into `self` and `rhs`.
+    // Так как `Length` реализует `Copy`, `add()` не поглощает
+    // `one_foot` и `one_meter`, а копирует их в `self` и `rhs`.
     let two_feet = one_foot + one_foot;
     let two_meters = one_meter + one_meter;
 
-    // Addition works.
-    println!("one foot + one_foot = {:?} in", two_feet.0);
-    println!("one meter + one_meter = {:?} mm", two_meters.0);
+    // Сложение работает.
+    println!("один фут + один фут = {:?} фута", two_feet.0);
+    println!("один метр + один метр = {:?} метра", two_meters.0);
 
-    // Nonsensical operations fail as they should:
-    // Compile-time Error: type mismatch.
+    // Бессмысленные операции потерпят неудачу, как и должно быть:
+    // Ошибка времени компиляции: несоответствие типов.
     //let one_feter = one_foot + one_meter;
 }
 ```
 
-### See also:
+### Смотрите также:
 
-[Borrowing (`&`)], [Bounds (`X: Y`)], [enum], [impl & self],
-[Overloading], [ref], [Traits (`X for Y`)], and [TupleStructs].
-
-[Borrowing (`&`)]: scope/borrow.html
-[Bounds (`X: Y`)]: generics/bounds.html
-[enum]: custom_types/enum.html
-[impl & self]: fn/methods.html
-[Overloading]: trait/ops.html
-[ref]: scope/borrow/ref.html
-[Traits (`X for Y`)]: trait.html
-[TupleStructs]: custom_types/structs.html
-[std::marker::PhantomData]: https://doc.rust-lang.org/std/marker/struct.PhantomData.html
+[Заимствование (`&`)](../../scope/borrow.md), [ограничения (`X: Y`)](../../generics/bounds.md), [перечисления](../../custom_types/enum.md), [`impl & self`](../../fn/methods.md),
+[перегрузка](../../trait/ops.md), [`ref`](../../scope/borrow/ref.md), [типажи (`X for Y`)](../../trait.md) и [кортежные структуры](../../custom_types/structs.md).

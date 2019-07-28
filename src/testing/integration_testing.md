@@ -1,25 +1,24 @@
-# Integration testing
+# Интеграционное тестирование
 
-[Unit tests][unit] are testing one module in isolation at a time: they're small
-and can test private code. Integration tests are external to your crate and use
-only its public interface in the same way any other code would. Their purpose is
-to test that many parts of your library work correctly together.
+[Модульные тесты](unit_testing.md) тестируют по одному модулю изолированно: они малы
+и могут проверить не публичный код. Интеграционные тесты являются внешними для вашего пакета и используют
+только его открытый интерфейс, таким же образом, как и любой другой код. Их цель в том, чтобы проверить, что многие части вашей библиотеки работают корректно вместе.
 
-Cargo looks for integration tests in `tests` directory next to `src`.
+Cargo ищет интеграционные тесты в каталоге `tests` после каталога `src`.
 
-File `src/lib.rs`:
+Файл `src/lib.rs`:
 
 ```rust,ignore
-// Assume that crate is called adder, will have to extern it in integration test.
+// Предположим, что наш пакет называется `adder`, для теста он будет внешним кодом.
 pub fn add(a: i32, b: i32) -> i32 {
     a + b
 }
 ```
 
-File with test: `tests/integration_test.rs`:
+Файл с тестом: `tests/integration_test.rs`:
 
 ```rust,ignore
-// extern crate we're testing, same as any other code would do.
+// мы тестируем extern crate, как и любой другой код.
 extern crate adder;
 
 #[test]
@@ -28,9 +27,9 @@ fn test_add() {
 }
 ```
 
-Running tests with `cargo test` command:
+Запустить тесты можно командой `cargo test`:
 
-```bash
+```shell
 $ cargo test
 running 0 tests
 
@@ -50,38 +49,32 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
-Each Rust source file in `tests` directory is compiled as a separate crate. One
-way of sharing some code between integration tests is making module with public
-functions, importing and using it within tests.
+Каждый файл с исходным кодом в директории `tests` компилируется в отдельный пакет. 
+Один из путей использовать некоторый общий код между интеграционными тестами - создать модуль с публичными функциями и импортировать их в тестах.
 
-File `tests/common.rs`:
+Файл `tests/common.rs`:
 
 ```rust,ignore
 pub fn setup() {
-    // some setup code, like creating required files/directories, starting
-    // servers, etc.
+    // некоторый код для настройки, создание необходимых файлов/каталогов, запуск серверов.
 }
 ```
 
-File with test: `tests/integration_test.rs`
+Файл с тестом: `tests/integration_test.rs`
 
 ```rust,ignore
-// extern crate we're testing, same as any other code will do.
+// мы тестируем extern crate, как и любой другой код.
 extern crate adder;
 
-// importing common module.
+// импорт общего модуля.
 mod common;
 
 #[test]
 fn test_add() {
-    // using common code.
+    // использование общего кода.
     common::setup();
     assert_eq!(adder::add(3, 2), 5);
 }
 ```
 
-Modules with common code follow the ordinary [modules][mod] rules, so it's ok to
-create common module as `tests/common/mod.rs`.
-
-[unit]: testing/unit_testing.html
-[mod]: mod.html
+Модули с общим кодом следуют обычным правилам  [модулей](../mod.md). Общий модуль можно создать как `tests/common/mod.rs`.

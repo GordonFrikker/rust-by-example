@@ -1,66 +1,66 @@
-# Associated types
+# Ассоциированные типы
 
-The use of "Associated types" improves the overall readability of code 
-by moving inner types locally into a trait as *output* types. Syntax
-for the `trait` definition is as follows:
+Использование "ассоциированных типов" улучшает общую 
+читаемость кода через локальное перемещение внутренних типов в 
+типаж в качестве *выходных* типов. Синтаксис для 
+объявления `trait` будет следующим:
 
 ```rust
-// `A` and `B` are defined in the trait via the `type` keyword.
-// (Note: `type` in this context is different from `type` when used for
-// aliases).
+// `A` и `B` определены в типаже при помощи ключевого слова `type`.
+// (Обратите внимание: в данном контексте `type` отличается `type`, который
+// используется в псевдонимах).
 trait Contains {
     type A;
     type B;
 
-    // Updated syntax to refer to these new types generically.
+    // Обновлённый синтаксис для обращения к этим двум ассоциированным типам.
     fn contains(&self, &Self::A, &Self::B) -> bool;
 }
 ```
 
-Note that functions that use the `trait` `Contains` are no longer required
-to express `A` or `B` at all:
+Обратите внимание, что функции, использующие `trait` `Contains` больше не требуют указания `A` или `B`:
 
 ```rust,ignore
-// Without using associated types
+// Без использования ассоциированных типов
 fn difference<A, B, C>(container: &C) -> i32 where
     C: Contains<A, B> { ... }
 
-// Using associated types
+// С использованием ассоциированных типов
 fn difference<C: Contains>(container: &C) -> i32 { ... }
 ```
 
-Let's rewrite the example from the previous section using associated types:
+Давайте перепишем пример их предыдущего раздела с использованием ассоциированных типов:
 
 ```rust,editable
 struct Container(i32, i32);
 
-// A trait which checks if 2 items are stored inside of container.
-// Also retrieves first or last value.
+// Типаж, который проверяет, сохранены ли 2 элемента в контейнере.
+// Также он может вернуть первое или последнее значение.
 trait Contains {
-    // Define generic types here which methods will be able to utilize.
+    // Объявляем общие типы, которые будут использовать методы.
     type A;
     type B;
 
-    fn contains(&self, &Self::A, &Self::B) -> bool;
+    fn contains(&self, _: &Self::A, _: &Self::B) -> bool;
     fn first(&self) -> i32;
     fn last(&self) -> i32;
 }
 
 impl Contains for Container {
-    // Specify what types `A` and `B` are. If the `input` type
-    // is `Container(i32, i32)`, the `output` types are determined
-    // as `i32` and `i32`.
+    // Определяем, какими будут типы `A` и `B`. Если `входящий` тип
+    // `Container(i32, i32)`, тогда `выходящие` типы определяются, как
+    // `i32` и `i32`.
     type A = i32;
     type B = i32;
 
-    // `&Self::A` and `&Self::B` are also valid here.
+    // `&Self::A` и `&Self::B` также будут здесь уместны.
     fn contains(&self, number_1: &i32, number_2: &i32) -> bool {
         (&self.0 == number_1) && (&self.1 == number_2)
     }
-    // Grab the first number.
+    // Берём первую цифру.
     fn first(&self) -> i32 { self.0 }
 
-    // Grab the last number.
+    // Берём последнюю цифру.
     fn last(&self) -> i32 { self.1 }
 }
 
@@ -74,12 +74,12 @@ fn main() {
 
     let container = Container(number_1, number_2);
 
-    println!("Does container contain {} and {}: {}",
+    println!("Содержатся ли в контейнере {} и {}: {}",
         &number_1, &number_2,
         container.contains(&number_1, &number_2));
-    println!("First number: {}", container.first());
-    println!("Last number: {}", container.last());
-    
-    println!("The difference is: {}", difference(&container));
+    println!("Первое число: {}", container.first());
+    println!("Последнее число: {}", container.last());
+
+    println!("Разница: {}", difference(&container));
 }
 ```
