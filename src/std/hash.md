@@ -1,64 +1,63 @@
 # HashMap
 
-Where vectors store values by an integer index, `HashMap`s store values by key. 
-`HashMap` keys can be booleans, integers, strings, 
-or any other type that implements the `Eq` and `Hash` traits. 
-More on this in the next section.
+В то время как вектора сохраняют значения с числовыми индексами, 
+`HashMap` сохраняют значения по ключу. Ключи 
+`HashMap` могут иметь логический, числовой, строковый 
+или любой другой тип данных, который реализует типажи 
+`Eq` и `Hash`. Подробнее об этом в 
+следующей главе.
 
-Like vectors, `HashMap`s are growable, but HashMaps can also shrink themselves 
-when they have excess space. 
-You can create a HashMap with a certain starting capacity using 
-`HashMap::with_capacity(uint)`, or use `HashMap::new()` to get a HashMap 
-with a default initial capacity (recommended).
+Как и вектора, `HashMap` расширяемые, но они также 
+могут и сжать себя, когда у них появляется избыточное пространство. 
+Вы можете создать хэш-карту с определённой размерностью при 
+помощи `HashMap::with_capacity(uint)` или использовать 
+`HashMap::new()` для получения хэш-карты с 
+размерностью по умолчанию (рекомендуется).
 
 ```rust,editable
 use std::collections::HashMap;
 
 fn call(number: &str) -> &str {
     match number {
-        "798-1364" => "We're sorry, the call cannot be completed as dialed. 
-            Please hang up and try again.",
-        "645-7689" => "Hello, this is Mr. Awesome's Pizza. My name is Fred.
-            What can I get for you today?",
-        _ => "Hi! Who is this again?"
+        "798-1364" => "Абонент выключен или находится вне зоны действия сети. 
+            Пожалуйста, позвоните позднее.",
+        "645-7689" => "Здравствуйте, это Mr. Awesome's Pizza. Меня зовут Фред.
+            Что я могу сделать для вас?",
+        _ => "Привет! Кто это опять?"
     }
 }
 
 fn main() { 
     let mut contacts = HashMap::new();
 
-    contacts.insert("Daniel", "798-1364");
-    contacts.insert("Ashley", "645-7689");
-    contacts.insert("Katie", "435-8291");
-    contacts.insert("Robert", "956-1745");
+    contacts.insert("Даниель", "798-1364");
+    contacts.insert("Эшли", "645-7689");
+    contacts.insert("Кейти", "435-8291");
+    contacts.insert("Роберт", "956-1745");
 
-    // Takes a reference and returns Option<&V>
-    match contacts.get(&"Daniel") {
-        Some(&number) => println!("Calling Daniel: {}", call(number)),
-        _ => println!("Don't have Daniel's number."),
+    // Возьмём ссылку и вернём `Option<&V>`
+    match contacts.get(&"Даниель") {
+        Some(&number) => println!("Звоним Даниелю: {}", call(number)),
+        _ => println!("У нас нет номера Даниеля."),
     }
 
-    // `HashMap::insert()` returns `None`
-    // if the inserted value is new, `Some(value)` otherwise
-    contacts.insert("Daniel", "164-6743");
+    // `HashMap::insert()` вернёт `None`, если мы добавляем 
+    // новое значение, иначе - `Some(value)`
+    contacts.insert("Даниель", "164-6743");
 
-    match contacts.get(&"Ashley") {
-        Some(&number) => println!("Calling Ashley: {}", call(number)),
-        _ => println!("Don't have Ashley's number."),
+    match contacts.get(&"Эшли") {
+        Some(&number) => println!("Звоним Эшли: {}", call(number)),
+        _ => println!("У нас нет номера Эшли."),
     }
 
-    contacts.remove(&"Ashley"); 
+    contacts.remove(&"Эшли"); 
 
-    // `HashMap::iter()` returns an iterator that yields 
-    // (&'a key, &'a value) pairs in arbitrary order.
+    // `HashMap::iter()` возвращает итератор, который в произвольном
+    // порядке отдаёт пары `(&'a key, &'a value)`.
     for (contact, &number) in contacts.iter() {
-        println!("Calling {}: {}", contact, call(number)); 
+        println!("Звоним {}: {}", contact, call(number)); 
     }
 }
 ```
 
-For more information on how hashing and hash maps 
-(sometimes called hash tables) work, have a look at 
-[Hash Table Wikipedia][wiki-hash]
-
-[wiki-hash]: https://en.wikipedia.org/wiki/Hash_table
+Для большей информации о том, как работает хеширование и хэш-карты (который иногда называются хэш-таблицами), вы можете обратиться к [Wikipedia](https://en.wikipedia.org/wiki/Hash_table).

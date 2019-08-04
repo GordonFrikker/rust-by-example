@@ -1,9 +1,10 @@
-# Aliasing
+# Алиасинг
 
-Data can be immutably borrowed any number of times, but while immutably
-borrowed, the original data can't be mutably borrowed. On the other hand,
-only *one* mutable borrow is allowed at a time. The original data can be
-borrowed again only *after* the mutable reference goes out of scope.
+Данные могут быть заимствованы без возможности изменения любое количество раз, но пока такое заимствование существует, оригинальные данные не могут быть заимствованы с возможностью изменения. С другой стороны, 
+одновременно может быть только *одно* изменяемое 
+заимствование. Исходные данные могут быть снова заимствованы 
+только *после* того, как изменяемая ссылка выйдет из 
+области видимости.
 
 ```rust,editable
 struct Point { x: i32, y: i32, z: i32 }
@@ -15,45 +16,45 @@ fn main() {
         let borrowed_point = &point;
         let another_borrow = &point;
 
-        // Data can be accessed via the references and the original owner
-        println!("Point has coordinates: ({}, {}, {})",
+        // Данные могут быть доступны через ссылки и владельца этих данных
+        println!("Точка имеет координаты: ({}, {}, {})",
                  borrowed_point.x, another_borrow.y, point.z);
 
-        // Error! Can't borrow point as mutable because it's currently
-        // borrowed as immutable.
+        // Ошбика! Нельзя изменяемо заимствовать `point`, так как она уже
+        // неизменяемо заимствована.
         //let mutable_borrow = &mut point;
-        // TODO ^ Try uncommenting this line
+        // TODO ^ Попробуйте раскомментировать эту строку
 
-        // Immutable references go out of scope
+        // Неизменяемые ссылки вышли из области видимости
     }
 
     {
         let mutable_borrow = &mut point;
 
-        // Change data via mutable reference
+        // Меняем при помощи изменяемой ссылки
         mutable_borrow.x = 5;
         mutable_borrow.y = 2;
         mutable_borrow.z = 1;
 
-        // Error! Can't borrow `point` as immutable because it's currently
-        // borrowed as mutable.
+        // Ошибка! Нельзя неизменяемо заимствовать `point` так как она уже
+        // заимствована изменяемо.
         //let y = &point.y;
-        // TODO ^ Try uncommenting this line
+        // TODO ^ Попробуйте раскомментировать эту строку
 
-        // Error! Can't print because `println!` takes an immutable reference.
+        // Ошибка! Нельзя вывести на экран потому что `println!` берёт неизменяемую ссылку.
         //println!("Point Z coordinate is {}", point.z);
-        // TODO ^ Try uncommenting this line
+        // TODO ^ Попробуйте раскомментировать эту строку
 
-        // Ok! Mutable references can be passed as immutable to `println!`
-        println!("Point has coordinates: ({}, {}, {})",
+        // Ok! Изменяемая ссылка может быть передана `println!` как неизменяемая
+        println!("Точка имеет координаты: ({}, {}, {})",
                  mutable_borrow.x, mutable_borrow.y, mutable_borrow.z);
 
-        // Mutable reference goes out of scope
+        // Изменяемая ссылка вышла из области видимости
     }
 
-    // Immutable references to point are allowed again
+    // Неизменяемая ссылка на `point` снова разрешена
     let borrowed_point = &point;
-    println!("Point now has coordinates: ({}, {}, {})",
+    println!("Точка имеет координаты: ({}, {}, {})",
              borrowed_point.x, borrowed_point.y, borrowed_point.z);
 }
 ```

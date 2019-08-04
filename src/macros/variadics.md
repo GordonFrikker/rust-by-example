@@ -1,22 +1,23 @@
-# Variadic Interfaces
+# Вариативные интерфейсы
 
-A _variadic_ interface takes an arbitrary number of arguments. For example,
-`println!` can take an arbitrary number of arguments, as determined by the
-format string.
+Интерфейсы с *переменным числом параметров* (вариативные интерфейсы) принимают произвольное число 
+аргументов. Например,  `println!` может принимать 
+произвольное число аргументов, как определено в формате строки.
 
-We can extend our `calculate!` macro from the previous section to be variadic:
+Мы можем расширить наш макрос `calculate!` из 
+предыдущей главы, чтобы он имел вариативный интерфейс:
 
 ```rust,editable
 macro_rules! calculate {
-    // The pattern for a single `eval`
+    // Шаблон для единичного `eval`
     (eval $e:expr) => {{
         {
-            let val: usize = $e; // Force types to be integers
+            let val: usize = $e; // Заставим быть переменную целым числом.
             println!("{} = {}", stringify!{$e}, val);
         }
     }};
 
-    // Decompose multiple `eval`s recursively
+    // Рекурсивно декомпозируем несколько `eval`
     (eval $e:expr, $(eval $es:expr),+) => {{
         calculate! { eval $e }
         calculate! { $(eval $es),+ }
@@ -24,7 +25,7 @@ macro_rules! calculate {
 }
 
 fn main() {
-    calculate! { // Look ma! Variadic `calculate!`!
+    calculate! { // Смотри, мама! Вариативный `calculate!`!
         eval 1 + 2,
         eval 3 + 4,
         eval (2 * 3) + 1
@@ -32,7 +33,7 @@ fn main() {
 }
 ```
 
-Output:
+Вывод:
 
 ```txt
 1 + 2 = 3

@@ -1,18 +1,19 @@
 # Domain Specific Languages (DSLs)
 
-A DSL is a mini "language" embedded in a Rust macro. It is completely valid
-Rust because the macro system expands into normal Rust constructs, but it looks
-like a small language. This allows you to define concise or intuitive syntax for
-some special functionality (within bounds).
+DSL - это мини язык, встроенный в макросы Rust. Это полностью 
+допустимый код на Rust, так как система макросов разворачивается 
+в нормальные конструкции, но выглядит как маленький язык. Это 
+позволяет вам определять краткий или интуитивный синтаксис для 
+некоторой функциональности (в пределах границ).
 
-Suppose that I want to define a little calculator API. I would like to supply
-an expression an have the output printed to console.
+Предположим, я хочу определить небольшое API для калькулятора. 
+Я хотел бы предоставить выражение и вывести результат в консоль.
 
 ```rust,editable
 macro_rules! calculate {
     (eval $e:expr) => {{
         {
-            let val: usize = $e; // Force types to be integers
+            let val: usize = $e; // Заставим быть переменную целым числом.
             println!("{} = {}", stringify!{$e}, val);
         }
     }};
@@ -20,7 +21,7 @@ macro_rules! calculate {
 
 fn main() {
     calculate! {
-        eval 1 + 2 // hehehe `eval` is _not_ a Rust keyword!
+        eval 1 + 2 // хе-хе, `eval` _не_ ключевое слово Rust!
     }
 
     calculate! {
@@ -29,13 +30,17 @@ fn main() {
 }
 ```
 
-Output:
+Вывод:
 
 ```txt
 1 + 2 = 3
 (1 + 2) * (3 / 4) = 0
 ```
 
-This was a very simple example, but much more complex interfaces have been
-developed, such as [`lazy_static`](https://crates.io/crates/lazy_static) or
-[`clap`](https://crates.io/crates/clap).
+Это очень простой пример, но можно разработать и гораздо более 
+сложные интерфейсы, такие как [`lazy_static`](https://crates.io/crates/lazy_static) 
+или [`clap`](https://crates.io/crates/clap).
+
+Также обратите внимание на две пары скобок в макросе. Внешняя 
+пара является частью синтаксиса `macro_rules!`, в 
+дополнение к `()` или `[]`.

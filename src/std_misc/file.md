@@ -1,11 +1,12 @@
-# File I/O
+# Файловый ввод-вывод
 
-The `File` struct represents a file that has been opened (it wraps a file
-descriptor), and gives read and/or write access to the underlying file.
+Структура `File` представляет открытый файл (она является обёрткой над файловым дескриптором) и даёт возможность чтения/записи этого файла.
 
-Since many things can go wrong when doing file I/O, all the `File` methods
-return the `io::Result<T>` type, which is an alias for `Result<T, io::Error>`.
+Из-за того, что многие вещи могут пойти не так в процессе файлового 
+ввода-вывода, все методы `File` возвращают тип 
+`io::Result<T>`, который является псевдонимом для 
+`Result<T, io::Error>`.
 
-This makes the failure of all I/O operations *explicit*. Thanks to this, the
-programmer can see all the failure paths, and is encouraged to handle them in
-a proactive manner.
+Это делает *явными* ошибки всех операций ввода-вывода. 
+Благодаря этому, программист может увидеть все пути отказов и 
+обрабатывать их упреждающей форме.

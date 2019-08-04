@@ -1,16 +1,16 @@
-# Elision
+# Сокрытие
 
-Some lifetime patterns are overwelmingly common and so the borrow checker
-will implicitly add them to save typing and to improve readability.
-This process of implicit addition is called elision. Elision exists in Rust
-solely because these patterns are common.
+Некоторые шаблоны времён жизни достаточно общие и поэтому 
+анализатор заимствований может позволить вам опустить их чтобы 
+ускорить написание кода и увеличить его читаемость.
+Это известно как сокрытие времён жизни. Сокрытие появилось в Rust, 
+исключительно из-за того, что они применяются к общим шаблонам.
 
-The following code shows a few examples of elision. For a more comprehensive
-description of elision, see [lifetime elision][elision] in the book.
+Следующий код показывает несколько примеров сокрытия. Для более полного описания сокрытия, обратитесь к главе про [a0}сокрытие времён жизни в TRPL.
 
 ```rust,editable
-// `elided_input` and `annotated_input` essentially have identical signatures
-// because the lifetime of `elided_input` is elided by the compiler:
+// По существу, `elided_input` и `annotated_input` имеют одинаковую сигнатуру
+// потому что время жизни `elided_input` выводится компилятором:
 fn elided_input(x: &i32) {
     println!("`elided_input`: {}", x);
 }
@@ -19,8 +19,8 @@ fn annotated_input<'a>(x: &'a i32) {
     println!("`annotated_input`: {}", x);
 }
 
-// Similarly, `elided_pass` and `annotated_pass` have identical signatures
-// because the lifetime is added implicitly to `elided_pass`:
+// Аналогично, `elided_pass` и `annotated_pass` имеют идентичные сигнатуры
+// потому что время жизни неявно добавлено к `elided_pass`:
 fn elided_pass(x: &i32) -> &i32 { x }
 
 fn annotated_pass<'a>(x: &'a i32) -> &'a i32 { x }
@@ -36,8 +36,6 @@ fn main() {
 }
 ```
 
-### See also:
+### Смотрите также:
 
-[elision][elision]
-
-[elision]: https://doc.rust-lang.org/book/second-edition/ch10-03-lifetime-syntax.html#lifetime-elision
+[сокрытие](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html#lifetime-elision)

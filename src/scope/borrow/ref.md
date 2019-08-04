@@ -1,8 +1,10 @@
-# The ref pattern
+# `ref` паттерн
 
-When doing pattern matching or destructuring via the `let` binding, the `ref`
-keyword can be used to take references to the fields of a struct/tuple. The 
-example below shows a few instances where this can be useful:
+Когда мы используем сопоставление с образцом или 
+деструктурируем при помощи `let`, можно 
+использовать ключевое слово `ref` для получения 
+ссылки на поле структуры или кортежа. Пример ниже показывает 
+несколько случаев, когда это может быть полезно:
 
 ```rust,editable
 #[derive(Clone, Copy)]
@@ -11,47 +13,47 @@ struct Point { x: i32, y: i32 }
 fn main() {
     let c = 'Q';
 
-    // A `ref` borrow on the left side of an assignment is equivalent to
-    // an `&` borrow on the right side.
+    // Заимствование с `ref` по левую сторону от присваивания, эквивалетно
+    // заимствованию с `&` по правую сторону.
     let ref ref_c1 = c;
     let ref_c2 = &c;
 
-    println!("ref_c1 equals ref_c2: {}", *ref_c1 == *ref_c2);
+    println!("ref_c1 равно ref_c2: {}", *ref_c1 == *ref_c2);
 
     let point = Point { x: 0, y: 0 };
 
-    // `ref` is also valid when destructuring a struct.
+    // `ref` также может использоваться при деструктуризации структур.
     let _copy_of_x = {
-        // `ref_to_x` is a reference to the `x` field of `point`.
+        // `ref_to_x` - ссылка на поле `x` в `point`.
         let Point { x: ref ref_to_x, y: _ } = point;
 
-        // Return a copy of the `x` field of `point`.
+        // Возвращаем копию поля `x` из `point`.
         *ref_to_x
     };
 
-    // A mutable copy of `point`
+    // Изменяемая копия `point`
     let mut mutable_point = point;
 
     {
-        // `ref` can be paired with `mut` to take mutable references.
+        // `ref` может использоваться вместе с `mut` для получения изменяемой ссылки.
         let Point { x: _, y: ref mut mut_ref_to_y } = mutable_point;
 
-        // Mutate the `y` field of `mutable_point` via a mutable reference.
+        // Изменяем поле `y` переменной `mutable_point` через изменяемую ссылку.
         *mut_ref_to_y = 1;
     }
 
-    println!("point is ({}, {})", point.x, point.y);
-    println!("mutable_point is ({}, {})", mutable_point.x, mutable_point.y);
+    println!("point ({}, {})", point.x, point.y);
+    println!("mutable_point ({}, {})", mutable_point.x, mutable_point.y);
 
-    // A mutable tuple that includes a pointer
+    // Изменяемый кортеж с указателем
     let mut mutable_tuple = (Box::new(5u32), 3u32);
     
     {
-        // Destructure `mutable_tuple` to change the value of `last`.
+        // Деструктурируем `mutable_tuple` чтобы изменить значение `last`.
         let (_, ref mut last) = mutable_tuple;
         *last = 2u32;
     }
     
-    println!("tuple is {:?}", mutable_tuple);
+    println!("tuple {:?}", mutable_tuple);
 }
 ```

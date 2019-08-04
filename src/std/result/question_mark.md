@@ -1,10 +1,13 @@
 # `?`
 
-Chaining results using match can get pretty untidy; luckily, the `?` operator
-can be used to make things pretty again. `?` is used at the end of an expression
-returning a `Result`, and is equivalent to a match expression, where the 
-`Err(err)` branch expands to an early `Err(From::from(err))`, and the `Ok(ok)`
-branch expands to an `ok` expression.
+Разбор цепочки результатов с использованием `match` может стать 
+довольно неопрятной, к счастью, с помощью оператора 
+`?` можно сделать разбор снова красивым. 
+`?` используется в конце выражения, возвращающего 
+`Result` и эквивалентен выражению `match`, в котором 
+ветка `Err(err)` разворачивается в 
+`Err(From::from(err))`, а ветка `Ok(ok)` во 
+внутреннее значение (`ok`).
 
 ```rust,editable,ignore,mdbook-runnable
 mod checked {
@@ -41,12 +44,12 @@ mod checked {
         }
     }
 
-    // Intermediate function
+    // Промежуточная функция
     fn op_(x: f64, y: f64) -> MathResult {
-        // if `div` "fails", then `DivisionByZero` will be `return`ed
+        // Если `div` "упадёт", тогда будет "возвращено" `DivisionByZero`
         let ratio = div(x, y)?;
 
-        // if `ln` "fails", then `NonPositiveLogarithm` will be `return`ed
+        // если `ln` "упадёт", тогда будет "возвращено" `NonPositiveLogarithm`
         let ln = ln(ratio)?;
 
         sqrt(ln)
@@ -56,11 +59,11 @@ mod checked {
         match op_(x, y) {
             Err(why) => panic!(match why {
                 MathError::NonPositiveLogarithm
-                    => "logarithm of non-positive number",
+                    => "логарифм не положительного числа",
                 MathError::DivisionByZero
-                    => "division by zero",
+                    => "деление на ноль",
                 MathError::NegativeSquareRoot
-                    => "square root of negative number",
+                    => "квадратный корень от отрицательного числа",
             }),
             Ok(value) => println!("{}", value),
         }
@@ -72,7 +75,5 @@ fn main() {
 }
 ```
 
-Be sure to check the [documentation][docs],
-as there are many methods to map/compose `Result`.
-
-[docs]: https://doc.rust-lang.org/std/result/index.html
+Обязательно посмотрите [документацию](https://doc.rust-lang.org/std/result/index.html), так как есть много 
+методов для работы с `Result`.

@@ -1,8 +1,10 @@
-# Channels
+# Каналы
 
-Rust provides asynchronous `channels` for communication between threads. Channels
-allow a unidirectional flow of information between two end-points: the
-`Sender` and the `Receiver`.
+Rust предоставляет асинхронные каналы (`channel`) для 
+взаимодействия между потоками. Каналы обеспечивают 
+однонаправленную передачу информации между двумя конечными 
+точками: отправителем (`Sender`) и получателем 
+(`Receiver`).
 
 ```rust,editable
 use std::sync::mpsc::{Sender, Receiver};
@@ -12,36 +14,44 @@ use std::thread;
 static NTHREADS: i32 = 3;
 
 fn main() {
-    // Channels have two endpoints: the `Sender<T>` and the `Receiver<T>`,
-    // where `T` is the type of the message to be transferred
-    // (type annotation is superfluous)
+    // Каналы имеют две конечные точки: Sender<T>` и `Receiver<T>`,
+    // где `T` - тип передаваемового сообщения.
+    // (аннотации типов избыточны)
     let (tx, rx): (Sender<i32>, Receiver<i32>) = mpsc::channel();
+    let mut children = Vec::new();
 
     for id in 0..NTHREADS {
-        // The sender endpoint can be copied
+        // Отправитель может быть скопирован
         let thread_tx = tx.clone();
 
-        // Each thread will send its id via the channel
-        thread::spawn(move || {
-            // The thread takes ownership over `thread_tx`
-            // Each thread queues a message in the channel
+        // Каждый поток отправит через канал его id
+        let child = thread::spawn(move || {
+            // Поток забирает владение `thread_tx`
+            // Каждый поток добавляет своё сообщение в очередь канала
             thread_tx.send(id).unwrap();
 
-            // Sending is a non-blocking operation, the thread will continue
-            // immediately after sending its message
-            println!("thread {} finished", id);
+            // Отправка - не блокирующая операция, поток незамедлительно
+            // продолжит работу после отправки сообщения
+            println!("поток {} завершён", id);
         });
+
+        children.push(child);
     }
 
-    // Here, all the messages are collected
+    // Здесь все сообщения собираются
     let mut ids = Vec::with_capacity(NTHREADS as usize);
     for _ in 0..NTHREADS {
-        // The `recv` method picks a message from the channel
-        // `recv` will block the current thread if there are no messages available
+        // Метод `recv` "достаёт" сообщения из канала
+        // `recv` блокирует текущий поток, если доступных сообщений нет
         ids.push(rx.recv());
     }
+    
+    // Ожидаем, когда потоки завершат всю оставшуюся работу
+    for child in children {
+        child.join().expect("Упс! Дочерний поток паникует");
+    }
 
-    // Show the order in which the messages were sent
+    // Посмотрите порядок, с которым сообщения были отправлeны
     println!("{:?}", ids);
 }
 ```

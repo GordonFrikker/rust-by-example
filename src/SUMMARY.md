@@ -3,6 +3,7 @@
 [Введение](index.md)
 
 - [Привет, мир!](hello.md)
+
     - [Комментарии](hello/comment.md)
     - [Форматированный вывод](hello/print.md)
         - [Debug](hello/print/print_debug.md)
@@ -11,11 +12,13 @@
         - [Форматирование](hello/print/fmt.md)
 
 - [Примитивы](primitives.md)
+
     - [Литералы и операторы](primitives/literals.md)
     - [Кортежи](primitives/tuples.md)
     - [Массив и срезы](primitives/array.md)
 
 - [Пользовательские типы](custom_types.md)
+
     - [Структуры](custom_types/structs.md)
     - [Перечисления](custom_types/enum.md)
         - [Декларация `use`](custom_types/enum/enum_use.md)
@@ -24,11 +27,13 @@
     - [Константы](custom_types/constants.md)
 
 - [Связывание переменных](variable_bindings.md)
+
     - [Изменяемость](variable_bindings/mut.md)
     - [Область видимости и затенение](variable_bindings/scope.md)
     - [Предварительное объявление](variable_bindings/declare.md)
 
 - [Типы](types.md)
+
     - [Приведение типов](types/cast.md)
     - [Литералы](types/literals.md)
     - [Вывод типов](types/inference.md)
@@ -42,6 +47,7 @@
 - [Выражения](expression.md)
 
 - [Управление потоком](flow_control.md)
+
     - [if/else](flow_control/if_else.md)
     - [loop](flow_control/loop.md)
         - [Вложенность и метки](flow_control/loop/nested.md)
@@ -60,6 +66,7 @@
     - [while let](flow_control/while_let.md)
 
 - [Функции](fn.md)
+
     - [Методы](fn/methods.md)
     - [Замыкания](fn/closures.md)
         - [Захват](fn/closures/capture.md)
@@ -74,6 +81,7 @@
     - [Расходящиеся функции](fn/diverging.md)
 
 - [Модули](mod.md)
+
     - [Видимость](mod/visibility.md)
     - [Видимость структуры](mod/struct_visibility.md)
     - [Декларация `use`](mod/use.md)
@@ -116,13 +124,14 @@
         - [Пример: unit clarification](generics/phantom/testcase_units.md)
 
 - [Правила области видимости](scope.md)
+
     - [RAII](scope/raii.md)
     - [Владение и перемещение](scope/move.md)
         - [Изменяемость](scope/move/mut.md)
     - [Заимствование](scope/borrow.md)
         - [Mutability](scope/borrow/mut.md)
         - [Замораживание](scope/borrow/freeze.md)
-        - [Aliasing](scope/borrow/alias.md)
+        - [Алиасинг](scope/borrow/alias.md)
         - [ref паттерн](scope/borrow/ref.md)
     - [Времена жизни](scope/lifetime.md)
         - [Явное аннотирование](scope/lifetime/explicit.md)
@@ -144,6 +153,7 @@
     - [Типаж `Clone`](trait/clone.md)
 
 - [macro_rules!](macros.md)
+
     - [Синтаксис](macros/syntax.md)
         - [Указатели](macros/designators.md)
         - [Перегрузка](macros/overload.md)
@@ -153,6 +163,7 @@
     - [Variadics](macros/variadics.md)
 
 - [Обработка ошибок](error.md)
+
     - [`panic`](error/panic.md)
     - [`Option` & `unwrap`](error/option_unwrap.md)
         - [Комбинаторы: `map`](error/option_unwrap/map.md)
@@ -171,6 +182,7 @@
     - [Итерирование по `Result`](error/iter_result.md)
 
 - [Типы стандартной библиотеки](std.md)
+
     - [`Box`, стек и куча](std/box.md)
     - [Вектора](std/vec.md)
     - [Strings](std/str.md)
@@ -202,6 +214,7 @@
     - [Foreign Function Interface](std_misc/ffi.md)
 
 - [Тестирование](testing.md)
+
     - [Unit-тестирование](testing/unit_testing.md)
     - [Тестирование документации](testing/doc_testing.md)
     - [Интеграционное тестирование](testing/integration_testing.md)
@@ -210,7 +223,9 @@
 - [Unsafe операции](unsafe.md)
 
 - [Совместимость](compatibility.md)
+
     - [Сырые идентификаторы](compatibility/raw_identifiers.md)
 
 - [Meta](meta.md)
+
     - [Документация](meta/doc.md)

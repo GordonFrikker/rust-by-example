@@ -1,50 +1,55 @@
-# Strings
+# Строки
 
-There are two types of strings in Rust: `String` and `&str`.
+В Rust есть два типа строк: `String` и `&str`.
 
-A `String` is stored as a vector of bytes (`Vec<u8>`), but guaranteed to
-always be a valid UTF-8 sequence. `String` is heap allocated, growable and not
-null terminated.
+`String` сохраняется как вектор байт 
+(`Vec<u8>`), но с гарантией, что это всегда будет 
+действительная UTF-8 последовательность. `String` 
+выделяется в куче, расширяемая и не заканчивается нулевым байтом 
+(не null-terminated).
 
-`&str` is a slice (`&[u8]`) that always points to a valid UTF-8 sequence, and
-can be used to view into a `String`, just like `&[T]` is a view into `Vec<T>`.
+`&str` - это срез (`&[u8]`), 
+который всегда указывает на действительную UTF-8 
+последовательность, и является отображением 
+`String`, так же как и `&[T]` - 
+отображение `Vec<T>`.
 
 ```rust,editable
 fn main() {
-    // (all the type annotations are superfluous)
-    // A reference to a string allocated in read only memory
+    // (все аннотации типов избыточны)
+    // Ссылка на строку, размещённую в read-only памяти
     let pangram: &'static str = "the quick brown fox jumps over the lazy dog";
     println!("Pangram: {}", pangram);
 
-    // Iterate over words in reverse, no new string is allocated
+    // Итерируемся по словам в обратном прядке, новая строка не аллоцируется
     println!("Words in reverse");
     for word in pangram.split_whitespace().rev() {
         println!("> {}", word);
     }
 
-    // Copy chars into a vector, sort and remove duplicates
+    // Копируем символы в вектор, сортируем и удаляем дубликаты
     let mut chars: Vec<char> = pangram.chars().collect();
     chars.sort();
     chars.dedup();
 
-    // Create an empty and growable `String`
+    // Создаём пустую расширяемую `String`
     let mut string = String::new();
     for c in chars {
-        // Insert a char at the end of string
+        // Добавляем символ в конец строки
         string.push(c);
-        // Insert a string at the end of string
+        // Добавляем в конец строки другую строку
         string.push_str(", ");
     }
 
-    // The trimmed string is a slice to the original string, hence no new
-    // allocation is performed
+    // Усечённая строка - это срез оригинальной строки, а значит новых 
+    // аллокаций не производится
     let chars_to_trim: &[char] = &[' ', ','];
     let trimmed_str: &str = string.trim_matches(chars_to_trim);
     println!("Used characters: {}", trimmed_str);
 
-    // Heap allocate a string
+    // Строка, аллоцированная в куче
     let alice = String::from("I like dogs");
-    // Allocate new memory and store the modified string there
+    // Выделяется новая память, в которую сохраняется модифицированная строка
     let bob: String = alice.replace("dog", "cat");
 
     println!("Alice says: {}", alice);
@@ -52,24 +57,24 @@ fn main() {
 }
 ```
 
-More `str`/`String` methods can be found under the
-[std::str][str] and
-[std::string][string]
-modules
+Больше методов `str` и `String` вы 
+можете найти в описании модулей [std::str](https://doc.rust-lang.org/std/str/) и 
+[std::string](https://doc.rust-lang.org/std/string/).
 
-## Literals and escapes
+## Литералы и экранирование
 
-There are multiple ways to write string literals with special characters in them.
-All result in a similar `&str` so it's best to use the form that is the most
-convenient to write. Similarly there are multiple ways to write byte string literals,
-which all result in `&[u8; N]`.
+Есть несколько способов написать строковый литерал со 
+специальными символами в нём. Все способы приведут к одной и 
+той же строке, так что лучше использовать тот способ, который 
+легче всего написать. Аналогично все способы записать строковый 
+литера из байтов в итоге дадут `&[u8; N]`.
 
-Generally special characters are escaped with a backslash character: `\`.
-This way you can add any character to your string, even unprintable ones
-and ones that you don't know how to type. If you want a literal backslash,
-escape it with another one: `\\`
+Обычно специальные символы экранируются с помощью обратной косой черты: `Обычно специальные символы экранируются с помощью обратной косой черты: . В этом случае вы можете добавить в вашу 
+строку любые символы, даже непечатаемые и те, которые вы не 
+знаете как набрать. Если вы хотите добавить обратную косую черту, 
+экранируйте его с помощью ещё одной: `\`.
 
-String or character literal delimiters occuring within a literal must be escaped: `"\""`, `'\''`.
+Строковые или символьные разделители литералов (кавычки, встречающиеся внутри другого литерала, должны быть экранированы: `"\""`, `'.'`.
 
 ```rust,editable
 fn main() {
@@ -93,61 +98,64 @@ fn main() {
 }
 ```
 
-Sometimes there are just too many characters that need to be escaped or it's just
-much more convenient to write a string out as-is. This is where raw string literals come into play.
+Иногда приходится экранировать слишком много символов или 
+легче записать строку как она есть. В этот момент в игру вступают 
+сырые строковые литералы.
 
-```rust, editable
+```rust,
 fn main() {
-    let raw_str = r"Escapes don't work here: \x3F \u{211D}";
+    let raw_str = r"Экранирование здесь не работает: \x3F \u{211D}";
     println!("{}", raw_str);
 
-    // If you need quotes in a raw string, add a pair of #s
-    let quotes = r#"And then I said: "There is no escape!""#;
+    // Если вам необходимы кавычки с сырой строке, добавьте пару `#`
+    let quotes = r#"И затем я сказал: "Здесь нет экранирования!""#;
     println!("{}", quotes);
 
-    // If you need "# in your string, just use more #s in the delimiter.
-    // There is no limit for the number of #s you can use.
-    let longer_delimiter = r###"A string with "# in it. And even "##!"###;
+    // Если вам необходимо добавить в вашу строку `"#`, то просто добавьте больше `#` в разделитель.
+    // Здесь нет ограничений на количество `#` которое вы можете использовать.
+    let longer_delimiter = r###"Строка с "# внутри неё. И даже с "##!"###;
     println!("{}", longer_delimiter);
 }
 ```
 
-Want a string that's not UTF-8? (Remember, `str` and `String` must be valid UTF-8)
-Or maybe you want an array of bytes that's mostly text? Byte strings to the rescue!
+Хотите строку, которая не UTF-8? (Помните, `str` и 
+`String` должны содержать действительные UTF-8 
+последовательности). Или возможно вы хотите массив байтов, 
+которые в основном текст? Байтовые строки вас спасут!
 
-```rust, editable
+```rust,
 use std::str;
 
 fn main() {
-    // Note that this is not actually a &str
-    let bytestring: &[u8; 20] = b"this is a bytestring";
+    // Note that this is not actually a `&str`
+    let bytestring: &[u8; 21] = b"this is a byte string";
 
-    // Byte arrays don't have Display so printing them is a bit limited
-    println!("A bytestring: {:?}", bytestring);
+    // Byte arrays don't have the `Display` trait, so printing them is a bit limited
+    println!("A byte string: {:?}", bytestring);
 
-    // Bytestrings can have byte escapes...
+    // Byte strings can have byte escapes...
     let escaped = b"\x52\x75\x73\x74 as bytes";
     // ...but no unicode escapes
     // let escaped = b"\u{211D} is not allowed";
     println!("Some escaped bytes: {:?}", escaped);
 
 
-    // Raw bytestrings work just like raw strings
+    // Raw byte strings work just like raw strings
     let raw_bytestring = br"\u{211D} is not escaped here";
     println!("{:?}", raw_bytestring);
 
-    // Converting a byte array to str can fail
+    // Converting a byte array to `str` can fail
     if let Ok(my_str) = str::from_utf8(raw_bytestring) {
         println!("And the same as text: '{}'", my_str);
     }
 
-    let quotes = br#"You can also use "fancier" formatting, \
+    let _quotes = br#"You can also use "fancier" formatting, \
                     like with normal raw strings"#;
 
-    // Bytestrings don't have to be UTF-8
+    // Byte strings don't have to be UTF-8
     let shift_jis = b"\x82\xe6\x82\xa8\x82\xb1\x82"; // "ようこそ" in SHIFT-JIS
 
-    // But then they can't always be converted to str
+    // But then they can't always be converted to `str`
     match str::from_utf8(shift_jis) {
         Ok(my_str) => println!("Conversion successful: '{}'", my_str),
         Err(e) => println!("Conversion failed: {:?}", e),
@@ -155,12 +163,7 @@ fn main() {
 }
 ```
 
-For conversions between character encodings check out the [encoding][encoding-crate] crate.
+Для преобразования между кодировками символов, посмотрите крейт [encoding](https://crates.io/crates/encoding).
 
-A more detailed listing of the ways to write string literals and escape characters
-is given in the ['Tokens' chapter][tokens] of the Rust Reference.
-
-[str]: https://doc.rust-lang.org/std/str/
-[string]: https://doc.rust-lang.org/std/string/
-[tokens]: https://doc.rust-lang.org/reference/tokens.html
-[encoding-crate]: https://crates.io/crates/encoding
+Более детальный список способов записи строковых литералов и 
+экранирования символов можно найти в [главе 'Tokens'](https://doc.rust-lang.org/reference/tokens.html) Rust Reference.
