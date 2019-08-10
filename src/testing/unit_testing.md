@@ -1,27 +1,29 @@
-# Unit testing
+# Unit-тестирование
 
-Tests are Rust functions that verify that the non-test code is functioning in
-the expected manner. The bodies of test functions typically perform some setup,
-run the code we want to test, then assert whether the results are what we
-expect.
+Тесты - это функции на Rust, которые проверяют, что тестируемый 
+код работает ожидаемым образом. Тело тестовых функций обычно 
+выполняет некоторую настройку, запускает код, который мы 
+тестируем, и затем сравнивает полученный результат с тем, что мы 
+ожидаем.
 
-Most unit tests go into a `tests` [mod][mod] with the `#[cfg(test)]` [attribute][attribute].
-Test functions are marked with the `#[test]` attribute.
+Большинство модульных тестов располагается в [модуле](../mod.md) 
+`tests`, помеченном [атрибутом](../attribute.md) 
+`#[cfg(test)]`. Тестовые функции помечаются 
+атрибутом `#[test]`.
 
-Tests fail when something in the test function [panics][panic]. There are some
-helper [macros][macros]:
+Тесты заканчиваются неудачей, когда что-либо в тестовой функции 
+вызывает [панику](../std/panic.md). Есть несколько вспомогательных 
+[макросов](../macros.md):
 
-* `assert!(expression)` - panics if expression evaluates to `false`.
-* `assert_eq!(left, right)` and `assert_ne!(left, right)` - testing left and
-  right expressions for equality and inequality respectively.
+- `assert!(expression)` - паникует, если результат выражения равен `false`.
+- `assert_eq!(left, right)` и `assert_ne!(left, right)` - сравнивает левое и правое выражения на равенство и неравенство соответственно.
 
 ```rust,ignore
 pub fn add(a: i32, b: i32) -> i32 {
     a + b
 }
 
-// This is a really bad adding function, its purpose is to fail in this
-// example.
+// Это действительно плохая функция сложения, её назначение в данном // примере - потерпеть неудачу.
 #[allow(dead_code)]
 fn bad_add(a: i32, b: i32) -> i32 {
     a - b
@@ -29,7 +31,7 @@ fn bad_add(a: i32, b: i32) -> i32 {
 
 #[cfg(test)]
 mod tests {
-    // Note this useful idiom: importing names from outer (for mod tests) scope.
+    // Обратите внимание на эту полезную идиому: импортирование имён из внешней (для mod - тестов) области видимости.
     use super::*;
 
     #[test]
@@ -39,16 +41,16 @@ mod tests {
 
     #[test]
     fn test_bad_add() {
-        // This assert would fire and test will fail.
-        // Please note, that private functions can be tested too!
+        // Это утверждение запустится и проверка не сработает.
+        // Заметьте, что приватные функции также могут быть протестированы!
         assert_eq!(bad_add(1, 2), 3);
     }
 }
 ```
 
-Tests can be run with `cargo test`.
+Тесты могут быть запущены при помощи команды `cargo test`.
 
-```bash
+```shell
 $ cargo test
 
 running 2 tests
@@ -70,12 +72,15 @@ failures:
 test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
-## Testing panics
+## Тестирование паники
 
-To check functions that should panic under certain circumstances, use attribute
-`#[should_panic]`. This attribute accepts optional parameter `expected = ` with
-the text of the panic message. If your function can panic in multiple ways, it helps
-make sure your test is testing the correct panic.
+Для тестирования функций, которые должны паниковать при 
+определённых обстоятельствах, используется атрибут 
+`#[should_panic]`. Этот атрибут принимает 
+необязательный параметр `expected =` с текстом 
+сообщения о панике. Если ваша функция может паниковать в 
+разных случаях, то этот параметр поможет вам быть уверенным, 
+что вы тестируете именно ту панику, которую собирались.
 
 ```rust,ignore
 pub fn divide_non_zero_result(a: u32, b: u32) -> u32 {
@@ -110,9 +115,9 @@ mod tests {
 }
 ```
 
-Running these tests gives us:
+Запуск этих тестов даст следующее:
 
-```bash
+```shell
 $ cargo test
 
 running 3 tests
@@ -129,11 +134,12 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
-## Running specific tests
+## Запуск конкретных тестов
 
-To run specific tests one may specify the test name to `cargo test` command.
+Для запуска конкретного теста надо добавить имя теста в команду 
+`cargo test`.
 
-```bash
+```shell
 $ cargo test test_any_panic
 running 1 test
 test tests::test_any_panic ... ok
@@ -147,10 +153,10 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
-To run multiple tests one may specify part of a test name that matches all the
-tests that should be run.
+Для запуска нескольких тестов, можно указать часть имени, 
+которая есть во всех необходимых тестах.
 
-```bash
+```shell
 $ cargo test panic
 running 2 tests
 test tests::test_any_panic ... ok
@@ -165,10 +171,9 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
-## Ignoring tests
+## Игнорирование тестов
 
-Tests can be marked with the`#[ignore]` attribute to exclude some tests. Or to run
-them with command `cargo test -- --ignored`
+Тесты могут быть помечены атрибутом `#[ignore]`, чтобы они были исключены из списка запускаемых командой `cargo test`. Такие тесты можно запустить с помощью команды `cargo test -- --ignored`.
 
 ```rust
 pub fn add(a: i32, b: i32) -> i32 {
@@ -198,12 +203,14 @@ mod tests {
 }
 ```
 
-```bash
+```shell
 $ cargo test
-running 1 test
+running 3 tests
 test tests::ignored_test ... ignored
+test tests::test_add ... ok
+test tests::test_add_hundred ... ok
 
-test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out
+test result: ok. 2 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out
 
    Doc-tests tmp-ignore
 
@@ -223,8 +230,3 @@ running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
-
-[attribute]: attribute.html
-[panic]: std/panic.html
-[macros]: macros.html
-[mod]: mod.html

@@ -1,24 +1,26 @@
 # Foreign Function Interface
 
-Rust provides a Foreign Function Interface (FFI) to C libraries. Foreign
-functions must be declared inside an `extern` block annotated with a `#[link]`
-attribute containing the name of the foreign library.
+Rust предоставляет интерфейс внешних функций (Foreign Function 
+Interface, FFI) к библиотекам, написанным на языке С. Внешние 
+функции должны быть объявлены внутри блока `extern` 
+и аннотированы при помощи атрибута `#[link]`, который 
+содержит имя внешней библиотеки.
 
 ```rust,ignore
 use std::fmt;
 
-// this extern block links to the libm library
+// Этот extern-блок подключает библиотеку libm
 #[link(name = "m")]
 extern {
-    // this is a foreign function
-    // that computes the square root of a single precision complex number
+    // Это внешняя функция, которая считает квадратный корень
+    // комплексного числа одинарной точности
     fn csqrtf(z: Complex) -> Complex;
 
     fn ccosf(z: Complex) -> Complex;
 }
 
-// Since calling foreign functions is considered unsafe,
-// it's common to write safe wrappers around them.
+// Так как вызовы внешних функций считаются unsafe,
+// принято писать над ними обёртки.
 fn cos(z: Complex) -> Complex {
     unsafe { ccosf(z) }
 }
@@ -27,16 +29,16 @@ fn main() {
     // z = -1 + 0i
     let z = Complex { re: -1., im: 0. };
 
-    // calling a foreign function is an unsafe operation
+    // вызов внешней функции - unsafe операция
     let z_sqrt = unsafe { csqrtf(z) };
 
-    println!("the square root of {:?} is {:?}", z, z_sqrt);
+    println!("квадратный корень от {:?} равен {:?}", z, z_sqrt);
 
-    // calling safe API wrapped around unsafe operation
+    // вызов безопасного API в котором находится unsafe операция
     println!("cos({:?}) = {:?}", z, cos(z));
 }
 
-// Minimal implementation of single precision complex numbers
+// Минимальная реализация комплексного числа одинарной точности
 #[repr(C)]
 #[derive(Clone, Copy)]
 struct Complex {

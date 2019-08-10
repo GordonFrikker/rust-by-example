@@ -1,25 +1,23 @@
-# Testcase: map-reduce
+# Пример: map-reduce
 
-Rust makes it very easy to parallelise data processing, without many of the headaches traditionally associated with such an attempt.
+Rust позволяет очень легко распределить обработку данных между потоками, без 
+головной боли, традиционно связанной с попыткой сделать это.
 
-The standard library provides great threading primitives out of the box.
-These, combined with Rust's concept of Ownership and aliasing rules, automatically prevent
-data races.
+Стандартная библиотека предоставляет отличные примитивы для работы потоками из коробки. Они в сочетании с концепцией владения и правилами алиасинга в Rust, автоматически предотвращают гонки данных.
 
-The aliasing rules (one writable reference XOR many readable references) automatically prevent
-you from manipulating state that is visible to other threads. (Where synchronisation is needed,
-there are synchronisation
-primitives like `Mutex`es or `Channel`s.)
+Правила алиасинга (одна уникальная ссылка на запись или много ссылок на чтение) автоматически не позволяет вам манипулировать 
+состоянием, которое видно другим потокам. (Где синхронизация необходима,
+есть примитивы синхронизации, такие как `mutex` (мьютексы) или `channel` (каналы).)
 
-In this example, we will calculate the sum of all digits in a block of numbers.
-We will do this by parcelling out chunks of the block into different threads. Each thread will sum
-its tiny block of digits, and subsequently we will sum the intermediate sums produced by each
-thread.
+В этом примере мы вычислим сумму всех цифр в блоке чисел. Мы сделаем это, разбив куски блока на разные потоки. Каждый поток будет суммировать свой крошечный блок цифр, и впоследствии мы будем суммировать промежуточные суммы, полученные каждым потоком.
 
-Note that, although we're passing references across thread boundaries, Rust understands that we're
-only passing read-only references, and that thus no unsafety or data races can occur. Because
-we're `move`-ing the data segments into the thread, Rust will also ensure the data is kept alive
-until the threads exit, so no dangling pointers occur.
+Обратите внимание на то, что хоть мы и передаём ссылки через 
+границы потоков, Rust понимает, что мы только передаём 
+неизменяемые ссылки, которые можно только читать, и что из-за 
+этого не может быть никакой небезопасности и гонок данных. Так 
+как мы перемещаем (`move`) сегменты данных в 
+поток, Rust также уверен, что данные будут жить до тех пор, пока 
+поток не завершится, и висящих указателей не появится.
 
 ```rust,editable
 use std::thread;
@@ -125,28 +123,21 @@ fn main() {
 
 ```
 
-### Assignments
-It is not wise to let our number of threads depend on user inputted data.
-What if the user decides to insert a lot of spaces? Do we _really_ want to spawn 2,000 threads?
-Modify the program so that the data is always chunked into a limited number of chunks,
-defined by a static constant at the beginning of the program.
+### Назначения
 
-### See also:
-* [Threads][thread]
-* [vectors][vectors] and [iterators][iterators]
-* [closures][closures], [move][move] semantics and [`move` closures][move_closure]
-* [destructuring][destructuring] assignments
-* [turbofish notation][turbofish] to help type inference
-* [unwrap vs. expect][unwrap]
-* [enumerate][enumerate]
+Не стоит позволять числу наших потоков быть зависимом от 
+введённых пользователем данных. Что если пользователь решит 
+вставить много пробелов? Мы *действительно* хотим 
+создать 2000 потоков? Измените программу так, чтобы данные 
+разбивались на ограниченное число блоков, объявленных 
+статической константой в начале программы.
 
-[thread]: std_misc/threads.html
-[vectors]: std/vec.html
-[iterators]: trait/iter.html
-[destructuring]: https://doc.rust-lang.org/book/second-edition/ch18-03-pattern-syntax.html#destructuring-to-break-apart-values
-[closures]: fn/closures.html
-[move]: scope/move.html
-[move_closure]: https://doc.rust-lang.org/book/second-edition/ch13-01-closures.html#closures-can-capture-their-environment
-[turbofish]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect
-[unwrap]: error/option_unwrap.html
-[enumerate]: https://doc.rust-lang.org/book/loops.html#enumerate
+### Смотрите также:
+
+- [Потоки](../threads.md)
+- [вектора](../../std/vec.md) и [итераторы](../../trait/iter.md)
+- [замыкания](../../fn/closures.md), [семантика передачи владения](../../scope/move.md) и [перемещения (`move`) в замыканиях](https://doc.rust-lang.org/book/ch13-01-closures.html#closures-can-capture-their-environment)
+- [деструктуризация](https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html#destructuring-to-break-apart-values) при присвоениях
+- [нотация turbofish](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect) в помощь механизму вывода типов
+- [`unwrap` или `expect`](../../error/option_unwrap.md)
+- [enumerate](https://doc.rust-lang.org/book/loops.html#enumerate)

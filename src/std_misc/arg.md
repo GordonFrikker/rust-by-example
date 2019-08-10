@@ -1,9 +1,10 @@
-# Program arguments
+# Аргументы программы
 
-## Standard Library
+## Стандартная библиотека
 
-The command line arguments can be accessed using `std::env::args`, which
-returns an iterator that yields a `String` for each argument:
+Аргументы командной строки могут быть доступны при помощи 
+`std::env::args`, который возвращает итератор, который 
+выдаёт `String` для каждого аргумента:
 
 ```rust,editable
 use std::env;
@@ -11,27 +12,26 @@ use std::env;
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    // The first argument is the path that was used to call the program.
-    println!("My path is {}.", args[0]);
+    // Первый аргумент - путь, используемый для вызова программы.
+    println!("Мой путь {}.", args[0]);
 
-    // The rest of the arguments are the passed command line parameters.
-    // Call the program like this:
+    // Оставшиеся аргументы - переданные в командной строке параметры.
+    // Вызов программы выглядит так:
     //   $ ./args arg1 arg2
-    println!("I got {:?} arguments: {:?}.", args.len() - 1, &args[1..]);
+    println!("У меня {:?} аргумента: {:?}.", args.len() - 1, &args[1..]);
 }
 ```
 
-```bash
+```shell
 $ ./args 1 2 3
-My path is ./args.
-I got 3 arguments: ["1", "2", "3"].
+Мой путь ./args.
+У меня 3 аргумента: ["1", "2", "3"].
 ```
 
-## Crates
+## Крейты
 
-Alternatively, there are numerous crates that can provide extra functionality
-when creating command-line applications. The [Rust Cookbook] exhibits best
-practices on how to use one of the more popular command line argument crates,
-`clap`.
-
-[Rust Cookbook]: https://rust-lang-nursery.github.io/rust-cookbook/app.html#ex-clap-basic
+В качестве альтернативы, существует несколько крейтов, которые 
+предоставляют дополнительную функциональность при создании 
+приложений командной сроки. [Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/cli/arguments.html) показывает 
+лучшие практики, как использовать один из самых популярных 
+крейтов для аргументов командной строки, `clap`.

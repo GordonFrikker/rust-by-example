@@ -1,30 +1,44 @@
-# Documentation
+# Документация
 
-Doc comments are very useful for big projects that require documentation. When
-running [Rustdoc][1], these are the comments that get compiled into
-documentation. They are denoted by a `///`, and support [Markdown][2].
+Используйте `cargo doc` для сборки документации в 
+`target/doc`.
 
-```rust,editable,ignore,mdbook-runnable
+Используйте `cargo test` для запуска всех тестов 
+(включая документационные тесты) и `cargo test --doc` 
+для запуска только документационных тестов.
+
+Эти команды, по мере необходимости, будут соответствующим 
+образом вызывать `rustdoc` (и `rustc`).
+
+### Документационные комментарии
+
+Документационные комментарии очень полезны для больших 
+проектов, требующих документирования. Эти комментарии 
+компилируются в документацию при запуске `rustdoc`. Они 
+обозначаются как `///` и поддерживают 
+[Markdown](https://en.wikipedia.org/wiki/Markdown).
+
+```rust,editable,ignore
 #![crate_name = "doc"]
 
-/// A human being is represented here
+/// Эта структура представляет человека
 pub struct Person {
-    /// A person must have a name, no matter how much Juliet may hate it
+    /// Человек должен иметь имя вне зависимости от того, на сколько Джульетта его ненавидит
     name: String,
 }
 
 impl Person {
-    /// Returns a person with the name given them
+    /// Возвращает человека с данным ему именем
     ///
-    /// # Arguments
+    /// # Аргументы
     ///
-    /// * `name` - A string slice that holds the name of the person
+    /// * `name` - Срез строки, содержащий имя человека
     ///
-    /// # Example
+    /// # Прмер
     ///
     /// ```
-    /// // You can have rust code between fences inside the comments
-    /// // If you pass --test to Rustdoc, it will even test it for you!
+    /// // Мы можете писать код на Rust внутри комментариев.
+    /// // Если вы передадите `--test` в `rustdoc`, то он проверит его!
     /// use doc::Person;
     /// let person = Person::new("name");
     /// ```
@@ -34,11 +48,11 @@ impl Person {
         }
     }
 
-    /// Gives a friendly hello!
+    /// Дружественное приветствие!
     ///
-    /// Says "Hello, [name]" to the `Person` it is called on.
+    /// Говорит "Привет, [name]" для `Person` у которого он вызывается.
     pub fn hello(& self) {
-        println!("Hello, {}!", self.name);
+        println!("Привет, {}!", self.name);
     }
 }
 
@@ -49,16 +63,20 @@ fn main() {
 }
 ```
 
-To run the tests, first build the code as a library, then tell rustdoc where
-to find the library so it can link it into each doctest program:
+Для запуска тестов сначала соберите код как библиотеку, а затем 
+скажите `rustdoc` где найти эту библиотеку, чтобы он мог 
+подключить её к каждому документационному тесту:
 
-```bash
+```shell
 $ rustc doc.rs --crate-type lib
 $ rustdoc --test --extern doc="libdoc.rlib" doc.rs
 ```
 
-(When you run `cargo test` on a library crate, Cargo will automatically
-generate and run the correct rustc and rustdoc commands.)
+### Смотрите также:
 
-[1]: https://doc.rust-lang.org/book/documentation.html
-[2]: https://en.wikipedia.org/wiki/Markdown
+- [The Rust Book: Making Useful Documentation Comments](https://doc.rust-lang.org/book/ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments)
+- [The Rustdoc Book](https://doc.rust-lang.org/rustdoc/index.html)
+- [The Reference: Doc comments](https://doc.rust-lang.org/stable/reference/comments.html#doc-comments)
+- [RFC 1574: API Documentation Conventions](https://rust-lang.github.io/rfcs/1574-more-api-documentation-conventions.html#appendix-a-full-conventions-text)
+- [RFC 1946: Relative links to other items from doc comments (intra-rustdoc links)](https://rust-lang.github.io/rfcs/1946-intra-rustdoc-links.html)
+- [Is there any documentation style guide for comments? (reddit)](https://www.reddit.com/r/rust/comments/ahb50s/is_there_any_documentation_style_guide_for/)

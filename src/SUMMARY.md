@@ -191,7 +191,7 @@
         - [`?`](std/result/question_mark.md)
     - [`panic!`](std/panic.md)
     - [HashMap](std/hash.md)
-        - [Альтернативные/пользовательские типы ключей](std/hash/alt_key_types.md)
+        - [Альтернативные (пользовательские) типы ключей](std/hash/alt_key_types.md)
         - [HashSet](std/hash/hashset.md)
     - [`Rc`](std/rc.md)
 

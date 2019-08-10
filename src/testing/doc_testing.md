@@ -1,16 +1,18 @@
-# Documentation testing
+# Тестирование документации
 
-The primary way of documenting a Rust project is through annotating the source
-code. Documentation comments are written in [markdown] and support code
-blocks in them. Rust takes care about correctness, so these code blocks are
-compiled and used as tests.
+Основной способ документирования проекта на Rust - это 
+аннотирование исходного кода. Документационные комментарии 
+пишутся с использованием [markdown](https://daringfireball.net/projects/markdown/) и позволяют 
+использовать внутри блоки кода. Rust заботится о корректности, так 
+что эти блоки кода могут компилироваться и использоваться в 
+качестве тестов.
 
 ```rust,ignore
-/// First line is a short summary describing function.
+/// Первая строка - это краткое описание функции.
 ///
-/// The next lines present detailed documentation. Code blocks start with
-/// triple backquotes and have implicit `fn main()` inside
-/// and `extern crate <cratename>`. Assume we're testing `doccomments` crate:
+/// Следующие строки представляют детальную документацию. Блоки кода /// начинаются трёх обратных кавычек и внутри содержат неявные
+/// `fn main()` и `extern crate <cratename>`. Предположим, мы
+/// тестируем крейт `doccomments`:
 ///
 /// ```
 /// let result = doccomments::add(2, 3);
@@ -20,9 +22,9 @@ pub fn add(a: i32, b: i32) -> i32 {
     a + b
 }
 
-/// Usually doc comments may include sections "Examples", "Panics" and "Failures".
+/// Ообычно документационные комментарии могут содержат секции "Examples", "Panics" and "Failures".
 ///
-/// The next function divides two numbers.
+/// Следующая функция делит два числа.
 ///
 /// # Examples
 ///
@@ -33,24 +35,24 @@ pub fn add(a: i32, b: i32) -> i32 {
 ///
 /// # Panics
 ///
-/// The function panics if the second argument is zero.
+/// Функция паникует, если второй аргумент равен нулю.
 ///
 /// ```rust,should_panic
-/// // panics on division by zero
+/// // паникует при делении на 0
 /// doccomments::div(10, 0);
 /// ```
 pub fn div(a: i32, b: i32) -> i32 {
     if b == 0 {
-        panic!("Divide-by-zero error");
+        panic!("Ошибка деления на 0");
     }
 
     a / b
 }
 ```
 
-Tests can be run with `cargo test`:
+Тесты могут быть запущены при помощи `cargo test`:
 
-```bash
+```shell
 $ cargo test
 running 0 tests
 
@@ -66,44 +68,43 @@ test src/lib.rs - div (line 31) ... ok
 test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
-## Motivation behind documentation tests
+## Мотивация для документационных тестов
 
-The main purpose of documentation tests is to serve as an examples that exercise
-the functionality, which is one of the most important
-[guidelines][question-instead-of-unwrap]. It allows using examples from docs as
-complete code snippets. But using `?` makes compilation fail since `main`
-returns `unit`. The ability to hide some source lines from documentation comes
-to the rescue: one may write `fn try_main() -> Result<(), ErrorType>`, hide it and
-`unwrap` it in hidden `main`. Sounds complicated? Here's an example:
+Главная цель документационных тестов - служить примерами 
+предоставляемой функциональности, что является одной из самых 
+важных [рекомендаций](https://rust-lang-nursery.github.io/api-guidelines/documentation.html#examples-use--not-try-not-unwrap-c-question-mark). Это позволяет использовать 
+примеры из документации в качестве полных фрагментов кода. Но 
+использование `?` приведёт к ошибке компиляции, так 
+как функция `main` возвращает `()` 
+(`unit`). На помощь приходит возможность скрыть из документации 
+некоторые строки исходного кода: можно написать 
+`fn try_main() -> Result<(), ErrorType>`, скрыть 
+её и вызвать её в скрытом `main` с 
+`unwrap`. Звучит сложно? Вот пример:
 
 ```rust,ignore
-/// Using hidden `try_main` in doc tests.
+/// Использование скрытой `try_main` в документационных тестах.
 ///
 /// ```
-/// # // hidden lines start with `#` symbol, but they're still compileable!
-/// # fn try_main() -> Result<(), String> { // line that wraps the body shown in doc
+/// # // скрытые строки начинаются с символа `#`, но они всё ещё компилируемы!
+/// # fn try_main() -> Result<(), String> { // эта линия оборачивает тело функции, которое отображается в документации
 /// let res = try::try_div(10, 2)?;
-/// # Ok(()) // returning from try_main
+/// # Ok(()) // возвращается из try_main
 /// # }
-/// # fn main() { // starting main that'll unwrap()
-/// #    try_main().unwrap(); // calling try_main and unwrapping
-/// #                         // so that test will panic in case of error
+/// # fn main() { // начало `main` которая выполняет `unwrap()`
+/// #    try_main().unwrap(); // вызов `try_main` и извлечение результата
+/// #                         // так что в случае ошибки этот тест запаникует
 /// # }
 pub fn try_div(a: i32, b: i32) -> Result<i32, String> {
     if b == 0 {
-        Err(String::from("Divide-by-zero"))
+        Err(String::from("Деление на 0"))
     } else {
         Ok(a / b)
     }
 }
 ```
 
-## See Also
+## Смотрите также:
 
-* [RFC505][RFC505] on documentation style
-* [API Guidelines][doc-nursery] on documentation guidelines
-
-[doc-nursery]: https://rust-lang-nursery.github.io/api-guidelines/documentation.html
-[markdown]: https://daringfireball.net/projects/markdown/
-[RFC505]: https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md
-[question-instead-of-unwrap]: https://rust-lang-nursery.github.io/api-guidelines/documentation.html#examples-use--not-try-not-unwrap-c-question-mark
+- [RFC505](https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md) по стилю документации
+- [Рекомендации для API](https://rust-lang-nursery.github.io/api-guidelines/documentation.html) по документационному тестированию

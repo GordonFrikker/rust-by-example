@@ -1,6 +1,6 @@
-# Argument parsing
+# Парсинг аргументов
 
-Matching can be used to parse simple arguments:
+Сопоставление может быть использовано для разбора простых аргументов:
 
 ```rust,editable
 use std::env;
@@ -16,27 +16,27 @@ fn decrease(number: i32) {
 fn help() {
     println!("usage:
 match_args <string>
-    Check whether given string is the answer.
+    Проверяет является ли данная строка ответом.
 match_args {{increase|decrease}} <integer>
-    Increase or decrease given integer by one.");
+    Увеличивает или уменьшает число на 1.");
 }
 
 fn main() {
     let args: Vec<String> = env::args().collect();
 
     match args.len() {
-        // no arguments passed
+        // аргументы не переданы
         1 => {
-            println!("My name is 'match_args'. Try passing some arguments!");
+            println!("Я - 'match_args'. Попробуйте передать аргументы!");
         },
-        // one argument passed
+        // передан один аргумент
         2 => {
             match args[1].parse() {
-                Ok(42) => println!("This is the answer!"),
-                _ => println!("This is not the answer."),
+                Ok(42) => println!("Это ответ!"),
+                _ => println!("Это не ответ."),
             }
         },
-        // one command and one argument passed
+        // переданы одна команда и один аргумент
         3 => {
             let cmd = &args[1];
             let num = &args[2];
@@ -46,49 +46,49 @@ fn main() {
                     n
                 },
                 Err(_) => {
-                    eprintln!("error: second argument not an integer");
+                    eprintln!("ошибка: второй аргумент не является числом");
                     help();
                     return;
                 },
             };
-            // parse the command
+            // парсим команду
             match &cmd[..] {
                 "increase" => increase(number),
                 "decrease" => decrease(number),
                 _ => {
-                    eprintln!("error: invalid command");
+                    eprintln!("ошибка: неизвестная команда");
                     help();
                 },
             }
         },
-        // all the other cases
+        // все остальные случаи
         _ => {
-            // show a help message
+            // показываем сообщение с помощью
             help();
         }
     }
 }
 ```
 
-```bash
+```shell
 $ ./match_args Rust
-This is not the answer.
+Это не ответ.
 $ ./match_args 42
-This is the answer!
+Это ответ!
 $ ./match_args do something
-error: second argument not an integer
+ошибка: второй аргумент не является числом
 usage:
 match_args <string>
-    Check whether given string is the answer.
+    Проверяет является ли данная строка ответом.
 match_args {increase|decrease} <integer>
-    Increase or decrease given integer by one.
+    Увеличивает или уменьшает число на 1.
 $ ./match_args do 42
-error: invalid command
+ошибка: неизвестная команда
 usage:
 match_args <string>
-    Check whether given string is the answer.
+    Проверяет является ли данная строка ответом.
 match_args {increase|decrease} <integer>
-    Increase or decrease given integer by one.
+    Увеличивает или уменьшает число на 1.
 $ ./match_args increase 42
 43
 ```

@@ -1,35 +1,42 @@
-# Alternate/custom key types
+# Альтернативные (пользовательские) типы ключей
 
-Any type that implements the `Eq` and `Hash` traits can be a key in `HashMap`. 
-This includes:
+Любой тип, реализующий типажи `Eq` и 
+`Hash` могут являться ключами в 
+`HashMap`. Туда входят:
 
-* `bool` (though not very useful since there is only two possible keys)
-* `int`, `uint`, and all variations thereof
-* `String` and `&str` (protip: you can have a `HashMap` keyed by `String`
-and call `.get()` with an `&str`)
+- `bool` (хотя он будет не очень полезен, так как будет всего лишь два возможных ключа)
+- `int`, `uint` и все их варианты
+- `String` и `&str` (подсказка: вы можете сделать `HashMap` с ключами типа `String`, а вызывать `.get()` - с `&str`)
 
-Note that `f32` and `f64` do *not* implement `Hash`,
-likely because [floating-point precision errors][floating]
-would make using them as hashmap keys horribly error-prone.
+Заметьте, что `f32` и `f64` *не* 
+реализуют `Hash`, из-за того, что [ошибки 
+точности при работе с плавающей запятой](https://en.wikipedia.org/wiki/Floating_point#Accuracy_problems) могут привести к 
+ужасным ошибкам при использовании их в качестве ключей для 
+хэш-карт.
 
-All collection classes implement `Eq` and `Hash` 
-if their contained type also respectively implements `Eq` and `Hash`. 
-For example, `Vec<T>` will implement `Hash` if `T` implements `Hash`.
+Все классы коллекций реализуют `Eq` и 
+`Hash` если содержащийся в них тип также реализует 
+`Eq` и `Hash`. Например, 
+`Vec<T>` реализует `Hash`, если 
+`T` реализует `Hash`.
 
-You can easily implement `Eq` and `Hash` for a custom type with just one line: 
-`#[derive(PartialEq, Eq, Hash)]`
+Вы можете легко реализовать `Eq` и 
+`Hash` для пользовательских типов добавив всего 
+лишь одну строчку: `#[derive(PartialEq, Eq, Hash)]`
 
-The compiler will do the rest. If you want more control over the details, 
-you can implement `Eq` and/or `Hash` yourself. 
-This guide will not cover the specifics of implementing `Hash`. 
+Компилятор сделает всё остальное. Если вы хотите больше 
+контроля над деталями, вы можете сами реализовать 
+`Eq` и/или `Hash`. Данное руководство 
+не охватывает специфику реализации `Hash`.
 
-To play around with using a `struct` in `HashMap`, 
-let's try making a very simple user logon system:
+Чтобы поиграть с использованием `struct` в 
+`HashMap`, давайте попробуем реализовать очень 
+простую систему авторизации пользователей:
 
 ```rust,editable
 use std::collections::HashMap;
 
-// Eq requires that you derive PartialEq on the type.
+// `Eq` требует, чтобы для типа был также выведен `PartialEq`.
 #[derive(PartialEq, Eq, Hash)]
 struct Account<'a>{
     username: &'a str,
@@ -45,22 +52,22 @@ type Accounts<'a> = HashMap<Account<'a>, AccountInfo<'a>>;
 
 fn try_logon<'a>(accounts: &Accounts<'a>,
         username: &'a str, password: &'a str){
-    println!("Username: {}", username);
-    println!("Password: {}", password);
-    println!("Attempting logon...");
+    println!("Имя пользователя: {}", username);
+    println!("Пароль: {}", password);
+    println!("Попытка входа...");
 
     let logon = Account {
-        username: username,
-        password: password,
+        username,
+        password,
     };
 
     match accounts.get(&logon) {
         Some(account_info) => {
-            println!("Successful logon!");
-            println!("Name: {}", account_info.name);
+            println!("Успешный вход!");
+            println!("Имя: {}", account_info.name);
             println!("Email: {}", account_info.email);
         },
-        _ => println!("Login failed!"),
+        _ => println!("Ошибка входа!"),
     }
 }
 
@@ -84,6 +91,3 @@ fn main(){
     try_logon(&accounts, "j.everyman", "password123");
 }
 ```
-
-[hash]: https://en.wikipedia.org/wiki/Hash_function
-[floating]: https://en.wikipedia.org/wiki/Floating_point#Accuracy_problems
